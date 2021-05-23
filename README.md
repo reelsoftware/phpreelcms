@@ -1,7 +1,7 @@
 # phpReel
 phpReel is a free, MIT open-source subscription-based video streaming service that lets you create your platform for distributing video content in the form of movies or series.
 
-## Some of the features that make phpReel great.
+## Some of the features that make phpReel great
 
 ### Dashboard
 You, as the administrator of the application, can access the dashboard that lets you modify the platform as you see fit.
