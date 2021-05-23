@@ -1,0 +1,18 @@
+.dot {
+    height: 25px;
+    width: 25px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right:5px;
+}
+
+.done {
+    background-color: rgb(59, 197, 31);
+}
+
+.nav {
+    background-color:rgb(240, 240, 240);
+    padding-top:10px;
+    padding-bottom:10px;
+}

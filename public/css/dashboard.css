@@ -1,0 +1,128 @@
+#progressBar
+{
+	width: 0%;
+}
+
+.mt-1
+{
+	margin-top: 10px !important;
+}
+
+.menu-toggle
+{
+	color:white;
+	font-size:20px  !important;
+}
+
+.white
+{
+	color:white !important;
+}
+
+.ml-1
+{
+	margin-left:10px;
+}
+
+.ne-btn
+{
+	font-size:.875rem;
+	font-weight:600;
+	line-height:1.5;
+	display:inline-block;
+	padding:.625rem 1.25rem;
+	cursor:pointer;
+	-webkit-user-select:none;
+	-ms-user-select:none;
+	user-select:none;
+	transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+	text-align:center;
+	vertical-align:middle;
+	color:#525f7f;
+	border:1px solid transparent;
+	border-radius:.25rem;
+	background-color:transparent
+}
+	@media (prefers-reduced-motion:reduce)
+	{
+		.ne-btn
+		{
+			transition:none
+		}
+	}
+	
+	.ne-btn:hover
+	{
+		text-decoration:none;
+		color:#525f7f
+	}
+	
+	.ne-btn.focus,.ne-btn:focus
+	{
+		outline:0;
+		box-shadow:0 7px 14px rgba(50,50,93,.1),0 3px 6px rgba(0,0,0,.08)
+	}
+	
+	.ne-btn.disabled,.ne-btn:disabled
+	{
+		opacity:.65;box-shadow:none
+	}
+	
+	.ne-btn:not(:disabled):not(.disabled).active,.ne-btn:not(:disabled):not(.disabled):active
+	{
+		box-shadow:none
+	}
+	
+	.ne-btn:not(:disabled):not(.disabled).active:focus,.ne-btn:not(:disabled):not(.disabled):active:focus
+	{
+		box-shadow:0 7px 14px rgba(50,50,93,.1),0 3px 6px rgba(0,0,0,.08)
+	}
+	
+	a.ne-btn.disabled,fieldset:disabled a.ne-btn
+	{
+		pointer-events:none
+	}
+	
+	.ne-pagination
+	{
+		color:#fff;
+		border-color:#5e72e4;
+		background-color:#5e72e4;
+		box-shadow:0 4px 6px rgba(50,50,93,.11),0 1px 3px rgba(0,0,0,.08)
+	}
+	
+	.ne-pagination:hover
+	{
+		color:#fff;
+		border-color:#5e72e4;
+		background-color:#5e72e4
+	}
+	
+	.ne-pagination.focus,.ne-pagination:focus
+	{
+		box-shadow:0 4px 6px rgba(50,50,93,.11),0 1px 3px rgba(0,0,0,.08),0 0 0 0 rgba(94,114,228,.5)
+	}
+	
+	.ne-pagination.disabled,.ne-pagination:disabled
+	{
+		color:#fff;
+		border-color:#5e72e4;
+		background-color:#5e72e4
+	}
+	
+	.ne-pagination:not(:disabled):not(.disabled).active,.ne-pagination:not(:disabled):not(.disabled):active,.show>.ne-pagination.dropdown-toggle
+	{
+		color:#fff;
+		border-color:#5e72e4;
+		background-color:#324cdd
+	}
+	
+	.ne-pagination:not(:disabled):not(.disabled).active:focus,.ne-pagination:not(:disabled):not(.disabled):active:focus,.show>.ne-pagination.dropdown-toggle:focus
+	{
+		box-shadow:none,0 0 0 0 rgba(94,114,228,.5)
+	}
+
+	.page-item
+	{
+		border-radius: none;
+	}
