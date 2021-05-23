@@ -34,6 +34,9 @@ You can update and chef the subscription status of any registered users.
 ### Roles
 At the moment phpReel has two roles for its users. The default role is "user" which is the basic visitor of your application that can subscribe, watch content, and so on. The other available role is "administrator" which is the role that gives you access to the dashboard page.
 
+## Instalation
+[PDF](https://github.com/phpreel/phpreel/blob/main/phpReel%20documentation.pdf)
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
