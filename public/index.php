@@ -16,8 +16,8 @@ define('LARAVEL_START', microtime(true));
 |
 */
 
-if (file_exists(__DIR__.'/../cloudFlix/storage/framework/maintenance.php')) {
-    require __DIR__.'/../cloudFlix/storage/framework/maintenance.php';
+if (file_exists(__DIR__.'/../phpReel/storage/framework/maintenance.php')) {
+    require __DIR__.'/../phpReel/storage/framework/maintenance.php';
 }
 
 /*
@@ -31,7 +31,7 @@ if (file_exists(__DIR__.'/../cloudFlix/storage/framework/maintenance.php')) {
 |
 */
 
-require __DIR__.'/../cloudFlix/vendor/autoload.php';
+require __DIR__.'/../phpReel/vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -47,7 +47,7 @@ require __DIR__.'/../cloudFlix/vendor/autoload.php';
 //If STDIN is not defined then define it
 if(! defined('STDIN')) define('STDIN', fopen("php://stdin","r"));
 
-$app = require_once __DIR__.'/../cloudFlix/bootstrap/app.php';
+$app = require_once __DIR__.'/../phpReel/bootstrap/app.php';
 
 $kernel = $app->make(Kernel::class);
 
