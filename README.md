@@ -1,7 +1,15 @@
 # phpReel
 phpReel is a free, MIT open-source subscription-based video streaming service that lets you create your platform for distributing video content in the form of movies or series.
 
+<<<<<<< HEAD
 ## Some of the features that make phpReel great
+=======
+## Demo
+[Frontend Demo](https://demo.phpreel.paulbalan.com/)
+[Dashboard Demo](https://demo.phpreel.paulbalan.com/dashboard)
+
+## Some of the features that make phpReel great.
+>>>>>>> 0b42cb555d9577030f8fcdd6b243a44d12db983a
 
 ### Dashboard
 You, as the administrator of the application, can access the dashboard that lets you modify the platform as you see fit.
@@ -34,10 +42,13 @@ You can update and chef the subscription status of any registered users.
 ### Roles
 At the moment phpReel has two roles for its users. The default role is "user" which is the basic visitor of your application that can subscribe, watch content, and so on. The other available role is "administrator" which is the role that gives you access to the dashboard page.
 
+## Instalation
+[PDF](https://github.com/phpreel/phpreel/blob/main/phpReel%20documentation.pdf)
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](https://github.com/phpreel/phpreel/blob/main/LICENSE)
