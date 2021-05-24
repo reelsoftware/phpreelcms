@@ -1,19 +1,13 @@
 # phpReel
 phpReel is a free, MIT open-source subscription-based video streaming service that lets you create your platform for distributing video content in the form of movies or series.
 
-<<<<<<< HEAD
-## Some of the features that make phpReel great
-=======
 ## Demo
 [Frontend Demo](https://demo.phpreel.paulbalan.com/)
 [Dashboard Demo](https://demo.phpreel.paulbalan.com/dashboard)
 
 ## Some of the features that make phpReel great.
->>>>>>> 0b42cb555d9577030f8fcdd6b243a44d12db983a
-
 ### Dashboard
 You, as the administrator of the application, can access the dashboard that lets you modify the platform as you see fit.
-
 
 ### Subscription plans with Stripe
 At the heart of phpReel is the subscription plan, which lets users choose from different plans. You can have as many plans as you wish that are custom-tailored to your needs. The whole subscription process is powered by Stripe which takes care of all the payments.
