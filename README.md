@@ -1,4 +1,5 @@
 # phpReel
+This is the dev branch. It might not contain complete and bug-free code. If you do choose to use it keep in mind that you might encounter various problems.
 phpReel is a free, MIT open-source subscription-based video streaming service that lets you create your platform for distributing video content in the form of movies or series.
 
 ## Demo
