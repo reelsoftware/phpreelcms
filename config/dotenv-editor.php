@@ -11,7 +11,7 @@ return array(
     | the original file will be backed up before save.
     */
 
-    'autoBackup' => true,
+    'autoBackup' => false,
 
     /*
     |----------------------------------------------------------------------

@@ -8,26 +8,16 @@ trait MigrateDatabaseTrait
     //Migration for the basic database tables
     private function migrateDatabase()
     {
-        DB::statement("CREATE TABLE IF NOT EXISTS `episodes` (
+
+        DB::statement("CREATE TABLE IF NOT EXISTS `videos` (
             `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-            `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-            `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-            `season_id` bigint(20) unsigned NOT NULL,
-            `thumbnail` bigint(20) unsigned NOT NULL,
-            `video` bigint(20) unsigned NOT NULL,
-            `length` mediumint(8) unsigned NOT NULL,
+            `name` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+            `storage` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
             `created_at` timestamp NULL DEFAULT NULL,
             `updated_at` timestamp NULL DEFAULT NULL,
-            `public` tinyint(1) NOT NULL DEFAULT '0',
-            `order` smallint(6) NOT NULL,
-            PRIMARY KEY (`id`),
-            KEY `episodes_season_id_foreign` (`season_id`),
-            KEY `episodes_thumbnail_foreign` (`thumbnail`),
-            KEY `episodes_video_foreign` (`video`),
-            CONSTRAINT `episodes_season_id_foreign` FOREIGN KEY (`season_id`) REFERENCES `seasons` (`id`),
-            CONSTRAINT `episodes_thumbnail_foreign` FOREIGN KEY (`thumbnail`) REFERENCES `images` (`id`),
-            CONSTRAINT `episodes_video_foreign` FOREIGN KEY (`video`) REFERENCES `videos` (`id`)
-           )");
+            `premium` tinyint(1) NOT NULL DEFAULT '0',
+            PRIMARY KEY (`id`)
+        )");
 
         DB::statement("CREATE TABLE IF NOT EXISTS `failed_jobs` (
             `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -88,26 +78,6 @@ trait MigrateDatabaseTrait
             KEY `password_resets_email_index` (`email`)
            )");
 
-        DB::statement("CREATE TABLE IF NOT EXISTS `seasons` (
-            `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-            `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-            `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-            `order` smallint(6) NOT NULL,
-            `series_id` bigint(20) unsigned NOT NULL,
-            `thumbnail` bigint(20) unsigned NOT NULL,
-            `trailer` bigint(20) unsigned NOT NULL,
-            `created_at` timestamp NULL DEFAULT NULL,
-            `updated_at` timestamp NULL DEFAULT NULL,
-            `year` smallint(5) unsigned NOT NULL,
-            PRIMARY KEY (`id`),
-            KEY `seasons_series_id_foreign` (`series_id`),
-            KEY `seasons_thumbnail_foreign` (`thumbnail`),
-            KEY `seasons_trailer_foreign` (`trailer`),
-            CONSTRAINT `seasons_series_id_foreign` FOREIGN KEY (`series_id`) REFERENCES `series` (`id`),
-            CONSTRAINT `seasons_thumbnail_foreign` FOREIGN KEY (`thumbnail`) REFERENCES `images` (`id`),
-            CONSTRAINT `seasons_trailer_foreign` FOREIGN KEY (`trailer`) REFERENCES `videos` (`id`)
-           )");
-
         DB::statement("CREATE TABLE IF NOT EXISTS `series` (
             `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
             `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -161,6 +131,16 @@ trait MigrateDatabaseTrait
             KEY `subscription_items_stripe_id_index` (`stripe_id`)
            ) ");
 
+        DB::statement("CREATE TABLE IF NOT EXISTS `subscription_types` (
+            `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            `name` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
+            `created_at` timestamp NULL DEFAULT NULL,
+            `updated_at` timestamp NULL DEFAULT NULL,
+            `product_id` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+            `public` tinyint(1) NOT NULL DEFAULT '0',
+            PRIMARY KEY (`id`)
+        ) ");
+
         DB::statement("CREATE TABLE IF NOT EXISTS `subscription_plans` (
             `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
             `name` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -177,17 +157,7 @@ trait MigrateDatabaseTrait
             PRIMARY KEY (`id`),
             KEY `subscription_plans_subscription_type_id_foreign` (`subscription_type_id`),
             CONSTRAINT `subscription_plans_subscription_type_id_foreign` FOREIGN KEY (`subscription_type_id`) REFERENCES `subscription_types` (`id`)
-           )");
-
-        DB::statement("CREATE TABLE IF NOT EXISTS `subscription_types` (
-            `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-            `name` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
-            `created_at` timestamp NULL DEFAULT NULL,
-            `updated_at` timestamp NULL DEFAULT NULL,
-            `product_id` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-            `public` tinyint(1) NOT NULL DEFAULT '0',
-            PRIMARY KEY (`id`)
-           ) ");
+        )");
 
         DB::statement("	CREATE TABLE IF NOT EXISTS `translations` (
             `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -217,14 +187,45 @@ trait MigrateDatabaseTrait
             KEY `users_stripe_id_index` (`stripe_id`)
            )");
 
-        DB::statement("CREATE TABLE IF NOT EXISTS `videos` (
+        DB::statement("CREATE TABLE IF NOT EXISTS `seasons` (
             `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-            `name` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-            `storage` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+            `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+            `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+            `order` smallint(6) NOT NULL,
+            `series_id` bigint(20) unsigned NOT NULL,
+            `thumbnail` bigint(20) unsigned NOT NULL,
+            `trailer` bigint(20) unsigned NOT NULL,
             `created_at` timestamp NULL DEFAULT NULL,
             `updated_at` timestamp NULL DEFAULT NULL,
-            `premium` tinyint(1) NOT NULL DEFAULT '0',
-            PRIMARY KEY (`id`)
-           )");
+            `year` smallint(5) unsigned NOT NULL,
+            PRIMARY KEY (`id`),
+            KEY `seasons_series_id_foreign` (`series_id`),
+            KEY `seasons_thumbnail_foreign` (`thumbnail`),
+            KEY `seasons_trailer_foreign` (`trailer`),
+            CONSTRAINT `seasons_series_id_foreign` FOREIGN KEY (`series_id`) REFERENCES `series` (`id`),
+            CONSTRAINT `seasons_thumbnail_foreign` FOREIGN KEY (`thumbnail`) REFERENCES `images` (`id`),
+            CONSTRAINT `seasons_trailer_foreign` FOREIGN KEY (`trailer`) REFERENCES `videos` (`id`)
+        )");
+
+        DB::statement("CREATE TABLE IF NOT EXISTS `episodes` (
+            `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+            `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+            `season_id` bigint(20) unsigned NOT NULL,
+            `thumbnail` bigint(20) unsigned NOT NULL,
+            `video` bigint(20) unsigned NOT NULL,
+            `length` mediumint(8) unsigned NOT NULL,
+            `created_at` timestamp NULL DEFAULT NULL,
+            `updated_at` timestamp NULL DEFAULT NULL,
+            `public` tinyint(1) NOT NULL DEFAULT '0',
+            `order` smallint(6) NOT NULL,
+            PRIMARY KEY (`id`),
+            KEY `episodes_season_id_foreign` (`season_id`),
+            KEY `episodes_thumbnail_foreign` (`thumbnail`),
+            KEY `episodes_video_foreign` (`video`),
+            CONSTRAINT `episodes_season_id_foreign` FOREIGN KEY (`season_id`) REFERENCES `seasons` (`id`),
+            CONSTRAINT `episodes_thumbnail_foreign` FOREIGN KEY (`thumbnail`) REFERENCES `images` (`id`),
+            CONSTRAINT `episodes_video_foreign` FOREIGN KEY (`video`) REFERENCES `videos` (`id`)
+        )");
     }
 }
