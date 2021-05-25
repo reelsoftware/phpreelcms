@@ -21,6 +21,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TrailerController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\TranscodingController;
+use App\Http\Controllers\ThemesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +33,6 @@ use App\Http\Controllers\TranscodingController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 
 Route::middleware(['install'])->group(function () 
 {
@@ -311,6 +311,13 @@ Route::middleware(['setLanguage'])->group(function ()
 
         Route::get('dashboard/users/subscription/{id}', [UserDashboardController::class, 'subscriptionDetails'])
             ->name('usersSubscriptionDetails');
+
+        //Themes
+        Route::get('dashboard/themes', [ThemesController::class, 'edit'])
+            ->name('themeEdit');
+
+        Route::post('dashboard/themes', [ThemesController::class, 'update'])
+            ->name('themeUpdate');
     });
 });
 

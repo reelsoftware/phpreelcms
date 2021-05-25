@@ -12,9 +12,12 @@ return [
     | the usual Laravel view path has already been registered for you.
     |
     */
-
+    /**
+     * themes = folder used for custom themes for frontend and dashboard
+     */
     'paths' => [
         resource_path('views'),
+        resource_path('themes'),
     ],
 
     /*
