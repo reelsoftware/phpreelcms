@@ -33,7 +33,7 @@
                             </div>
 
                             <div class="col-md-9 col-sm-8">
-                                <input type="text" id="{{$loop->index}}" name="{{$loop->index}}" class="form-control" value="@if($loop->index < count($languageFile)){{$languageFile[$enKey]}}@endif">
+                                <input type="text" id="{{$loop->index}}" name="{{$loop->index}}" class="form-control" value="@if(isset($languageFile[$enKey]) && $languageFile[$enKey] != null & $loop->index < count($languageFile)){{$languageFile[$enKey]}}@endif">
                             </div>
                         </div>
                     </div>

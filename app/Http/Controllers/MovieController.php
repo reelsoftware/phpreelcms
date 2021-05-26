@@ -49,7 +49,7 @@ class MovieController extends Controller
             $subscribed = false;
         }
 
-        return view('movie.index', [
+        return view(env('THEME') . '.movie.index', [
             'movies' => $movies, 
             'subscribed' => $subscribed,
         ]);
@@ -193,7 +193,7 @@ class MovieController extends Controller
         $cast = explode(", ", $movie['cast']);
         $genre = explode(", ", $movie['genre']);
 
-        return view('movie.show', [
+        return view(env('THEME') . '.movie.show', [
             'movie' => $movie,
             'cast' => $cast, 
             'genre' => $genre

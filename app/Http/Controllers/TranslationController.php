@@ -32,7 +32,7 @@ class TranslationController extends Controller
      */
     public function create()
     {
-        $languageFile = json_decode(File::get(base_path().'/resources/lang/default/default.json'), true);
+        $languageFile = json_decode(File::get(base_path().'/resources/themes/' . env('theme') . '/lang/default/default.json'), true);
         
         return view('translation.create', [
             'languageFile' => $languageFile,
@@ -57,7 +57,7 @@ class TranslationController extends Controller
         $translation->save();
 
         //Get the default language file from resources
-        $languageFile = json_decode(File::get(base_path().'/resources/lang/default/default.json'), true);
+        $languageFile = json_decode(File::get(base_path().'/resources/themes/' . env('theme') . '/lang/default/default.json'), true);
         
         //Add translations from the form to the JSON
         foreach($languageFile as $enKey => $translateValue)
@@ -72,7 +72,7 @@ class TranslationController extends Controller
         }
 
         //Save the translation file as a json file
-        File::put(base_path().'/resources/lang/' . $request->language . '.json', (json_encode($languageFile)));
+        File::put(base_path().'/resources/themes/' . env('theme') . '/lang/' . $request->language . '.json', (json_encode($languageFile)));
         
         return redirect(route('translationDashboard'));
     }
@@ -89,10 +89,10 @@ class TranslationController extends Controller
         $translation = Translation::find($id);
 
         //Get the default language file from resources
-        $defaultFile = json_decode(File::get(base_path().'/resources/lang/default/default.json'), true);
+        $defaultFile = json_decode(File::get(base_path().'/resources/themes/' . env('theme') . '/lang/default/default.json'), true);
 
         //Get the json language file from resources
-        $languageFile = json_decode(File::get(base_path().'/resources/lang/' . $translation['language'] . '.json'), true);
+        $languageFile = json_decode(File::get(base_path().'/resources/themes/' . env('theme') . '/lang/' . $translation['language'] . '.json'), true);
 
         return view('translation.edit', [
             'languageFile' => $languageFile,
@@ -122,10 +122,10 @@ class TranslationController extends Controller
         $translation = Translation::find($id);
 
         //Get the json language file from resources
-        $defaultFile = json_decode(File::get(base_path().'/resources/lang/default/default.json'), true);
+        $defaultFile = json_decode(File::get(base_path().'/resources/themes/' . env('theme') . '/lang/default/default.json'), true);
 
         //Delete the old json file
-        File::delete(base_path().'/resources/lang/' . $translation['language'] . '.json');
+        File::delete(base_path().'/resources/themes/' . env('theme') . '/lang/' . $translation['language'] . '.json');
 
         //Loop counter
         $i = 0;
@@ -145,7 +145,7 @@ class TranslationController extends Controller
         }
 
         //Save the translation file as a json file
-        File::put(base_path().'/resources/lang/' . $request->language . '.json', (json_encode($defaultFile)));
+        File::put(base_path().'/resources/themes/' . env('theme') . '/lang/' . $request->language . '.json', (json_encode($defaultFile)));
 
         //Update the translation name from database
         $translation->language = $request->language;
@@ -168,7 +168,7 @@ class TranslationController extends Controller
         if($language != null)
             $language->delete();
 
-        File::delete(base_path().'/resources/lang/' . $language['language'] . '.json');
+        File::delete(base_path().'/resources/themes/' . env('theme') . '/lang/' . $language['language'] . '.json');
 
         return redirect()->route('translationDashboard');
     }

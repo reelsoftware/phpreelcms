@@ -7,7 +7,7 @@
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.4/plyr.css" />
+    @styleCssExternal('https://cdn.plyr.io/3.6.4/plyr.css')
 @endsection
 
 @section('content')
@@ -16,15 +16,15 @@
         <div class="col-12">
             @if($movie->video_storage == 'vimeo')
                 <div class="plyr__video-embed" id="player">
-                    <iframe src="https://player.vimeo.com/video/{{$movie->video_name}}"></iframe>
+                    @vimeoEmbed($movie->video_name)
                 </div>
             @elseif($movie->video_storage == 's3' || $movie->video_storage == 'local')
                 <video id="player" playsinline controls>
-                    <source src="{{route('fileResource', ['fileName' => $movie->video_name, 'storage' => $movie->video_storage])}}">
+                    @html5Source($movie->video_name, $movie->video_storage)
                 </video> 
             @elseif($movie->video_storage == 'youtube')
                 <div class="plyr__video-embed" id="player">
-                    <iframe src="https://www.youtube.com/embed/{{$movie->video_name}}"></iframe>
+                    @youtubeEmbed($movie->video_name);
                 </div>
             @endif
         </div>
@@ -85,6 +85,6 @@
 @endsection
 
 @section('script')
-    <script src="https://cdn.plyr.io/3.6.4/plyr.js"></script>
-    <script type="text/javascript" src="{{ URL::asset('js/player.js') }}"></script>
+    @scriptJsExternal('https://cdn.plyr.io/3.6.4/plyr.js')
+    @scriptJsLocal('player')
 @endsection

@@ -22,6 +22,7 @@ use App\Http\Controllers\TrailerController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\TranscodingController;
 use App\Http\Controllers\ThemesController;
+use App\Http\Controllers\AssetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,13 @@ use App\Http\Controllers\ThemesController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+//Asset routes
+Route::get('/asset/js/{scriptName}', [AssetController::class, 'javascript'])
+    ->name('jsAsset');
+
+Route::get('/asset/css/{styleName}', [AssetController::class, 'css'])
+    ->name('cssAsset');
 
 Route::middleware(['install'])->group(function () 
 {

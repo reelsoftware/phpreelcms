@@ -23,7 +23,7 @@
 
                     <select name="theme" class="custom-select" id="theme">
                         @foreach ($directories as $directory)
-                            <option value="{{$directory}}">{{$directory}}</option>    
+                            <option value="{{$directory}}" @if(env('THEME') == $directory) selected @endif>{{$directory}}</option>    
                         @endforeach
                     </select>
                 </div>

@@ -78,7 +78,7 @@ class CategoriesController extends Controller
             $subscribed = false;
         }
 
-        return view('categories.cast', [
+        return view(env('THEME') . '.categories.cast', [
             'movies' => $results, 
             'subscribed' => $subscribed,
             'cast' => $slug,
@@ -154,7 +154,7 @@ class CategoriesController extends Controller
             $subscribed = false;
         }
 
-        return view('categories.genre', [
+        return view(env('THEME') . '.categories.genre', [
             'movies' => $results, 
             'subscribed' => $subscribed,
             'genre' => $slug,
@@ -230,7 +230,7 @@ class CategoriesController extends Controller
             $subscribed = false;
         }
 
-        return view('categories.release', [
+        return view(env('THEME') . '.categories.release', [
             'movies' => $results, 
             'subscribed' => $subscribed,
             'year' => $year,
@@ -306,7 +306,7 @@ class CategoriesController extends Controller
             $subscribed = false;
         }
 
-        return view('categories.rating', [
+        return view(env('THEME') . '.categories.rating', [
             'movies' => $results, 
             'subscribed' => $subscribed,
             'grade' => $grade,
