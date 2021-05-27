@@ -1,4 +1,4 @@
-<!-- docs/_sidebar.md -->
+<!-- _sidebar.md -->
 
 * [Home](/)
 * [Quick start guide](quick-start.md)
