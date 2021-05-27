@@ -2,9 +2,7 @@
 
 @section('meta_description', $movie->description)
 
-@section('title')
-    {{$movie->title}} - 
-@endsection
+@section('title', "$movie->title - ")
 
 @section('style')
     @styleCssExternal('https://cdn.plyr.io/3.6.4/plyr.css')
@@ -14,19 +12,24 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            @if($movie->video_storage == 'vimeo')
+            @vimeo($movie->video_storage)
                 <div class="plyr__video-embed" id="player">
                     @vimeoEmbed($movie->video_name)
                 </div>
-            @elseif($movie->video_storage == 's3' || $movie->video_storage == 'local')
+            @endvimeo
+
+            @html5($movie->video_storage)
                 <video id="player" playsinline controls>
                     @html5Source($movie->video_name, $movie->video_storage)
                 </video> 
-            @elseif($movie->video_storage == 'youtube')
+            @endhtml5
+
+            @youtube($movie->video_storage)
                 <div class="plyr__video-embed" id="player">
                     @youtubeEmbed($movie->video_name);
                 </div>
-            @endif
+            @endyoutube()
+
         </div>
     </div>
 

@@ -69,6 +69,34 @@ class ThemeComponentsServiceProvider extends ServiceProvider
             return $html;
         });
 
+        //Custom if directives
+        /**
+         * Display vimeo content only
+         * 
+         * @param string $expression Storage medium used for the resource
+         */
+        Blade::if('vimeo', function ($expression) {
+            return $expression === "vimeo";
+        });
+
+        /**
+         * Display html5 content only
+         * 
+         * @param string $expression Storage medium used for the resource
+         */
+        Blade::if('html5', function ($expression) {
+            return (($expression === "html5") || ($expression === "s3"));
+        });
+
+        /**
+         * Display youtube content only
+         * 
+         * @param string $expression Storage medium used for the resource
+         */
+        Blade::if('youtube', function ($expression) {
+            return $expression === "youtube";
+        });
+
         //Assets directives
         //Js assets
         /**
