@@ -1,2 +1,2 @@
 - [Home](/)
-- [Markdown](quick-start)
+- [Quick start](quick-start)
