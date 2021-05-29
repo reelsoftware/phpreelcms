@@ -79,7 +79,7 @@ class CategoriesController extends Controller
         }
 
         return view(env('THEME') . '.categories.cast', [
-            'movies' => $results, 
+            'content' => $results, 
             'subscribed' => $subscribed,
             'cast' => $slug,
         ]);

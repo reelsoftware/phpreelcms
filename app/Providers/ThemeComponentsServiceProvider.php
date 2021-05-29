@@ -100,56 +100,96 @@ class ThemeComponentsServiceProvider extends ServiceProvider
         //Assets directives
         //Js assets
         /**
-         * Returns a script tag with the requested local script
+         * Returns a script tag with the requested local or external script
          * 
-         * @param string $expression Name of the script file saved in the "js" directory of the theme
+         * @param string $scriptName Name of the script file 
+         * @param string $scriptScope Can be local (stored in the theme file) or external (via url, cdn)
+         * 
          */
-        Blade::directive('scriptJsLocal', function ($expression) {
-            $php = "<?php 
-                echo route('jsAsset', ['scriptName' => $expression])
-            ?>";
+        Blade::directive('scriptJs', function ($expression) {
+            //Get the variables from the expression
+            $params = explode(',', $expression);
+            $scriptName = $params[0];
+            $scriptScope = trim($params[1]);
+
+            if(strtolower($scriptScope) == 'local')
+                $php = "<?php echo route('jsAsset', ['scriptName' => $scriptName]) ?>";
+            else if(strtolower($scriptScope) == 'external')
+                $php = "<?php echo $scriptName ?>";
+
             $html = "<script type=\"text/javascript\" src=\"$php\"></script>";
-
-            return $html;
-        });
-
-        /**
-         * Returns a script tag with the requested local script
-         * 
-         * @param string $expression URL of the script file (this can be a CDN)
-         */
-        Blade::directive('scriptJsExternal', function ($expression) {
-            $php = "<?php echo $expression ?>";
-            $html = "<script src=\"$php\"></script>";
 
             return $html;
         });
 
         //CSS assets
         /**
-         * Returns a css file link with the requested local script
+         * Returns a css file 
          * 
-         * @param string $expression Name of the css file saved in the "css" directory of the theme
+         * @param string $styleName Name of the script file 
+         * @param string $styleScope Can be local (stored in the theme file) or external (via url, cdn)
          */
-        Blade::directive('styleCssLocal', function ($expression) {
-            $php = "<?php 
-                echo route('cssAsset', ['styleName' => $expression])
-            ?>";
+        Blade::directive('styleCss', function ($expression) {
+            //Get the variables from the expression
+            $params = explode(',', $expression);
+            $styleName = $params[0];
+            $styleScope = trim($params[1]);
+
+            if(strtolower($styleScope) == 'local')
+                $php = "<?php echo route('cssAsset', ['styleName' => $styleName]) ?>";
+            else if(strtolower($styleScope) == 'external')
+                $php = "<?php echo $styleName ?>";
+
             $html = "<link rel=\"stylesheet\" href=\"$php\" />";
 
             return $html;
         });
 
-        /**
-         * Returns a css file link with the requested local script
-         * 
-         * @param string $expression URL of the css file (this can be a CDN)
-         */
-        Blade::directive('styleCssExternal', function ($expression) {
-            $php = "<?php echo $expression ?>";
-            $html = "<link rel=\"stylesheet\" href=\"$php\" />";
 
-            return $html;
+        //URL generation
+        /**
+         * Returns a URL for a movie or a series
+         * 
+         * @param movie/series $item Movie or series object
+         * @param int $itemId Id of movie or series
+         */
+        Blade::directive('itemUrl', function ($expression) {
+            //Get the variables from the expression
+            $params = explode(',', $expression);
+            $item = $params[0];
+            $itemId = $params[1];
+            
+            return "<?php
+                if(with($item)->getTable() == 'movies')
+                    echo route('movieShow', ['id' => $itemId]);
+                else if(with($item)->getTable() == 'series')
+                    echo route('seriesShow', ['id' => $itemId]); 
+            ?>";
+        });
+
+        /**
+         * Returns a URL for any type of images (theme images, resource images, url images)
+         * Theme images are images stored in the theme folder
+         * Resource images are those stored using a form
+         * URL images are external images provided by an URL
+         * 
+         * @param string $imageName Name of the image resource 
+         * @param string $imageStorage Storage medium of the image resource
+         */
+        Blade::directive('imageUrl', function ($expression) {
+            //Get the variables from the expression
+            $params = explode(',', $expression);
+            $imageName = $params[0];
+            $imageStorage = $params[1];
+
+            if(strtolower($imageStorage) == 'url')
+                $php = "<?php echo $imageName; ?>";
+            else if(strtolower($imageStorage) == 'theme')
+                $php = "<?php echo route('imageAsset', ['imageName' => $imageName]); ?>";
+            else
+                $php = "<?php echo route('fileResourceImage', ['fileName' => $imageName, 'storage' => $imageStorage]); ?>";
+        
+            return $php;
         });
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use File;
 
 class AssetController extends Controller
 {
@@ -15,8 +16,7 @@ class AssetController extends Controller
      */
     public function javascript($scriptName)
     {
-        return response()->view(env('theme') . '.js.' . $scriptName)
-            ->header('Content-Type', 'application/javascript');
+        return response()->file(resource_path('themes/'. env('theme') . '/js/' . $scriptName));
     }
 
     /**
@@ -28,7 +28,18 @@ class AssetController extends Controller
      */
     public function css($styleName)
     {
-        return response()->view(env('theme') . '.css.' . $styleName)
-            ->header('Content-Type', 'application/javascript');
+        return response()->file(resource_path('themes/'. env('theme') . '/css/' . $styleName));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param string imageName The name of the theme image to be returned
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function image($imageName)
+    {
+        return response()->file(resource_path('themes/'. env('theme') . '/img/' . $imageName));
     }
 }

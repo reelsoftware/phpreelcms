@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 
 @section('style')
-    <link href="{{ asset('css/slider.css') }}" rel="stylesheet" type="text/css">
+    @styleCss('slider.css', local)
 @endsection
 
 @section('content')
@@ -110,7 +110,9 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('js/slider.js') }}"></script>
+
+    @scriptJs("slider.js", local)
+
     <script>
         let slider1 = new Slider("slider1");
         let slider2 = new Slider("slider2");

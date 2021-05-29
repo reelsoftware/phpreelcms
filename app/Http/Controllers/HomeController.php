@@ -54,11 +54,12 @@ class HomeController extends Controller
             ])
             ->limit(6)
             ->get();
-    
-        return view('index', [
+                
+        return view(env('THEME') . '.index', [
             'subscribed' => $subscription,
             'movies' => $movies,
             'series' => $series
         ]);
+
     }
 }

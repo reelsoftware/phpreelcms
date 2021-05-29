@@ -10,24 +10,24 @@
 <div class="container ne-margin-top-under-nav">
     <div class="ne-h1">{{__('Latest movies')}}</div>
     <div class="row">
-        @foreach ($movies as $movie)
+        @foreach ($content as $item)
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <div class="card ne-card">
                     <div class="ne-image-container">
-                        <a href="{{route('movieShow', ['id' => $movie->id])}}">
-                            <img src="{{ route('fileResourceImage', ['fileName' => $movie->image_name, 'storage' => $movie->image_storage]) }}" class="card-img">
+                        <a href="@itemUrl($item, $item->id)">
+                            <img src="{{ route('fileResourceImage', ['fileName' => $item->image_name, 'storage' => $item->image_storage]) }}" class="card-img">
                         </a>
 
                         <div class="ne-image-container-bottom-right">
-                            <span class="ne-movie-length">{{gmdate("H:i", $movie->length)}}</span><br>
+                            <span class="ne-movie-length">{{gmdate("H:i", $item->length)}}</span><br>
                         </div>
                     </div>      
                     
                     <div class="card-body">
-                        <a href="{{route('movieShow', ['id' => $movie->id])}}" class="card-title ne-title">{{$movie->title}}</a>
+                        <a href="{{route('movieShow', ['id' => $item->id])}}" class="card-title ne-title">{{$item->title}}</a>
 
-                        <p class="card-text ne-short-description">{{mb_strimwidth($movie->description, 0, 120, "...")}}</p>
-                        <a href="{{route('trailerMovieShow', ['id' => $movie->id])}}" class="ne-btn">{{__('Trailer')}}</a>
+                        <p class="card-text ne-short-description">{{mb_strimwidth($item->description, 0, 120, "...")}}</p>
+                        <a href="{{route('trailerMovieShow', ['id' => $item->id])}}" class="ne-btn">{{__('Trailer')}}</a>
                         
                         @if($subscribed == false)
                             <a href="{{route('subscribe')}}" class="ne-btn ne-movie-premium">{{__('Subscribe')}}</a>
@@ -44,7 +44,7 @@
 
     <div class="row">
         <div class="col text-center">
-            {{ $movies->links() }}
+            {{ $content->links() }}
         </div>
     </div>
 </div>

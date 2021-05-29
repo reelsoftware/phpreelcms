@@ -42,6 +42,9 @@ Route::get('/asset/js/{scriptName}', [AssetController::class, 'javascript'])
 Route::get('/asset/css/{styleName}', [AssetController::class, 'css'])
     ->name('cssAsset');
 
+Route::get('/asset/image/{imageName}', [AssetController::class, 'image'])
+    ->name('imageAsset');
+
 Route::middleware(['install'])->group(function () 
 {
     Route::get('/install', [InstallController::class, 'index'])

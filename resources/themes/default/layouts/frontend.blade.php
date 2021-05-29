@@ -6,11 +6,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 	<meta name="description" content="@yield('meta_description')">
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
-	<link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
+    @styleCss('app.css', local)
+    @styleCss('slider.css', local)
+    @styleCss('style.css', local)
+    @styleCss('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap', external)
 	
-  @yield('style')
+  	@yield('style')
+	
     <title>@yield('title'){{Config::get('app.name')}}</title>
 </head>
 <body onresize="@yield('bodyScript')">
@@ -90,8 +92,10 @@
 	</nav>
 
     @yield('content')
-    <script src="{{asset('js/jquery-3.6.0.min.js')}}"></script>
-    <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
+
+    @scriptJs("jquery-3.6.0.min.js", local)
+    @scriptJs("bootstrap.bundle.min.js", local)
+
     @yield('script')
 </body>
 </html>

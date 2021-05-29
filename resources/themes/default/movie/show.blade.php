@@ -1,32 +1,32 @@
 @extends('layouts.frontend')
 
-@section('meta_description', $movie->description)
+@section('meta_description', $item->description)
 
-@section('title', "$movie->title - ")
+@section('title', "$item->title - ")
 
 @section('style')
-    @styleCssExternal('https://cdn.plyr.io/3.6.4/plyr.css')
+    @styleCss('https://cdn.plyr.io/3.6.4/plyr.css', external)
 @endsection
 
 @section('content')
 <div class="container">
     <div class="row">
         <div class="col-12">
-            @vimeo($movie->video_storage)
+            @vimeo($item->video_storage)
                 <div class="plyr__video-embed" id="player">
-                    @vimeoEmbed($movie->video_name)
+                    @vimeoEmbed($item->video_name)
                 </div>
             @endvimeo
 
-            @html5($movie->video_storage)
+            @html5($item->video_storage)
                 <video id="player" playsinline controls>
-                    @html5Source($movie->video_name, $movie->video_storage)
+                    @html5Source($item->video_name, $item->video_storage)
                 </video> 
             @endhtml5
 
-            @youtube($movie->video_storage)
+            @youtube($item->video_storage)
                 <div class="plyr__video-embed" id="player">
-                    @youtubeEmbed($movie->video_name);
+                    @youtubeEmbed($item->video_name);
                 </div>
             @endyoutube()
 
@@ -36,17 +36,17 @@
     <div class="row">
         <div class="col">
             <h1 class="ne-single-lesson-title pt-1">
-                {{$movie->title}}
-                <a href="{{route('trailerMovieShow', ['id' => $movie->id])}}" class="trailer"><i>{{__('Watch movie trailer')}}</i></a>
+                {{$item->title}}
+                <a href="{{route('trailerMovieShow', ['id' => $item->id])}}" class="trailer"><i>{{__('Watch movie trailer')}}</i></a>
             </h1>
-            <p class="ne-single-lesson-description">{{$movie->description}}</p>
+            <p class="ne-single-lesson-description">{{$item->description}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col">
             <span class="categories">{{__('Release date')}}: </span> 
-            <a class="ne-movie-details" href="{{route('releaseShow', ['year' => $movie->year])}}">{{$movie->year}}</a>    
+            <a class="ne-movie-details" href="{{route('releaseShow', ['year' => $item->year])}}">{{$item->year}}</a>    
         </div>
     </div>
 
@@ -80,7 +80,7 @@
         <div class="col">
             <span class="categories">{{__('Rating')}}: </span> 
             <span class="ne-movie-details"></span>
-            <a class="ne-movie-details" href="{{route('ratingShow', ['grade' => $movie->rating])}}">{{$movie->rating}}</a>    
+            <a class="ne-movie-details" href="{{route('ratingShow', ['grade' => $item->rating])}}">{{$item->rating}}</a>    
         </div>
     </div>
 </div>
@@ -88,6 +88,6 @@
 @endsection
 
 @section('script')
-    @scriptJsExternal('https://cdn.plyr.io/3.6.4/plyr.js')
-    @scriptJsLocal('player')
+    @scriptJs("https://cdn.plyr.io/3.6.4/plyr.js", external)
+    @scriptJs('player.js', local)
 @endsection
