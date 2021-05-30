@@ -24,7 +24,7 @@ Takes two arguments:
 ```
 
 ## @vimeoEmbed(videoName)
-Return the vimeo embedded video.
+Return the Vimeo embedded video.
 Takes one argument:
 - `videoName` ID of the video file that will become the source for the iframe component
 
@@ -35,7 +35,7 @@ Takes one argument:
 ```
 
 ## @youtubeEmbed(videoName)
-Return the vimeo embedded video.
+Return the YouTube embedded video.
 Takes one argument:
 - `videoName` ID of the video file that will become the source for the iframe component
 
