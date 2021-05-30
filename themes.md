@@ -23,3 +23,24 @@ Takes two arguments:
 </video>
 ```
 
+## @vimeoEmbed(videoName)
+Return the vimeo embedded video.
+Takes one argument:
+- `videoName` ID of the video file that will become the source for the iframe component
+
+```php
+<div class="plyr__video-embed" id="player">
+    @vimeoEmbed($item->video_name)
+</div>
+```
+
+## @youtubeEmbed(videoName)
+Return the vimeo embedded video.
+Takes one argument:
+- `videoName` ID of the video file that will become the source for the iframe component
+
+```php
+<div class="plyr__video-embed" id="player">
+    @youtubeEmbed($item->video_name);
+</div>
+```
