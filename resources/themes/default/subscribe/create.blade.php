@@ -21,7 +21,7 @@
                     <input class="StripeElement mb-3" style="width: 100%" name="card_holder_name" placeholder="Card holder name" required>
                     <label class="ne-label">Card details</label><br>
                     <div id="card-element"></div>
-                    <div id="card-errors" role="alert"></div>
+                    <div id="card-errors" role="alert" class="ne-label"></div>
 
                     <div class="form-group mt-3">
                         <button type="submit" class="btn ne-btn pay">

@@ -51,7 +51,7 @@
     "Watch movie trailer": "",
     "Latest movies": "",
     "Latest series": "",
-    "Thank you": "",
+    "Subscription result": "",
     "Thank you for subscribing": "",
     "Please enjoy your new subscription. Access the settings menu for more account details.": "",
     "Watch seasons trailer": "",
@@ -78,5 +78,7 @@
     "Already subscribed": "",
     "Update language": "",
     "Preferred language": "",
-    "Back to series": ""
+    "Back to series": "",
+    "Something went wrong": "",
+    "You are either already subscribed or something just went wrong. Please try again!": ""
 }

@@ -155,7 +155,7 @@ class CategoriesController extends Controller
         }
 
         return view(env('THEME') . '.categories.genre', [
-            'movies' => $results, 
+            'content' => $results, 
             'subscribed' => $subscribed,
             'genre' => $slug,
         ]);
@@ -231,7 +231,7 @@ class CategoriesController extends Controller
         }
 
         return view(env('THEME') . '.categories.release', [
-            'movies' => $results, 
+            'content' => $results, 
             'subscribed' => $subscribed,
             'year' => $year,
         ]);
@@ -307,7 +307,7 @@ class CategoriesController extends Controller
         }
 
         return view(env('THEME') . '.categories.rating', [
-            'movies' => $results, 
+            'content' => $results, 
             'subscribed' => $subscribed,
             'grade' => $grade,
         ]);

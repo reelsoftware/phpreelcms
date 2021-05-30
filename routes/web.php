@@ -161,8 +161,8 @@ Route::middleware(['setLanguage'])->group(function ()
             Route::get('/subscribe/cancel', [SubscriptionController::class, 'destroy'])
                 ->name('subscribeCancel');
 
-            Route::get('/subscribe/thank-you', [SubscriptionController::class, 'thankYou'])
-                ->name('thankYou');
+            Route::get('/subscribe/result', [SubscriptionController::class, 'result'])
+                ->name('subscriptionResult');
         });
 });
     //Admin dashboard routes

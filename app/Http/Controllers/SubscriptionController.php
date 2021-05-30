@@ -5,10 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SubscriptionPlan;
 use App\Models\Setting;
+use App\Helpers\PaymentProcessor\PaymentContext;
+use App\Helpers\PaymentProcessor\CardStrategy;
 use Auth;
 
 class SubscriptionController extends Controller
 {
+    public function __construct()
+    {
+        $this->paymentContext = new PaymentContext();   
+    } 
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -57,7 +66,7 @@ class SubscriptionController extends Controller
         $user = Auth::user();
 
         if(!$user->subscribed('default'))
-            return view('subscribe.create', [
+            return view(env('THEME') . '.subscribe.create', [
                 'intent' => $user->createSetupIntent(),
                 'name' => $request->plan,
                 'price' => $request->price,
@@ -80,32 +89,20 @@ class SubscriptionController extends Controller
             'plan' => 'required',
         ]);
 
-        $user = $request->user();
-        $paymentMethod = $request->input('payment_method');
+        $this->paymentContext->setPaymentStrategy(new CardStrategy($request));
 
-        //Check if the user is not already subscribed
-        if(!$user->subscribed('default'))
-        {
-            try 
-            {
-                $user->createOrGetStripeCustomer();
-                $user->updateDefaultPaymentMethod($paymentMethod);
-                $user->newSubscription('default', $request->plan)->create($request->paymentMethodId);        
-            } 
-            catch (Exception $exception) 
-            {
-                dd($exception->getMessage());
-            }
-        }
-        else
-            return redirect(route('home'));
+        $success = $this->paymentContext->execute();
 
-        return redirect(route('thankYou'));
+        return view(env('THEME') . '.subscribe.result', [
+            'success' => $success
+        ]);
     }
 
-    public function thankYou()
+    public function result()
     {
-        return view('subscribe.thankYou');
+        return view(env('THEME') . '.subscribe.result', [
+            'success' => $success
+        ]);
     }
 
     /**
