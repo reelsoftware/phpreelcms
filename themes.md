@@ -9,5 +9,17 @@ The theme is nothing more than a collection of folders and files that together w
 # Components
 As we previously stated, components are basic functions that help you link phpReel to your HTML5 template (stuff like embedding a video, linking CSS or js files, and so on). In this section we will discuss in detail everything about these components, what is their purpose, and how you can use them to create your themes.
 
-## html5Source
-`html5Source`
+!> **Keep in mind!** Components take arguments in order to work. These arguments are PHP variables accessible in the themes files. Every file inside the theme has access to the exact variables it needs to serve its purpose.
+
+## @html5Source(videoName, videoStorage)
+Return a source html tag for the html5 video component.
+Takes two arguments:
+- `videoName` Name of the video file that will become the source for the HTML5 video component
+- `videoStorage` Storage medium used to store the video on upload
+
+```php
+<video id="player" playsinline controls>
+	@html5Source($item->video_name, $item->video_storage)
+</video>
+```
+
