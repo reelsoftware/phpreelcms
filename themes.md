@@ -114,3 +114,31 @@ Takes two arguments:
 <!--External script example, javascript file is stored using a CDN-->
 @scriptJs("https://cdn.plyr.io/3.6.4/plyr.js", external)
 ```
+
+# Translation
+phpReel integrates a translation feature that lets you translate your application to any language you might want, using a simple UI right from your dashboard. This feature is great but considering you are developing a new theme that might contain different keywords that have to be translated you have to take one extra step and that is creating your default language file.
+
+To do that, go to your "lang" directory situated inside your theme folder, then navigate to "default" and open "default.json". This is the JSON document that contains all the words available for translation. It is structured as a key-value pair as shown in the example below. The left side will contain the word to be translated and the right side will always be left empty. 
+```json
+{
+	"Name": "",
+	"Password": "",
+	"Confirm password": "",
+	"Already registered?": "",
+	"Remember me": "",
+	"Forgot your password?": "",
+	"Log in": ""
+}
+```
+
+!> **Keep in mind!** Remember that the last key-value pair MUST NOT have a comma.
+When you are writing the words inside your theme you have to write them inside `{{__('your word or group of words go here')}}`. The words that you write there must match the words written in the JSON file.
+```html
+<!--This works because the words match the words from the JSON file-->
+<label>{{__('Forgot your password?')}}</label>
+
+<!--This will not work because the words don't match the words from the JSON file-->
+<label>{{__('Login')}}</label>
+```
+
+It is not mandatory to work with translations, if you don't need them then just skip updating the default.json file or writing the words inside the special tag. Your theme will continue to work just fine but will not have the feature of translations.
