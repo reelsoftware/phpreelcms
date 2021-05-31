@@ -132,6 +132,7 @@ To do that, go to your "lang" directory situated inside your theme folder, then 
 ```
 
 !> **Keep in mind!** Remember that the last key-value pair MUST NOT have a comma.
+
 When you are writing the words inside your theme you have to write them inside `{{__('your word or group of words go here')}}`. The words that you write there must match the words written in the JSON file.
 ```html
 <!--This works because the words match the words from the JSON file-->
