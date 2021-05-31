@@ -142,4 +142,4 @@ When you are writing the words inside your theme you have to write them inside `
 <label>{{__('Login')}}</label>
 ```
 
-It is not mandatory to work with translations, if you don't need them then just skip updating the default.json file or writing the words inside the special tag. Your theme will continue to work just fine but will not have the feature of translations.
+It is not mandatory to work with translations, if you don't need them then just skip updating the default.json file or writing the words inside the special tag. Your theme will continue to work just fine but will not have the translation feature.
