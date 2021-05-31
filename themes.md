@@ -44,3 +44,73 @@ Takes one argument:
     @youtubeEmbed($item->video_name);
 </div>
 ```
+
+## @vimeo(videoStorage)
+Similar to an if statement, it checks if the `videoStorage` is equal to "vimeo".
+Takes one argument:
+- `videoStorage` Storage medium used to store the video on upload
+
+```php
+@vimeo($item->video_storage)
+	<!--This shows up if the video_storage is vimeo-->
+	<div class="plyr__video-embed" id="player">
+	    @vimeoEmbed($item->video_name);
+	</div>
+@elsevimeo("youtube")
+	<p>This will show up if the storage is not vimeo but it is youtube</p>
+@else
+	<p>This will show up if the storage is different from both youtube or vimeo</p>
+@endvimeo()
+```
+
+
+## @youtube(videoStorage)
+Similar to an if statement, it checks if the `videoStorage` is equal to "youtube".
+Takes one argument:
+- `videoStorage` Storage medium used to store the video on upload
+
+```php
+@youtube($item->video_storage)
+	<!--This shows up if the video_storage is youtube-->
+	<div class="plyr__video-embed" id="player">
+	    @youtubeEmbed($item->video_name);
+	</div>
+@elseyoutube("s3")
+	<p>This will show up if the storage is not youtube but it is s3</p>
+@else
+	<p>This will show up if the storage is different from both youtube or s3</p>
+@endyoutube()
+```
+
+## @html5(videoStorage)
+Similar to an if statement, it checks if the `videoStorage` is equal to storage mediums that render to an HTML5 video player.
+Takes one argument:
+- `videoStorage` Storage medium used to store the video on upload
+
+```php
+@html5($item->video_storage)
+	<!--This shows up if the video_storage is either "s3" or "local" -->
+	<div class="plyr__video-embed" id="player">
+	    @youtubeEmbed($item->video_name);
+	</div>
+@html5("s3")
+	<p>This will show up if the storage is not local but it is s3</p>
+@else
+	<p>This will show up if the storage is different from both s3 or local</p>
+@endhtml5()
+```
+
+## @scriptJs(scriptName, scriptScope)
+Return a javascript file indetified by a name and a scope.
+
+Takes two arguments:
+- `scriptName` Name of the javascript file (E.g. jsFile.js).
+- `scriptScope` Scope is the location of the javascript file. It takes one of the two values: local (stored in the theme folder inside the js folder) or external (via url, cdn)
+
+```php
+<!--Local script example, player.js is stored in the js folder-->
+@scriptJs('player.js', local)
+
+<!--External script example, javascript file is stored using a CDN-->
+@scriptJs("https://cdn.plyr.io/3.6.4/plyr.js", external)
+```
