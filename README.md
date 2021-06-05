@@ -5,6 +5,10 @@ phpReel is a free, MIT open-source subscription-based video streaming service th
 [Frontend Demo](https://demo.phpreel.paulbalan.com/)
 [Dashboard Demo](https://demo.phpreel.paulbalan.com/dashboard)
 
+Login credentials for admin:
+Email: admin@paulbalan.com
+Password: 123456789
+
 ## Some of the features that make phpReel great.
 ### Dashboard
 You, as the administrator of the application, can access the dashboard that lets you modify the platform as you see fit.
