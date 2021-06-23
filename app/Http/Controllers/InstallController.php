@@ -11,10 +11,35 @@ use Illuminate\Auth\Events\Registered;
 use Jackiedo\DotenvEditor\Facades\DotenvEditor;
 use App\Models\SubscriptionType;
 use App\Http\Traits\MigrateDatabaseTrait;
+use App\Helpers\Install\EnvHandler;
 
 class InstallController extends Controller
 {
     use MigrateDatabaseTrait;
+
+    /**
+    * @var EnvHandler
+    */
+    private $envHandler;
+
+    public function __construct()
+    {
+        $this->envHandler = new EnvHandler();
+    }
+
+
+    public function config()
+    {
+        dd($this->envHandler->setEnvFields());
+
+        dd();
+        dd(file_get_contents(base_path('.env')));
+
+        dd(base_path('.env'));
+
+        return view('install.config');
+    }
+
 
     public function storeDatabase(Request $request)
     {

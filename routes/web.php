@@ -36,16 +36,6 @@ use App\Http\Controllers\TestController;
 |
 */
 
-//Asset routes
-Route::get('/asset/js/{scriptName}', [AssetController::class, 'javascript'])
-    ->name('jsAsset');
-
-Route::get('/asset/css/{styleName}', [AssetController::class, 'css'])
-    ->name('cssAsset');
-
-Route::get('/asset/image/{imageName}', [AssetController::class, 'image'])
-    ->name('imageAsset');
-
 Route::middleware(['install'])->group(function () 
 {
     Route::get('/install', [InstallController::class, 'index'])
@@ -54,6 +44,12 @@ Route::middleware(['install'])->group(function ()
     Route::get('/install/requirements', [InstallController::class, 'requirements'])
         ->name('installRequirements');
 
+    Route::get('/install/config', [InstallController::class, 'config'])
+        ->name('installConfig');
+
+
+
+        
     Route::get('/install/database', [InstallController::class, 'database'])
         ->name('installDatabase');
 
@@ -72,6 +68,16 @@ Route::middleware(['install'])->group(function ()
     Route::post('/install/payment', [InstallController::class, 'storePayment'])
         ->name('storePayment');
 });
+
+//Asset routes
+Route::get('/asset/js/{scriptName}', [AssetController::class, 'javascript'])
+    ->name('jsAsset');
+
+Route::get('/asset/css/{styleName}', [AssetController::class, 'css'])
+    ->name('cssAsset');
+
+Route::get('/asset/image/{imageName}', [AssetController::class, 'image'])
+    ->name('imageAsset');
 
 Route::middleware(['setLanguage'])->group(function () 
 {
