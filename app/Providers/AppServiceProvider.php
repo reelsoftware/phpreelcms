@@ -53,8 +53,5 @@ class AppServiceProvider extends ServiceProvider
                 ]
             );
         });
-
-        //Blade Directives for themes
-        
     }
 }

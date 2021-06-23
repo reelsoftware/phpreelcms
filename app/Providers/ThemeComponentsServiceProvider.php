@@ -85,7 +85,7 @@ class ThemeComponentsServiceProvider extends ServiceProvider
          * @param string $expression Storage medium used for the resource
          */
         Blade::if('html5', function ($expression) {
-            return (($expression === "html5") || ($expression === "s3"));
+            return (($expression === "local") || ($expression === "s3"));
         });
 
         /**
@@ -103,7 +103,7 @@ class ThemeComponentsServiceProvider extends ServiceProvider
          * Returns a script tag with the requested local or external script
          * 
          * @param string $scriptName Name of the script file 
-         * @param string $scriptScope Can be local (stored in the theme file) or external (via url, cdn)
+         * @param string $scriptScope Can be local (stored in the theme folder inside the js folder) or external (via url, cdn)
          * 
          */
         Blade::directive('scriptJs', function ($expression) {
@@ -127,7 +127,7 @@ class ThemeComponentsServiceProvider extends ServiceProvider
          * Returns a css file 
          * 
          * @param string $styleName Name of the script file 
-         * @param string $styleScope Can be local (stored in the theme file) or external (via url, cdn)
+         * @param string $styleScope Can be local (stored in the theme folder inside the js folder) or external (via url, cdn)
          */
         Blade::directive('styleCss', function ($expression) {
             //Get the variables from the expression

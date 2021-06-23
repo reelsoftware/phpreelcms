@@ -40,7 +40,7 @@
 
             <div class="card-body">
                 <h5 class="card-title ne-title">{{__('Subscription details')}}</h5>
-                @if($subscription != null)
+                @if($subscription != NULL)
                         @if($cancelAt == NULL)
                             <p class="ne-short-description">
                                 {{__('The next payment is schedule for')}} {{$currentPeriodEnd}}

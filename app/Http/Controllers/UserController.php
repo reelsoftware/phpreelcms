@@ -73,7 +73,7 @@ class UserController extends Controller
         $params['cancelAt'] = $cancelAt;
         $params['currentPeriodEnd'] = $currentPeriodEnd;
         
-        return view('user.index', $params);
+        return view(env('theme') . '.user.index', $params);
     }
 
     public function invoice(Request $request, $invoice)

@@ -25,8 +25,8 @@ class TrailerController extends Controller
         if($trailer == null)
             return abort(404);
 
-        return view('trailer.show', [
-            'trailer' => $trailer,
+        return view(env('theme') . '.trailer.show', [
+            'item' => $trailer,
         ]);
     }
 
@@ -45,8 +45,8 @@ class TrailerController extends Controller
         if($trailer == null)
             return abort(404);
 
-        return view('trailer.show', [
-            'trailer' => $trailer,
+        return view(env('theme') . '.trailer.show', [
+            'item' => $trailer,
         ]);
     }
 }

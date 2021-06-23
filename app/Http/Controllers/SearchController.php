@@ -116,7 +116,7 @@ class SearchController extends Controller
             $subscribed = false;
         }
 
-        return view('search.index', [
+        return view(env('theme') . '.search.index', [
             'results' => $results,
             'subscribed' => $subscribed,
             'query' => $query

@@ -23,6 +23,7 @@ use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\TranscodingController;
 use App\Http\Controllers\ThemesController;
 use App\Http\Controllers\AssetController;
+use App\Http\Controllers\TestController;
 
 /*
 |--------------------------------------------------------------------------

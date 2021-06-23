@@ -65,7 +65,7 @@
 
     <div class="row">
         <div class="col text-center">
-            {{ $results->links() }}
+            {{ $results->links(env('THEME') . '.pagination.simple-pagination') }}
         </div>
     </div>
 </div>

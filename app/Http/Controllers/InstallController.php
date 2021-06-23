@@ -58,17 +58,6 @@ class InstallController extends Controller
 
         event(new Registered($user));
 
-        //Update .env file
-        $file = DotenvEditor::setKeys([
-            'APP_NAME' => $request->appName,
-            'APP_URL' => url(''),
-            'APP_ENV' => 'production',
-            'APP_DEBUG' => 'false',
-            'STORAGE_DISK' => 'local',
-        ]);
-
-        DotenvEditor::save();
-
         //Make admin
         $admin = User::where('email', '=', $request->email)->first();
         $admin->roles = 'admin';
@@ -81,6 +70,17 @@ class InstallController extends Controller
         ];
 
         Setting::insert($settings);
+
+        //Update .env file
+        $file = DotenvEditor::setKeys([
+            'APP_NAME' => $request->appName,
+            'APP_URL' => url(''),
+            'APP_ENV' => 'production',
+            'APP_DEBUG' => 'false',
+            'STORAGE_DISK' => 'local',
+        ]);
+
+        DotenvEditor::save();
 
         return redirect(route('home'));
     }

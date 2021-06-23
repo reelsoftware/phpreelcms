@@ -44,7 +44,7 @@
 
     <div class="row">
         <div class="col text-center">
-            {{ $content->links() }}
+            {{ $content->links(env('THEME') . '.pagination.simple-pagination') }}
         </div>
     </div>
 </div>
