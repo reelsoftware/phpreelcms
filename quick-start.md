@@ -16,10 +16,13 @@ Here is a quick summary of what you will have to do:
 
 - Make sure you have previously installed on your computer: PHP, Composer, MySQL database, or other databases that work with Laravel, Laravel also provides an [instalation guide](https://laravel.com/docs/7.x/installation) which is fairly similar to what you will have to do here.
 - Clone your forked repository.
-- Get the contents of the `.env.example` file and save them to a `.env` file. After you save it make sure you configure your database inside the `.env` file.
+- Get the contents of the `.env.example` file and save them to a `.env` file. After you save it make sure you configure your database and Stripe settings inside the `.env` file.
 - Open the console, cd to the root of the project, and run the following commands.
 - `composer install`
 - `npm install`
 - `php artisan key:generate`
 - `php artisan migrate`
 - `php artisan serve`
+- Go to `yourdomain.com/install/dev` to seed the database. This replaces the installer by inserting mock data in the database. Once you open the link these are going to be your admin login details: 
+- Email `admin@paulbalan.com`
+- Password `123456789`
