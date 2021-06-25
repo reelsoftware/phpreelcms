@@ -30,14 +30,12 @@ class InstallController extends Controller
 
     public function config()
     {
-        dd($this->envHandler->setEnvFields());
-
-        dd();
-        dd(file_get_contents(base_path('.env')));
-
-        dd(base_path('.env'));
-
-        return view('install.config');
+        $this->envHandler->setEnvFields();
+        $envFields = $this->envHandler->getEnvFields();
+        
+        return view('install.config', [
+            'envFields' => $envFields,
+        ]);
     }
 
 

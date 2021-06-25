@@ -12,50 +12,36 @@
 </ul>
 
 <div class="container">
-
-    config
     <div class="row">
         <div class="col my-2">
             <form method="POST" action="{{route('storeDatabase')}}">
                 @csrf
-                <div class="form-group">
-                    <label for="hostname">Hostname</label>
-                    <input type="text" class="form-control" name="hostname">
-                    @error('hostname')
-                        <div class="alert alert-danger py-2 my-2">{{ $message }}</div>
-                    @enderror
-                </div>
+                <!--List env config fields-->
+                <div class="accordion" id="accordionExample">
+                    @foreach ($envFields as $section => $envField)
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#{{ str_replace(" ", "_", $section) }}" aria-expanded="true" aria-controls="collapseOne">
+                                    {{ $section }}
+                                </button>
+                            </h2>
 
-                <div class="form-group">
-                    <label for="port">Port</label>
-                    <input type="text" class="form-control" name="port">
-                    @error('port')
-                        <div class="alert alert-danger py-2 my-2">{{ $message }}</div>
-                    @enderror
-                </div>
+                            @foreach ($envField as $env)
+                                <div id="{{ str_replace(" ", "_", $section) }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <div class="form-group">
+                                            <label for="hostname">{{$env}}</label>
+                                            <input type="text" class="form-control" name="{{$env}}">
 
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" name="username">
-                    @error('username')
-                        <div class="alert alert-danger py-2 my-2">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" name="password">
-                    @error('password')
-                        <div class="alert alert-danger py-2 my-2">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="databaseName">Database name</label>
-                    <input type="text" class="form-control" name="databaseName">
-                    @error('databaseName')
-                        <div class="alert alert-danger py-2 my-2">{{ $message }}</div>
-                    @enderror
+                                            @error('{{$env}}')
+                                                <div class="alert alert-danger py-2 my-2">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endforeach
                 </div>
                 
                 <button type="submit" class="btn btn-primary">Next</button>

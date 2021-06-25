@@ -86,7 +86,10 @@ class EnvHandler
             //Add the last value from the env file
             $this->envFields[$assocArrayKey] = array_filter($assocArrayValue);
         }
-        
+    }
+
+    public function getEnvFields()
+    {
         return $this->envFields;
     }
 }
