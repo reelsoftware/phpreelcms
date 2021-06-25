@@ -30,7 +30,7 @@
                                 <div id="{{ str_replace(" ", "_", $section) }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <div class="form-group">
-                                            <label for="hostname">{{$env}}</label>
+                                            <label for="{{$env}}">{{ucfirst(strtolower(str_replace("_", " ", $env)))}}</label>
                                             <input type="text" class="form-control" name="{{$env}}">
 
                                             @error('{{$env}}')
