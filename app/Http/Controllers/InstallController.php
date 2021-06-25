@@ -119,6 +119,53 @@ class InstallController extends Controller
         return redirect(route('installUser'));
     }
 
+    /**
+     * NOTICE: This MUST NOT be used in production
+     * This route is used only for dev porpouses, it gives you basic seeding
+     */
+    public function dev()
+    {
+        //Create a mock Stripe product and save it to the database
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+        $product = $stripe->products->create([
+            'name' => 'default',
+        ]);
+
+        //Add subscription to the database
+        $subscriptionType = new SubscriptionType();
+        $subscriptionType->name = 'default';
+        $subscriptionType->product_id = $product['id'];
+        $subscriptionType->public = '1';
+        $subscriptionType->save();
+
+        //Create new admin user
+
+        $user = User::create([
+            'name' => "admin",
+            'email' => "admin@paulbalan.com",
+            'password' => Hash::make("123456789"),
+        ]);
+
+        Auth::login($user);
+
+        event(new Registered($user));
+
+        //Make admin
+        $admin = User::where('email', '=', "admin@paulbalan.com")->first();
+        $admin->roles = 'admin';
+        $admin->save();
+
+        //Add settings
+        $settings = [
+            ['setting' => 'default_subscription', 'value' => 'default'],
+            ['setting' => 'company_name', 'value' => 'name']
+        ];
+
+        Setting::insert($settings);   
+
+        return redirect(route('installUser'));
+    }
+
     public function user()
     {
         return view('install.user');
