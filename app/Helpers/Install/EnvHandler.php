@@ -1,6 +1,9 @@
 <?php
 namespace App\Helpers\Install; 
 
+use Illuminate\Http\Request;
+use Jackiedo\DotenvEditor\Facades\DotenvEditor;
+
 class EnvHandler
 {
     /**
@@ -18,11 +21,19 @@ class EnvHandler
     */
     private $excludedEnvFields;
 
+    /**
+    * @var array list of the validation rules to be applied to fields
+    */
+    private $validatedFields;
+
     public function __construct()
     {
         $this->envFile = base_path('.env');
         $this->envFields = [];
-        $this->excludedEnvFields = $this->setExcludedFields();
+        $this->validatedFields = [];
+
+        $this->excludedEnvFields = $this->getExcludedFields();
+        
     }
 
     /**
@@ -30,16 +41,20 @@ class EnvHandler
      *
      * @return array
      */
-    private function setExcludedFields()
+    private function getExcludedFields()
     {
         //List of all the section names to be excluded
-        return ["Theme", "Storage"];
+        return ["Theme", "Storage", "Core", "Logs", "Hidden"];
     }
 
+    /**
+     * Read the env file and save the fields and their category
+     *
+     */
     public function setEnvFields()
     {
         //Env fields as array
-        $envContent = explode("\r\n", file_get_contents($this->envFile));
+        $envContent = explode("\n", file_get_contents($this->envFile));
 
         $assocArrayValue = [];
         $assocArrayKey = null;
@@ -55,7 +70,8 @@ class EnvHandler
             //Check if the field defines a section inside the env
             if($separateFields[0] != "#SECTION")
             {
-                array_push($assocArrayValue, $separateFields[0]);
+                if(!$checkInArray)
+                    array_push($assocArrayValue, $separateFields[0]);
             }
             else
             {
@@ -75,9 +91,8 @@ class EnvHandler
                 $checkInArray = in_array($assocArrayKey, $this->excludedEnvFields);
 
                 //Empty the array if an excluded value is found
-                if($checkInArray)
+                if($checkInArray) 
                     $assocArrayValue = [];
-
             }
         }
 
@@ -88,8 +103,63 @@ class EnvHandler
         }
     }
 
+    /**
+     * Return the env fields
+     *
+     * @return array
+     */
     public function getEnvFields()
     {
         return $this->envFields;
+    }
+
+    /**
+     * Set the validation for the env fields
+     *
+     * @return array
+     */
+    public function setValidatedFields()
+    {
+        //Validate the config file
+        $envFields = $this->getEnvFields();
+        
+        foreach($this->envFields as $section => $envField)
+            foreach($envField as $env)
+                $this->validatedFields[$env] = 'required';
+
+        //Remove the validation for password
+        $this->validatedFields['DB_PASSWORD'] = "";
+    }
+
+    /**
+     * Return the rules for validation
+     *
+     * @return array
+     */
+    public function getValidatedFields()
+    {
+        return $this->validatedFields;
+    }
+
+    /**
+     * Writes the env fields to the env file
+     * @param Illuminate\Http\Request $request
+     */
+    public function storeEnvFields(Request $request)
+    {
+        //Use the validated fields as a base
+        $envFieldsValues = $this->validatedFields;
+
+        //Replace the values with the input       
+        foreach($envFieldsValues as $key => $value)
+        {
+            $envFieldsValues[$key] = $request[$key];
+        }
+            
+       
+        //Create the env fields with their values for the env editor
+        DotenvEditor::setKeys($envFieldsValues);
+
+        //DotenvEditor::save();
     }
 }

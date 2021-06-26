@@ -1,18 +1,26 @@
 .dot {
     height: 25px;
     width: 25px;
-    background-color: #bbb;
+    background-color: rgb(223, 223, 223);
     border-radius: 50%;
     display: inline-block;
     margin-right:5px;
 }
 
 .done {
-    background-color: rgb(59, 197, 31);
+    background-color: #2ae4d5;
 }
 
-.nav {
-    background-color:rgb(240, 240, 240);
+.nav-dots {
     padding-top:10px;
     padding-bottom:10px;
+}
+
+.btn-primary {
+    background-color: #2ae4d5;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #21aea2;
 }

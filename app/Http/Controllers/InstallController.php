@@ -8,7 +8,6 @@ use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
-use Jackiedo\DotenvEditor\Facades\DotenvEditor;
 use App\Models\SubscriptionType;
 use App\Http\Traits\MigrateDatabaseTrait;
 use App\Helpers\Install\EnvHandler;
@@ -18,24 +17,34 @@ class InstallController extends Controller
     use MigrateDatabaseTrait;
 
     /**
-    * @var EnvHandler
-    */
+     * Handler for the env file 
+     * @var EnvHandler
+     */
     private $envHandler;
 
     public function __construct()
     {
         $this->envHandler = new EnvHandler();
+        $this->envHandler->setEnvFields();
+        $this->envHandler->setValidatedFields();
     }
-
 
     public function config()
     {
-        $this->envHandler->setEnvFields();
         $envFields = $this->envHandler->getEnvFields();
-        
+
         return view('install.config', [
             'envFields' => $envFields,
         ]);
+    }
+
+    public function storeConfig(Request $request)
+    {    
+        //Validate the input env fields 
+        //$request->validate($this->envHandler->getValidatedFields());
+
+        //Save the env fields from the request
+        $this->envHandler->storeEnvFields($request);
     }
 
 

@@ -47,9 +47,9 @@ Route::middleware(['install'])->group(function ()
     Route::get('/install/config', [InstallController::class, 'config'])
         ->name('installConfig');
 
+    Route::post('/install/config', [InstallController::class, 'storeConfig'])
+        ->name('storeConfig');
 
-
-        
     Route::get('/install/database', [InstallController::class, 'database'])
         ->name('installDatabase');
 
