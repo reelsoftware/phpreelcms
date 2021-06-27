@@ -5,7 +5,6 @@
 @section('content')
 <ul class="nav justify-content-center">
     <li class="nav-item dot done"></li>
-    <li class="nav-item dot done"></li>
     <li class="nav-item dot"></li>
     <li class="nav-item dot"></li>
     <li class="nav-item dot"></li>
@@ -79,7 +78,7 @@
                 </div>
             </div>
 
-            <a href="{{route('installDatabase')}}" class="btn btn-primary">Next</a>
+            <a href="{{route('installConfig')}}" class="btn btn-primary">Next</a>
         </div>
     </div>
 </div>

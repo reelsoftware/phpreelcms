@@ -8,7 +8,6 @@
     <li class="nav-item dot done"></li>
     <li class="nav-item dot done"></li>
     <li class="nav-item dot"></li>
-    <li class="nav-item dot"></li>
 </ul>
 
 <div class="container">
@@ -31,7 +30,29 @@
                             @foreach ($envField as $env)
                                     <div class="mb-2 form-group">
                                         <label class="mb-1" for="{{$env}}">{{ucfirst(strtolower(str_replace("_", " ", $env)))}}</label>
-                                        <input type="text" class="form-control" name="{{$env}}">
+                                        
+                                        @if($env == "APP_ENV")
+                                            <select class="form-select" name="{{$env}}">
+                                                <option value="production">Production</option>
+                                                <option value="local">Local</option>
+                                                <option value="testing">Testing</option>
+                                            </select>
+
+                                            <div class="form-text">
+                                                Leave as production if you plan on publicly sharing your website
+                                            </div>
+                                        @elseif($env == "APP_DEBUG")
+                                            <select class="form-select" name="{{$env}}">
+                                                <option value="false">False</option>
+                                                <option value="true">True</option>
+                                            </select>
+
+                                            <div class="form-text">
+                                                Leave as false if you plan on publicly sharing your website
+                                            </div>
+                                        @else
+                                            <input type="text" class="form-control" name="{{$env}}" {{$env != 'DB_PASSWORD' ? 'required' : ''}}>
+                                        @endif
 
                                         @error($env)
                                             <div class="alert alert-danger py-2 my-2">

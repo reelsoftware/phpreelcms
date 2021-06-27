@@ -50,6 +50,14 @@ Route::middleware(['install'])->group(function ()
     Route::post('/install/config', [InstallController::class, 'storeConfig'])
         ->name('storeConfig');
 
+    Route::get('/install/seed', [InstallController::class, 'seed'])
+        ->name('installSeed');
+
+    Route::post('/install/seed', [InstallController::class, 'storeSeed'])
+        ->name('storeSeed');
+
+
+
     Route::get('/install/database', [InstallController::class, 'database'])
         ->name('installDatabase');
 

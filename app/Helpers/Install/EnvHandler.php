@@ -3,6 +3,8 @@ namespace App\Helpers\Install;
 
 use Illuminate\Http\Request;
 use Jackiedo\DotenvEditor\Facades\DotenvEditor;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\URL;
 
 class EnvHandler
 {
@@ -44,7 +46,7 @@ class EnvHandler
     private function getExcludedFields()
     {
         //List of all the section names to be excluded
-        return ["Theme", "Storage", "Core", "Logs", "Hidden"];
+        return ["Theme", "Storage", "Core", "Logs", "Hidden", "Memcached", "Redis", "AWS", "Pusher", "Mix Pusher", "HiddenDb", "Mail", "Stripe"];
     }
 
     /**
@@ -156,10 +158,12 @@ class EnvHandler
             $envFieldsValues[$key] = $request[$key];
         }
             
-       
+        $envFieldsValues['APP_KEY'] = 'base64:' . base64_encode(Str::random(32));
+        $envFieldsValues['APP_URL'] = URL::to('/');
+
         //Create the env fields with their values for the env editor
         DotenvEditor::setKeys($envFieldsValues);
 
-        //DotenvEditor::save();
+        DotenvEditor::save();
     }
 }
