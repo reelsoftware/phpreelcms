@@ -186,6 +186,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ThemeComponentsServiceProvider::class,
+        App\Providers\DashboardComponentsServiceProvider::class,
 
         ProtoneMedia\LaravelFFMpeg\Support\ServiceProvider::class,
 
