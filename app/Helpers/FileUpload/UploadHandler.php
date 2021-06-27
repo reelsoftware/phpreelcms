@@ -5,33 +5,11 @@ use Illuminate\Http\Request;
 
 class UploadHandler
 {
-    /**
-    * @var string location of the env file
-    */
-    private $envFile;
-
-    /**
-    * @var array list of the fields present in the env file
-    */
-    private $envFields;
-
-    /**
-    * @var array list of the fields excluded from the installer
-    */
-    private $excludedEnvFields;
-
-    /**
-    * @var array list of the validation rules to be applied to fields
-    */
-    private $validatedFields;
 
     public function __construct()
     {
-        $this->envFile = base_path('.env');
-        $this->envFields = [];
-        $this->validatedFields = [];
-
-        $this->excludedEnvFields = $this->getExcludedFields();
+       $this->storage = config('app.storage_disk');
+       $this->path = "";
         
     }
 

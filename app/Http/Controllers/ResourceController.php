@@ -12,6 +12,8 @@ use Aws\S3\S3Client;
 use Aws\Exception\AwsException;
 use Carbon\Carbon;
 use App\Http\Responses\S3FileStream as S3FileStream;
+use App\Helpers\FileUpload\StorageMethods\StorageContext;
+use App\Helpers\FileUpload\StorageMethods\LocalStrategy;
 
 
 class ResourceController extends Controller
@@ -139,61 +141,15 @@ class ResourceController extends Controller
     //Store resource
     public function storeAPI(Request $request)
     {
-        $storage = config('app.storage_disk');
-        $path = "";
+    	$storage = config('app.storage_disk');
+    	$storageContext = new StorageContext();
 
-        if($storage == 'local')
-            $path = base_path().'/storage';
-        else if($storage == 's3')
-        {
-            $client = new S3Client([
-                'region' => env('AWS_DEFAULT_REGION'),
-                'version' => '2006-03-01',
-                'credentials' => [
-                    'key' => env('AWS_ACCESS_KEY_ID'),
-                    'secret' => env('AWS_SECRET_ACCESS_KEY')
-                ],
-                // Set the S3 class to use objects.dreamhost.com/bucket
-                // instead of bucket.objects.dreamhost.com
-                'use_path_style_endpoint' => true
-            ]);
-            // Register the stream wrapper from an S3Client object
-            $client->registerStreamWrapper();
+    	if($storage == 'local')
+    		$storageContext->setStorageStrategy(new LocalStrategy());
 
-            $path = 's3://' . env('AWS_BUCKET');
-        }
-        //Name of the file
-        $fileName = '';
+    	$v = $storageContext->execute($request);
 
-        //If it's the first chunk then create a new file
-        if($request->videoId == '')
-            $fileName = $this->storeResource($request->file('file'));
-        else  
-        {
-            //If the file is already created then append to it the next chunk
-            
-            //Set file name from previous chunk
-            $fileName = $request->videoId;
-
-            //Set different file paths depending on the selected storage option
-            if($storage == 'local')
-                $filePath = '/app/resources/' . $fileName;
-            else
-                $filePath = '/resources/' . $fileName;
-
-            $path .= $filePath;
-
-            //Get the files chunks that were already saved
-            $savedChunks = fopen($path, 'a');
-            
-            //Update the saved chunks with the new chunk
-            fwrite($savedChunks, file_get_contents($request->file('file')));
-            fclose($savedChunks);
-        }
+    	return response()->json($v);
         
-        return response()->json([
-            'videoId' => $fileName,
-            'path' => $path
-        ]);
     }
 }
