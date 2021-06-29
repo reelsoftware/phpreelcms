@@ -17,7 +17,7 @@ class UploadComponents
                     <div class=\"card\">
                         <div class=\"card-header\">
                             <div class=\"custom-file\">
-                                <input type=\"file\" class=\"custom-file-input\" id=\"resourceFile\" onchange=\"updateFileLabel(\"resourceFile\")\">
+                                <input type=\"file\" class=\"custom-file-input\" id=\"resourceFile\" onchange=\"updateFileLabel(\'resourceFile\')\">
                                 <label class=\"custom-file-label\" for=\"resourceFile\">Upload files</label>
                             </div>
                         </div>

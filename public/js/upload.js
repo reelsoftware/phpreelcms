@@ -68,9 +68,7 @@ inputField.addEventListener('change', () => {
 		}
 
 		httpRequest.onload = function (event) {
-			console.log(httpRequest.response);
-
-
+			//console.log(httpRequest.response);
 			var resp = JSON.parse(httpRequest.response)
 			videoId = resp.videoId;
 			

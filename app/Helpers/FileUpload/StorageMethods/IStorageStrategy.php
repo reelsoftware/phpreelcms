@@ -4,9 +4,9 @@ use Illuminate\Http\Request;
 
 
 /**
- * IPaymentStrategy declares operations common to all payment strategies
+ * IStorageStrategy declares operations common to all uploading strategies
  *
- * This is used inside PaymentContext to call the appropriate strategy
+ * This is used inside StorageContext to call the appropriate strategy
  */
 interface IStorageStrategy
 {

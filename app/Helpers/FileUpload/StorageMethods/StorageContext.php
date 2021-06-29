@@ -4,7 +4,7 @@ namespace App\Helpers\FileUpload\StorageMethods;
 use Illuminate\Http\Request;
 
 /**
- * The Context defines the interface for payment
+ * The Context defines the interface for uploading
  */
 class StorageContext
 {
@@ -22,7 +22,7 @@ class StorageContext
     }
 
     /**
-     * Execute the payment and return true for successful payments and 
+     * Execute the upload strategy and return the video id and path
      */
     public function execute(Request $request)
     {

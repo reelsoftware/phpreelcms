@@ -1,15 +1,14 @@
 <?php
 namespace App\Helpers\FileUpload\StorageMethods;
 use App\Helpers\FileUpload\StorageMethods\IStorageStrategy;
+use App\Helpers\FileUpload\UploadHandler;
 use Aws\S3\S3Client;
 use Aws\Exception\AwsException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 /**
- * Concrete strategy class implement the payment method while following the base Strategy
- * interface. The interface makes them interchangeable in the PaymentContext.
+ * Concrete strategy class implement the uploading method while following the base Strategy
+ * interface. The interface makes them interchangeable in the StorageContext.
  */
 class LocalStrategy implements IStorageStrategy
 {
@@ -29,31 +28,17 @@ class LocalStrategy implements IStorageStrategy
         $this->fileName = '';
     }    
 
-    //Add a new resource 
-    //$file = $request->file('name');
-    private function storeResource($file)
-    {
-        $fileName = time() . Str::random(26) . '.' . $file->extension();
-
-        if(config('app.storage_disk') == 's3')
-            $filePath = 'resources/' . $fileName;
-        else 
-            $filePath = $fileName;
-            
-        Storage::disk(config('app.storage_disk'))->put($filePath, file_get_contents($file));
-
-        return $fileName;
-    }
-
     /**
      * Implementation of the upload method from the interface
+     * @param Request $request request object
+     * @return array assoc array of the videoId and path used by the ajax uploader script
      */
     public function upload(Request $request)
     {
         //If it's the first chunk then create a new file
         if($request->videoId == '')
         {
-            $this->fileName = $this->storeResource($request->file('file'));
+            $this->fileName = UploadHandler::storeResource($request->file('file'));
             $this->path .= '/app/resources/' . $this->fileName;
         }
         else  

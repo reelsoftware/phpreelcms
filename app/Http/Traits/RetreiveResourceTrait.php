@@ -9,7 +9,7 @@ use App\Models\Video;
 
 trait RetreiveResourceTrait 
 {
-        /**
+    /**
      * @var \League\Flysystem\AwsS3v3\AwsS3Adapter
      */
     private $adapter;
@@ -80,7 +80,9 @@ trait RetreiveResourceTrait
     public function setter(string $filePath, string $adapter = 's3', ?string $humanName = null)
     {
         $this->filePath    = $filePath;
+        //Name of the storage medium(local, s3)
         $this->adapterName = $adapter;
+        //Get the disk based on the selected storage
         $this->disk        = Storage::disk($this->adapterName);
         $this->adapter     = $this->disk->getAdapter();
         $this->humanName   = $humanName;

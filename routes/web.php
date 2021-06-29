@@ -55,26 +55,6 @@ Route::middleware(['install'])->group(function ()
 
     Route::post('/install/seed', [InstallController::class, 'storeSeed'])
         ->name('storeSeed');
-
-
-
-    Route::get('/install/database', [InstallController::class, 'database'])
-        ->name('installDatabase');
-
-    Route::post('/install/database', [InstallController::class, 'storeDatabase'])
-        ->name('storeDatabase');
-
-    Route::get('/install/user', [InstallController::class, 'user'])
-        ->name('installUser');
-
-    Route::post('/install/user', [InstallController::class, 'storeUser'])
-        ->name('storeUser');
-
-    Route::get('/install/payment', [InstallController::class, 'payment'])
-        ->name('installPayment');
-
-    Route::post('/install/payment', [InstallController::class, 'storePayment'])
-        ->name('storePayment');
 });
 
 //Asset routes
