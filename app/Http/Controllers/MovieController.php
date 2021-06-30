@@ -9,6 +9,7 @@ use App\Models\Video;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Traits\StoreResourceTrait;
+use App\Helpers\Content\MovieHelper; 
 use Auth;
 
 class MovieController extends Controller
@@ -87,70 +88,9 @@ class MovieController extends Controller
      */
     public function store(Request $request)
     {
-        $validationArray = [
-            'title' => 'required|max:255',
-            'description' => 'required|max:500',
-            'year' => 'required',
-            'rating' => 'required|max:25',
-            'length' => 'required',
-            'cast' => 'required|max:500',
-            'genre' => 'required|max:500',
-            'thumbnail' => 'required|max:45',
-            'public' => 'required|boolean',
-        ];
-        
-        //Platform for video 
-        if($request->platformVideo == 'html5')
-            $validationArray['video'] = 'required|max:45';
-        else
-            $validationArray['videoId'] = 'required|max:45';
+        MovieHelper::validationArrayStore($request);
 
-        //Platform for trailer 
-        if($request->platformTrailer == 'html5')
-            $validationArray['trailer'] = 'required|max:45';
-        else
-            $validationArray['trailerId'] = 'required|max:45';
-
-        $validated = $request->validate($validationArray);
-
-        $seconds = $this->timeToSeconds($request->length);
-
-        $movie = new Movie();
-        $movie->title = $request->title;
-        $movie->description = $request->description;
-        $movie->year = $request->year;
-        $movie->rating = $request->rating;
-        $movie->length = $seconds;
-        $movie->cast = $request->cast;
-        $movie->genre = $request->genre;
-        $movie->public = $request->public;
-
-        //Link the thumbnail from images table to movies table
-        $movie->thumbnail = $this->storeImage($request->thumbnail);
-
-        //Store video to the database and file
-        if($request->platformVideo == 'html5')
-        {
-            //Link the video from videos table to movies table
-            $movie->video = $this->storeVideo($request->video);
-        }
-        else
-        {
-            $movie->video = $this->storeVideoExternal($request->videoId, $request->platformVideo);
-        }
-
-        //Store trailer to the database and file
-        if($request->platformTrailer == 'html5')
-        {
-            //Link the video from videos table to movies table
-            $movie->trailer = $this->storeVideo($request->trailer, 0);
-        }
-        else
-        {
-            $movie->trailer = $this->storeVideoExternal($request->trailerId, $request->platformTrailer);
-        }
-
-        $movie->save();
+        MovieHelper::store($request);
 
         return redirect()->route('movieDashboard');
     }

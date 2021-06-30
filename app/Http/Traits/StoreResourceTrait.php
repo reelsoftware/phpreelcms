@@ -99,48 +99,4 @@ trait StoreResourceTrait {
         $image->save();
     }
 
-    //Store a video resource
-    //Returns the id of the stored video
-    //$fileName = video name
-    //$premium = by default every video is saved as premium (0=non premium, 1=premium)
-    protected function storeVideo($fileName, $premium=1)
-    {
-        //Store video
-        $video = new Video();
-        $video->name = $fileName;
-        $video->storage = config('app.storage_disk');
-        $video->premium = $premium;
-
-        $video->save();
-
-        return $video->id;
-    }
-
-    //Store a image resource
-    //Returns the id of the stored image
-    //$fileName = image name
-    protected function storeImage($fileName)
-    {
-        $image = new Image();
-        $image->name = $fileName;
-        $image->storage = config('app.storage_disk');
-        $image->save();
-
-        return $image->id;
-    }
-
-    //Store an external video resource
-    //Returns the id of the stored video
-    //$videoId = video id
-    //$storage = used storage medium
-    protected function storeVideoExternal($videoId, $storage)
-    {
-        //Store video
-        $video = new Video();
-        $video->name = $videoId;
-        $video->storage = $storage;
-        $video->save();
-
-        return $video->id;
-    }
 }
