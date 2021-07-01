@@ -10,6 +10,7 @@ use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Traits\StoreResourceTrait;
 use App\Helpers\Content\MovieHelper; 
+use App\Helpers\Content\ContentManager; 
 use Auth;
 
 class MovieController extends Controller
@@ -88,6 +89,12 @@ class MovieController extends Controller
      */
     public function store(Request $request)
     {
+        $manager = new ContentManager($request);
+        dd($manager->getFieldNames());
+
+
+        dd(123);
+
         MovieHelper::validationArrayStore($request);
 
         MovieHelper::store($request);

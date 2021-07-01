@@ -48,24 +48,6 @@ class ResourceHandler
     }
 
     /**
-     * Add a external video resource (YouTube, Vimeo) to the video database
-     *
-     * @param string $videoId id of the external file
-     * @param string $storage storage medium of the external file (youtube, vimeo)
-     * 
-     * @return int id of the new row from the video table
-     */
-    public static function addVideoExternal($videoId, $storage)
-    {
-        $video = new Video();
-        $video->name = $videoId;
-        $video->storage = $storage;
-        $video->save();
-
-        return $video->id;
-    }
-
-    /**
      * Add a video resource to the video database
      *
      * @param string $fileName name of the
@@ -74,11 +56,11 @@ class ResourceHandler
      * 
      * @return int id of the new row from the video table
      */
-    public static function addVideo($fileName, $premium=1)
+    public static function addVideo($fileName, $storage, $premium = 1)
     {
         $video = new Video();
         $video->name = $fileName;
-        $video->storage = config('app.storage_disk');
+        $video->storage = $storage;
         $video->premium = $premium;
 
         $video->save();

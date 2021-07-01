@@ -9,7 +9,7 @@ class ContentManager
     /**
     * @var array names of the fields added by the user
     */
-    private $fieldArray;
+    private $fieldNames;
 
     /**
     * @var array assoc array of the fields submited by the user 
@@ -23,32 +23,35 @@ class ContentManager
      */
     public function __construct(Request $request)
     {
-        $this->fieldArray = $this->getRequestFields();
-        
+        $this->fieldNames = [];
+        $this->fieldValues = [];
+        $this->setRequestFields($request);  
+    }
+
+    public function getFieldNames()
+    {
+        return $this->fieldNames;
+    }
+
+    public function getfieldValues()
+    {
+        return $this->fieldValues;
     }
 
     /**
      * Get the name of the fields added by the user
-     *
-     * @param Illuminate\Http\Request $request
-     * 
-     * @return array 
      */
-    public function getRequestFields(Request $request)
+    private function setRequestFields(Request $request)
     {   
-        $fieldArray = [];
-
         foreach ($request->except('_token') as $field => $value)
         {
             //Check to see if the request has a value assigned to it
             if($value != '')
             {
-                array_push($fieldArray, $field);
+                array_push($this->fieldNames, $field);
                 $this->fieldValues[$field] = $value;
             }
         }
-
-        return $fieldArray;
     }
 
     /**
@@ -84,16 +87,14 @@ class ContentManager
 
     /**
      * Get validation array based on the request fields
-     *
-     * @param Illuminate\Http\Request $request
      * 
      * @return array validation array used to validate the request
      */
-    public static function getValidationArray(Request $request))
+    public function getValidationArray()
     {   
         $validationArray = [];
 
-        foreach ($this->fieldArray as $field)
+        foreach ($this->fieldNames as $field)
             $validationArray[$field] = $this->getValidationData($field);
 
         return $validationArray; 
@@ -106,7 +107,7 @@ class ContentManager
      * 
      * @return array validation array used to validate the request
      */
-    public static function storeContent(Model $content)
+    public function storeContent(Model $content)
     {
         foreach ($this->fieldValues as $field => $value)
         {

@@ -126,7 +126,7 @@
                                 <label for="platformVideo">Select video platform</label><br>
             
                                 <select name="platformVideo" class="custom-select" onchange="switchVideoOption('platformVideo', 'videoFields')" id="platformVideo">
-                                    <option value="html5" @if (old('platformVideo') == "html5") selected @endif>HTML5</option>
+                                    <option value="{{config('app.storage_disk')}}" @if (old('platformVideo') == config('app.storage_disk')) selected @endif>HTML5</option>
                                     <option value="vimeo" @if (old('platformVideo') == "vimeo") selected @endif>Vimeo</option>
                                     <option value="youtube" @if (old('platformVideo') == "youtube") selected @endif>YouTube</option>
                                 </select>
@@ -165,7 +165,7 @@
                                 <label for="platformTrailer">Select trailer platform</label><br>
             
                                 <select name="platformTrailer" class="custom-select" onchange="switchVideoOption('platformTrailer', 'trailerFields')" id="platformTrailer">
-                                    <option value="html5" @if (old('platformTrailer') == "html5") selected @endif>HTML5</option>
+                                    <option value="{{config('app.storage_disk')}}" @if (old('platformTrailer') == config('app.storage_disk')) selected @endif>HTML5</option>
                                     <option value="vimeo" @if (old('platformTrailer') == "vimeo") selected @endif>Vimeo</option>
                                     <option value="youtube" @if (old('platformTrailer') == "youtube") selected @endif>YouTube</option>
                                 </select>

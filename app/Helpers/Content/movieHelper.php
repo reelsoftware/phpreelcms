@@ -66,26 +66,8 @@ class MovieHelper
 
         //Link the thumbnail from images table to movies table
         $movie->thumbnail = ResourceHandler::storeImage($request->thumbnail);
-
-        //Store video to the database and file
-        if($request->platformVideo == 'html5')
-        {
-            //Link the video from videos table to movies table
-            $movie->video = ResourceHandler::addVideo($request->video);
-        }
-        else
-            $movie->video = ResourceHandler::addVideoExternal($request->videoId, $request->platformVideo);
-
-        //Store trailer to the database and file
-        if($request->platformTrailer == 'html5')
-        {
-            //Link the video from videos table to movies table
-            $movie->trailer = ResourceHandler::addVideo($request->trailer, 0);
-        }
-        else
-        {
-            $movie->trailer = ResourceHandler::addVideoExternal($request->trailerId, $request->platformTrailer);
-        }
+        $movie->video = ResourceHandler::addVideo($request->video, $request->platformVideo);
+        $movie->trailer = ResourceHandler::addVideo($request->trailer, $request->platformTrailer, 0);
 
         $movie->save();
     }
