@@ -52,13 +52,13 @@ class MovieHelper
      */
     public static function store(Request $request)
     {
-        $seconds = $this->timeToSeconds($request->length);
 
         $movie = new Movie();
         $movie->title = $request->title;
         $movie->description = $request->description;
         $movie->year = $request->year;
         $movie->rating = $request->rating;
+        $seconds = $this->timeToSeconds($request->length);
         $movie->length = $seconds;
         $movie->cast = $request->cast;
         $movie->genre = $request->genre;
