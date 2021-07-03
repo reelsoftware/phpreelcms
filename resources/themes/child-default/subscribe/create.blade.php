@@ -13,24 +13,17 @@
 
             <form method="POST" action="{{ route('subscribeStore') }}" class="card-form mt-3 mb-3">
                 @csrf
-                <input type="hidden" name="payment_method" class="payment-method">
-                <input type="hidden" value="{{$name}}" name="plan">
-
-                <div class="col-12">
-                    <label class="ne-label">Name</label><br>
-                    <input class="StripeElement mb-3" style="width: 100%" name="card_holder_name" placeholder="Card holder name" required>
-                    <label class="ne-label">Card details</label><br>
-
+                @cardInfo($name)
+        
+                <label class="ne-label">Name</label><br>
+                @cardName
                     
-                    <div id="card-element"></div>
-                    <div id="card-errors" role="alert" class="ne-label"></div>
+                <label class="ne-label">Card details</label><br>
+                @card
+                @cardError
 
-                    <div class="form-group mt-3">
-                        <button type="submit" class="btn ne-btn pay">
-                            Subscribe for {{$price/100}}{{$price%100 ? '.' . $price%100 : ''}} {{$currency}}
-                        </button>
-                    </div>
-                </div>
+                @cardSubmit("Subscribe")
+
             </form>
         </div>
     </div>
@@ -56,12 +49,32 @@
         invalid: {
             color: '#fa755a',
             iconColor: '#fa755a'
-        }
+        },
+        stripeElement: {
+            boxSizing : 'border-box',
+            color: '#32325d',
+            height: '40px',
+            padding: '10px 12px',
+            border: '0px solid transparent',
+            borderRadius: '4px',
+            backgroundColor: 'white',
+            boxShadow: '0 1px 3px 0 #e6ebf1',
+            webkitTransform : 'box-shadow 150ms ease',
+            transition: 'box-shadow 150ms ease',
+            width: '100%',
+            marginBottom: '10px'
+        },
     }
+   
+    $('#cardName').css(style.stripeElement);
 
     let card = elements.create('card', {style: style})
 
-    card.mount('#card-element')
+    $('#cardName').focus(function() {
+        $('#cardName').css('border','0px solid transparent');
+    });
+
+    card.mount('#card')
     let paymentMethod = null
 
     $('.card-form').on('submit', function (e) {
@@ -74,12 +87,12 @@
             {
                 payment_method: {
                     card: card,
-                    billing_details: {name: $('.card_holder_name').val()}
+                    billing_details: {name: $('.cardHolderName').val()}
                 }
             }
         ).then(function (result) {
             if (result.error) {
-                $('#card-errors').text(result.error.message)
+                $('#cardError').text(result.error.message)
                 $('button.pay').removeAttr('disabled')
             } else {
                 paymentMethod = result.setupIntent.payment_method

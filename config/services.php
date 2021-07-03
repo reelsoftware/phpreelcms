@@ -30,4 +30,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'stripe' => [
+        'model' => App\User::class,
+        'key' => config('app.stripe_key'),
+        'secret' => config('app.stripe_secret'),
+    ],
 ];

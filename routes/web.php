@@ -245,22 +245,26 @@ Route::middleware(['setLanguage'])->group(function ()
         Route::post('dashboard/episode/order/{id}', [EpisodeController::class, 'episodesOrderUpdate'])
             ->name('episodesOrderUpdate');
 
-        //Subscription plans   
-        Route::get('dashboard/subscription/plan', [SubscriptionPlansController::class, 'index'])
-            ->name('subscriptionPlan');
+        Route::middleware(['stripe'])->group(function () 
+        {
+            //Subscription plans   
+            Route::get('dashboard/subscription/plan', [SubscriptionPlansController::class, 'index'])
+                ->name('subscriptionPlan');
 
-        Route::get('dashboard/subscription/plan/create', [SubscriptionPlansController::class, 'create'])
-            ->name('subscriptionPlanCreate');
+            Route::get('dashboard/subscription/plan/create', [SubscriptionPlansController::class, 'create'])
+                ->name('subscriptionPlanCreate');
 
-        Route::post('dashboard/subscription/plan/store', [SubscriptionPlansController::class, 'store'])
-            ->name('subscriptionPlanStore');
+            Route::post('dashboard/subscription/plan/store', [SubscriptionPlansController::class, 'store'])
+                ->name('subscriptionPlanStore');
+                       
+            Route::get('dashboard/subscription/plan/edit/{id}', [SubscriptionPlansController::class, 'edit'])
+                ->name('subscriptionPlanEdit');
 
-        
-        Route::get('dashboard/subscription/plan/edit/{id}', [SubscriptionPlansController::class, 'edit'])
-            ->name('subscriptionPlanEdit');
+            Route::post('dashboard/subscription/plan/update/{id}', [SubscriptionPlansController::class, 'update'])
+                ->name('subscriptionPlanUpdate');
+        });
 
-        Route::post('dashboard/subscription/plan/update/{id}', [SubscriptionPlansController::class, 'update'])
-            ->name('subscriptionPlanUpdate');
+        //Settings
 
         Route::get('dashboard/settings/storage', [SettingsController::class, 'storage'])
             ->name('settingsStorage');
@@ -285,6 +289,12 @@ Route::middleware(['setLanguage'])->group(function ()
 
         Route::post('dashboard/settings/email', [SettingsController::class, 'emailUpdate'])
             ->name('emailUpdate');
+
+        Route::get('dashboard/settings/stripe', [SettingsController::class, 'stripe'])
+            ->name('settingsStripe');
+
+        Route::post('dashboard/settings/stripe', [SettingsController::class, 'stripeUpdate'])
+            ->name('stripeUpdate');
 
         //Translation
         Route::get('dashboard/translation', [TranslationController::class, 'index'])

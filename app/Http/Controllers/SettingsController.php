@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Setting;
 use Jackiedo\DotenvEditor\Facades\DotenvEditor;
 use App\Http\Traits\MigrateDatabaseTrait;
+use App\Models\SubscriptionType;
 
 class SettingsController extends Controller
 {
@@ -179,5 +180,63 @@ class SettingsController extends Controller
         DotenvEditor::save();  
 
         return redirect(route('settingsEmail'));
+    }
+
+    public function stripe()
+    {
+        return view('settings.stripe');
+    }
+
+    public function stripeUpdate(Request $request)
+    {
+        //Validation only applies if there are no values inside the env file
+        $validationArray = [];
+
+        if(config('app.stripe_key') == null)
+            $validationArray['stripeKey'] = 'required';
+
+        if(config('app.stripe_secret') == null)
+            $validationArray['stripeSecret'] = 'required';
+
+        if(config('app.stripe_webhook_secret') == null)
+            $validationArray['stripeWebhookSecret'] = 'required';
+
+        if(count($validationArray))    
+            $request->validate($validationArray);
+
+        //Store or update the values in the env file
+        $stripe = [];
+
+        if($request->stripeKey != null)
+            $stripe['STRIPE_KEY'] = $request->stripeKey;
+
+        if($request->stripeSecret != null)
+            $stripe['STRIPE_SECRET'] = $request->stripeSecret;
+
+        if($request->stripeWebhookSecret != null)
+            $stripe['STRIPE_WEBHOOK_SECRET'] = $request->stripeWebhookSecret;
+
+        DotenvEditor::setKeys($stripe);
+        DotenvEditor::save();
+
+        //Seed the database if it's empty
+        if(empty(SubscriptionType::count()))
+        {
+            //Create subscription
+            //Add data to Stripe
+            $stripe = new \Stripe\StripeClient(config('app.stripe_secret'));
+            $product = $stripe->products->create([
+                'name' => 'default',
+            ]);
+
+            //Add subscription to the database
+            $subscriptionType = new SubscriptionType();
+            $subscriptionType->name = 'default';
+            $subscriptionType->product_id = $product['id'];
+            $subscriptionType->public = '1';
+            $subscriptionType->save();
+        }
+
+        return redirect(route('subscriptionPlanCreate'));
     }
 }

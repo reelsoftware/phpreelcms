@@ -69,6 +69,10 @@ return [
 
     'theme' => env('THEME', 'default'),
 
+    'stripe_key' => env('STRIPE_KEY', null),
+    'stripe_secret' => env('STRIPE_SECRET', null),
+    'stripe_webhook_secret' => env('STRIPE_WEBHOOK_SECRET', null),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

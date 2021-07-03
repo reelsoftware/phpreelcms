@@ -7,6 +7,7 @@ use App\Models\SubscriptionPlan;
 use App\Models\Setting;
 use App\Helpers\PaymentProcessor\PaymentContext;
 use App\Helpers\PaymentProcessor\CardStrategy;
+use App\Helpers\Theme\Theme;
 use Auth;
 
 class SubscriptionController extends Controller
@@ -66,7 +67,7 @@ class SubscriptionController extends Controller
         $user = Auth::user();
 
         if(!$user->subscribed('default'))
-            return view(env('THEME') . '.subscribe.create', [
+            return Theme::view('subscribe.create', [
                 'intent' => $user->createSetupIntent(),
                 'name' => $request->plan,
                 'price' => $request->price,

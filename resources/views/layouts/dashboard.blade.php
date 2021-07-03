@@ -263,6 +263,13 @@
 				</li>
 
 				<li class="nav-item">
+					<a class="nav-link" href="{{ route('settingsStripe') }}">
+						<i class="ni ni-cart"></i>
+						<span class="nav-link-text">Stripe</span>
+					</a>
+				</li>
+
+				<li class="nav-item">
 					<a class="nav-link" href="{{ route('settingsApp') }}">
 						<i class="ni ni-settings-gear-65"></i>
 						<span class="nav-link-text">App</span>
