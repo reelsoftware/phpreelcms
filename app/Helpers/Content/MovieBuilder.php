@@ -3,36 +3,110 @@ namespace App\Helpers\Content;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use App\Helpers\Content\IContentBuilder; 
+use App\Helpers\Content\ValidationManager; 
+use App\Helpers\Resource\ResourceHandler;
+use App\Models\Movie;
+use App\Helpers\Helper;
 
-class ContentManager implements ContentBuilder
+class MovieBuilder implements IContentBuilder
 {
     /**
     * @var array names of the fields added by the user
     */
     protected $request;
 
-    public function setRequest($request): ContentBuilder
+    /**
+     * Set the request
+     *
+     * @param Request $request 
+     * 
+     * @return ContentBuilder
+     */
+    public function setRequest(Request $request): IContentBuilder
     {
         $this->request = $request;
+
+        return $this;
     }
 
-    public function validate(): ContentBuilder
+    /**
+     * Validate the request data from the form
+     * 
+     * @return ContentBuilder
+     */
+    public function validate(): IContentBuilder
+    {     
+        $validationArray = ValidationManager::getValidationArray($this->request);
+        $this->request->validate($validationArray);
+        return $this;
+    }
+
+    /**
+     * Store the movie
+     * 
+     * @return ContentBuilder
+     */
+    public function store(): IContentBuilder
     {
         $movie = new Movie();
         $movie->title = $this->request->title;
         $movie->description = $this->request->description;
         $movie->year = $this->request->year;
         $movie->rating = $this->request->rating;
-        $seconds = $this->timeToSeconds($this->request->length);
+        $seconds = Helper::timeToSeconds($this->request->length);
         $movie->length = $seconds;
         $movie->cast = $this->request->cast;
         $movie->genre = $this->request->genre;
         $movie->public = $this->request->public;
 
         //Link the thumbnail from images table to movies table
-        $movie->thumbnail = ResourceHandler::storeImage($this->request->thumbnail);
+        $movie->thumbnail = ResourceHandler::addImage($this->request->thumbnail);
         $movie->video = ResourceHandler::addVideo($this->request->video, $this->request->platformVideo);
         $movie->trailer = ResourceHandler::addVideo($this->request->trailer, $this->request->platformTrailer, 0);
+
+        $movie->save();
+
+        return $this;
+    }
+
+    /**
+     * Update the movie
+     * 
+     * @param int $id id of the movie to be updated
+     * 
+     * @return ContentBuilder
+     */
+    public function update($id): IContentBuilder
+    {
+        $movie = Movie::find($id);
+        $movie->title = $this->request->title;
+        $movie->description = $this->request->description;
+        $movie->year = $this->request->year;
+        $movie->rating = $this->request->rating;
+        $seconds = Helper::timeToSeconds($this->request->length);
+        $movie->length = $seconds;
+        $movie->cast = $this->request->cast;
+        $movie->genre = $this->request->genre;
+        $movie->public = $this->request->public;
+        
+        //Update thumbnail
+        if($this->request->thumbnail != null)
+            ResourceHandler::updateImage($this->request->thumbnail, $movie->thumbnail, config('app.storage_disk'));
+
+        //Update video
+        if($this->request->video != null)
+            ResourceHandler::updateVideo($this->request->video, $movie->video, $this->request->platformVideo);
+
+        if($this->request->videoId != null)
+            ResourceHandler::updateVideo($this->request->videoId, $movie->video, $this->request->platformVideo);
+
+        //Update trailer
+        if($this->request->trailer != null)
+            ResourceHandler::updateVideo($this->request->trailer, $movie->trailer, $this->request->platformTrailer, 0);
+
+        if($this->request->trailerId != null)
+            ResourceHandler::updateVideo($this->request->trailerId, $movie->trailer, $this->request->platformTrailer);
 
         $movie->save();
 

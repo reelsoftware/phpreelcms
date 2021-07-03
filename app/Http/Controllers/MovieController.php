@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Movie;
 use App\Models\Image;
 use App\Models\Video;
 use Illuminate\Http\File;
@@ -11,6 +10,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Traits\StoreResourceTrait;
 use App\Helpers\Content\MovieHelper; 
 use App\Helpers\Content\ContentManager; 
+use App\Models\Movie;
+use App\Helpers\Content\MovieBuilder; 
 use Auth;
 
 class MovieController extends Controller
@@ -40,16 +41,7 @@ class MovieController extends Controller
             )
             ->simplePaginate(9);
 
-        $user = Auth::user();
-        if($user != null)
-        {
-            $defaultSubscription = 'default';
-            $subscribed = $user->subscribed($defaultSubscription);
-        }
-        else
-        {
-            $subscribed = false;
-        }
+        $subscribed = UserHandler::checkSubscription();
 
         return view(env('THEME') . '.movie.index', [
             'content' => $movies, 
@@ -89,23 +81,10 @@ class MovieController extends Controller
      */
     public function store(Request $request)
     {
-        $manager = new ContentManager($request);
-        dd($manager->getFieldNames());
+        $builder = new MovieBuilder();
 
-
-        dd(123);
-
-        MovieHelper::validationArrayStore($request);
-
-        MovieHelper::store($request);
-
+        $builder->setRequest($request)->validate()->store();
         return redirect()->route('movieDashboard');
-    }
-
-    private function timeToSeconds(string $time): int
-    {
-        $d = explode(':', $time);
-        return (intval($d[0]) * 3600) + (intval($d[1]) * 60);
     }
 
     /**
@@ -131,8 +110,6 @@ class MovieController extends Controller
                 'videos.storage as video_storage',
             )
             ->first();
-
-        $user = Auth::user();
 
         if($movie == null)
             return abort(404);
@@ -184,98 +161,9 @@ class MovieController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validationArray = [
-            'title' => 'required|max:255',
-            'description' => 'required|max:500',
-            'year' => 'required',
-            'rating' => 'required|max:25',
-            'length' => 'required',
-            'cast' => 'required|max:500',
-            'genre' => 'required|max:500',
-            'public' => 'required|boolean',
-        ];
+        $builder = new MovieBuilder();
 
-        //Check for updated thumbnail
-        if($request->thumbnail != null)
-            $validationArray['thumbnail'] = 'required|max:45';
-
-        //Check for updated video
-        if($request->video != null)  
-        {
-            //Platform for video 
-            if($request->platformVideo == 'html5')
-                $validationArray['video'] = 'required|max:45';
-            else
-                $validationArray['videoId'] = 'required|max:45';
-        }  
-        
-        //Check for updated trailer
-        if($request->trailer != null)  
-        {
-            //Platform for trailer 
-            if($request->platformTrailer == 'html5')
-                $validationArray['trailer'] = 'required|max:45';
-            else
-                $validationArray['trailerId'] = 'required|max:45';
-        }
-
-        $validated = $request->validate($validationArray);
-        $seconds = $this->timeToSeconds($request->length);
-
-        $movie = Movie::find($id);
-        $movie->title = $request->title;
-        $movie->description = $request->description;
-        $movie->year = $request->year;
-        $movie->rating = $request->rating;
-        $movie->length = $seconds;
-        $movie->cast = $request->cast;
-        $movie->genre = $request->genre;
-        $movie->public = $request->public;
-        
-        //Update thumbnail
-        if($request->thumbnail != null)
-        {
-            $this->updateImageResource($request->thumbnail, $movie->thumbnail, config('app.storage_disk'));
-        }
-
-
-        //Update video
-        if($request->platformVideo == 'html5')
-        {
-            if($request->video != null)
-            {
-                //Update the old video field with the new uploaded video
-                $this->updateVideoResource($request->video, $movie->video, config('app.storage_disk'));
-            } 
-        }
-        else if($request->platformVideo == 'youtube' || $request->platformVideo == 'vimeo')
-        {
-            if($request->videoId != null)
-            {
-                //Update the old video field with the new video id
-                $this->updateVideoResource($request->videoId, $movie->video, $request->platformVideo);
-            }
-        }
-
-        //Update trailer
-        if($request->platformTrailer == 'html5')
-        {
-            if($request->trailer != null)
-            {
-                //Update the old trailer field with the new uploaded trailer
-                $this->updateVideoResource($request->trailer, $movie->trailer, config('app.storage_disk'), 0);
-            } 
-        }
-        else if($request->platformTrailer == 'youtube' || $request->platformTrailer == 'vimeo')
-        {
-            if($request->trailerId != null)
-            {
-                //Update the old trailer field with the new trailer id
-                $this->updateVideoResource($request->trailerId, $movie->trailer, $request->platformTrailer);
-            }
-        }
-
-        $movie->save();
+        $builder->setRequest($request)->validate()->update($id);
 
         return redirect()->route('movieDashboard');
     }

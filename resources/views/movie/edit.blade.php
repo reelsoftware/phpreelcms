@@ -96,33 +96,7 @@
             </div>
         </div>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="resourceFile" onchange="updateFileLabel('resourceFile')">
-                                <label class="custom-file-label" for="resourceFile">Upload files</label>
-                            </div>
-                        </div>
-                            
-                        <div class="progress">
-                            <div id="progressBar" class="progress-bar" role="progressbar"></div>
-                        </div>   
-
-                        <div class="card-body">
-                            <h5 class="card-title">Uploaded files</h5>
-
-                            <div id="uploadedFiles">
-                                <p class="card-text"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
+        @uploadForm()
         
         <div class="container mt-1">
             <div class="row">
@@ -150,7 +124,7 @@
                         <label for="platformVideo">Select video platform</label><br>
     
                         <select name="platformVideo" class="custom-select" onchange="switchVideoOption('platformVideo', 'videoFields', true)" id="platformVideo">
-                            <option value="html5" @if (old('platformVideo') == "html5" || $video['storage'] == "html5") selected @endif>HTML5</option>
+                            <option value="{{config('app.storage_disk')}}" @if (old('platformVideo') == config('app.storage_disk') || $video['storage'] == config('app.storage_disk')) selected @endif>HTML5</option>
                             <option value="vimeo" @if (old('platformVideo') == "vimeo" || $video['storage'] == "vimeo") selected @endif>Vimeo</option>
                             <option value="youtube" @if (old('platformVideo') == "youtube" || $video['storage'] == "youtube") selected @endif>YouTube</option>
                         </select>
@@ -181,7 +155,6 @@
             </div>
         </div>
 
-
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -189,9 +162,9 @@
                         <label for="platformTrailer">Select trailer platform</label><br>
     
                         <select name="platformTrailer" class="custom-select" onchange="switchVideoOption('platformTrailer', 'trailerFields', true)" id="platformTrailer">
-                            <option value="html5" @if (old('platformVideo') == "html5" || $trailer['storage'] == "html5") selected @endif>HTML5</option>
-                            <option value="vimeo" @if (old('platformVideo') == "vimeo" || $trailer['storage'] == "vimeo") selected @endif>Vimeo</option>
-                            <option value="youtube" @if (old('platformVideo') == "youtube" || $trailer['storage'] == "youtube") selected @endif>YouTube</option>
+                            <option value="{{config('app.storage_disk')}}" @if (old('platformTrailer') == config('app.storage_disk') || $trailer['storage'] == config('app.storage_disk')) selected @endif>HTML5</option>
+                            <option value="vimeo" @if (old('platformTrailer') == "vimeo" || $trailer['storage'] == "vimeo") selected @endif>Vimeo</option>
+                            <option value="youtube" @if (old('platformTrailer') == "youtube" || $trailer['storage'] == "youtube") selected @endif>YouTube</option>
                         </select>
                     </div>
                 </div>

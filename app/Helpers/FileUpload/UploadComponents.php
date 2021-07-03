@@ -6,7 +6,7 @@ class UploadComponents
     /**
      * Return the env fields
      *
-     * @return array
+     * @return string
      */
     public static function getUploadForm()
     {

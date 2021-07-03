@@ -32,10 +32,8 @@ class UserHandler
 
     /**
      * Return the user role (admin, user), null if not auth
-     *
-     * @return string
      */
-    public static function getUserRole(): string
+    public static function getUserRole()
     {
         $user = Auth::user();
 

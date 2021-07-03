@@ -9,66 +9,9 @@ use App\Helpers\Resource\ResourceHandler;
 
 class MovieHelper
 {
-    /**
-     * Validation for storing movies
-     *
-     * @param Illuminate\Http\Request $request
-     * 
-     */
-    public static function validationArrayStore(Request $request)
+    public static function timeToSeconds(string $time): int
     {
-        $validationArray = [
-            'title' => 'required|max:255',
-            'description' => 'required|max:500',
-            'year' => 'required',
-            'rating' => 'required|max:25',
-            'length' => 'required',
-            'cast' => 'required|max:500',
-            'genre' => 'required|max:500',
-            'thumbnail' => 'required|max:45',
-            'public' => 'required|boolean',
-        ];
-
-        //Platform for video 
-        if($request->platformVideo == 'html5')
-            $validationArray['video'] = 'required|max:45';
-        else
-            $validationArray['videoId'] = 'required|max:45';
-
-        //Platform for trailer 
-        if($request->platformTrailer == 'html5')
-            $validationArray['trailer'] = 'required|max:45';
-        else
-            $validationArray['trailerId'] = 'required|max:45';
-
-        $request->validate($validationArray);
-    }
-
-    /**
-     * Validation for storing movies
-     *
-     * @param Illuminate\Http\Request $request
-     * 
-     */
-    public static function store(Request $request)
-    {
-
-        $movie = new Movie();
-        $movie->title = $request->title;
-        $movie->description = $request->description;
-        $movie->year = $request->year;
-        $movie->rating = $request->rating;
-        $seconds = $this->timeToSeconds($request->length);
-        $movie->length = $seconds;
-        $movie->cast = $request->cast;
-        $movie->genre = $request->genre;
-        $movie->public = $request->public;
-
-        //Link the thumbnail from images table to movies table
-        $movie->thumbnail = ResourceHandler::storeImage($request->thumbnail);
-        $movie->video = ResourceHandler::addVideo($request->video, $request->platformVideo);
-        $movie->trailer = ResourceHandler::addVideo($request->trailer, $request->platformTrailer, 0);
-
-        $movie->save();
+        $d = explode(':', $time);
+        return (intval($d[0]) * 3600) + (intval($d[1]) * 60);
     }
 }
