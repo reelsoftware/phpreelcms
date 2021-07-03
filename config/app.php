@@ -67,6 +67,8 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
+    'theme' => env('THEME', 'default'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

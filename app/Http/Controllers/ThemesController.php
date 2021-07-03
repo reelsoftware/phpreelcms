@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Jackiedo\DotenvEditor\Facades\DotenvEditor;
-use File;
+use App\Helpers\Theme\Theme;
+
 
 class ThemesController extends Controller
 {
@@ -15,7 +16,28 @@ class ThemesController extends Controller
      */
     public function index()
     {
-        //
+        //Get all the themes available in themes folder
+        
+    
+
+
+        dd(Theme::getCover('default'));
+        
+        return view('themes.index', [
+            'directories' => $directories
+        ]);
+    }
+
+    /**
+     * Display the cover of a particular theme
+     *
+     * @param string $theme name of the theme
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function cover($theme)
+    {
+        return response()->file(resource_path('themes/'. $theme . '/cover.jpg'));
     }
 
     /**
@@ -55,12 +77,7 @@ class ThemesController extends Controller
      */
     public function edit()
     {
-        //Get all the themes available in themes folder
-        $directories = array_map('basename', File::directories(resource_path('themes')));
-
-        return view('themes.index', [
-            'directories' => $directories
-        ]);
+        //
     }
 
     /**

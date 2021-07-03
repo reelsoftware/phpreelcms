@@ -319,8 +319,11 @@ Route::middleware(['setLanguage'])->group(function ()
             ->name('usersSubscriptionDetails');
 
         //Themes
-        Route::get('dashboard/themes', [ThemesController::class, 'edit'])
-            ->name('themeEdit');
+        Route::get('dashboard/themes', [ThemesController::class, 'index'])
+            ->name('themeIndex');
+
+        Route::get('/dashboard/themes/cover/{theme}', [ThemesController::class, 'cover'])
+            ->name('themeCover');
 
         Route::post('dashboard/themes', [ThemesController::class, 'update'])
             ->name('themeUpdate');

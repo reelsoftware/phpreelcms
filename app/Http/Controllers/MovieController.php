@@ -12,6 +12,8 @@ use App\Helpers\Content\MovieHelper;
 use App\Helpers\Content\ContentManager; 
 use App\Models\Movie;
 use App\Helpers\Content\MovieBuilder; 
+use App\Helpers\User\UserHandler;
+use App\Helpers\Theme\Theme;
 use Auth;
 
 class MovieController extends Controller
@@ -25,7 +27,7 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $movies = Movie::orderByDesc('movies.id')
+        $content = Movie::orderByDesc('movies.id')
             ->where('public', '=', '1')
             ->join('images', 'images.id', '=', 'movies.thumbnail')
             ->select(
@@ -43,8 +45,8 @@ class MovieController extends Controller
 
         $subscribed = UserHandler::checkSubscription();
 
-        return view(env('THEME') . '.movie.index', [
-            'content' => $movies, 
+        return Theme::view('movie.index', [
+            'content' => $content, 
             'subscribed' => $subscribed,
         ]);
     }

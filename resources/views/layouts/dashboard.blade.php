@@ -171,6 +171,24 @@
 			</ul>
 			<!-- End Subscription plans -->
 
+			<!-- Themes -->
+			<!-- Divider -->
+			<hr class="my-3">
+			<!-- Heading -->
+			<h6 class="navbar-heading p-0 text-muted">
+				<span class="docs-normal">Themes</span>
+			</h6>
+			<!-- Navigation -->
+			<ul class="navbar-nav mb-md-3">
+				<li class="nav-item">
+					<a class="nav-link" href="{{ route('themeIndex') }}">
+						<i class="ni ni-collection"></i>
+						<span class="nav-link-text">Show all</span>
+					</a>
+				</li>
+			</ul>
+			<!-- End Themes -->
+
 			<!-- Translation -->
 			<!-- Divider -->
 			<hr class="my-3">
