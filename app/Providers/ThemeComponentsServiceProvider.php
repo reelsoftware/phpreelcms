@@ -56,52 +56,6 @@ class ThemeComponentsServiceProvider extends ServiceProvider
             return $expression === "youtube";
         });
 
-        //URL generation
-        /**
-         * Returns a URL for a movie or a series
-         * 
-         * @param movie/series $item Movie or series object
-         * @param int $itemId Id of movie or series
-         */
-        Blade::directive('itemUrl', function ($expression) {
-            //Get the variables from the expression
-            $params = explode(',', $expression);
-            $item = $params[0];
-            $itemId = $params[1];
-            
-            return "<?php
-                if(with($item)->getTable() == 'movies')
-                    echo route('movieShow', ['id' => $itemId]);
-                else if(with($item)->getTable() == 'series')
-                    echo route('seriesShow', ['id' => $itemId]); 
-            ?>";
-        });
-
-        /**
-         * Returns a URL for any type of images (theme images, resource images, url images)
-         * Theme images are images stored in the theme folder
-         * Resource images are those stored using a form
-         * URL images are external images provided by an URL
-         * 
-         * @param string $imageName Name of the image resource 
-         * @param string $imageStorage Storage medium of the image resource
-         */
-        Blade::directive('imageUrl', function ($expression) {
-            //Get the variables from the expression
-            $params = explode(',', $expression);
-            $imageName = $params[0];
-            $imageStorage = $params[1];
-
-            if(strtolower($imageStorage) == 'url')
-                $php = "<?php echo $imageName; ?>";
-            else if(strtolower($imageStorage) == 'theme')
-                $php = "<?php echo route('imageAsset', ['imageName' => $imageName]); ?>";
-            else
-                $php = "<?php echo route('fileResourceImage', ['fileName' => $imageName, 'storage' => $imageStorage]); ?>";
-        
-            return $php;
-        });
-
         /**
          * Returns the element that will contain all the credit card information
          * 
