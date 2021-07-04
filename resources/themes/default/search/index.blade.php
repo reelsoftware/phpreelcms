@@ -10,39 +10,35 @@
 <div class="container ne-margin-top-under-nav">
     <div class="ne-h1">{{__('Results for ')}} <i>{{$query}}</i></div>
     <div class="row">
-        @foreach ($results as $result)
+        @foreach ($content as $item)
         <div class="col-sm-12 col-md-6 col-lg-4">
             <div class="card ne-card">
                 <div class="ne-image-container">
-                    <a href="
-                        @if($result->getTable() == 'movies') 
-                            {{route('movieShow', ['id' => $result->id])}} 
-                        @elseif($result->getTable() == 'series')
-                            {{route('seriesShow', ['id' => $result->id])}} 
-                        @endif
-                    ">
-                        <img src="{{ route('fileResourceImage', ['fileName' => $result->image_name, 'storage' => $result->image_storage]) }}" class="card-img">
+                    <a href="{{ get_item_url($item) }}">
+                        <img src="{{ get_image_url($item->image_name, $item->image_storage) }}" class="card-img">
                     </a>
 
-                    @if($result->getTable() == 'movies') 
+                    @IsMovie($item->getTable()) 
                         <div class="ne-image-container-bottom-right">
-                            <span class="ne-movie-length">{{gmdate("H:i", $result->length)}}</span><br>
+                            <span class="ne-movie-length">{{ gmdate("H:i", $item->length) }}</span><br>
                         </div>
-                    @endif
+                    @endIsMovie
                 </div>      
                 
                 <div class="card-body">
-                    @if($result->getTable() == 'movies') 
-                        <a href="{{route('movieShow', ['id' => $result->id])}}" class="card-title ne-title">{{$result->title}}</a>
+                    @IsMovie($item->getTable()) 
+                        <a href="{{ get_item_url($item) }}" class="card-title ne-title">{{$item->title}}</a>
 
-                        <p class="card-text ne-short-description">{{mb_strimwidth($result->description, 0, 120, "...")}}</p>
-                        <a href="{{route('trailerMovieShow', ['id' => $result->id])}}" class="ne-btn">{{__('Trailer')}}</a>
-                    @elseif($result->getTable() == 'series')
-                        <a href="{{route('seriesShow', ['id' => $result->id])}}" class="card-title ne-title">{{$result->title}}</a>
+                        <p class="card-text ne-short-description">{{mb_strimwidth($item->description, 0, 120, "...")}}</p>
+                        <a href="{{ get_trailer_url($item->id) }}" class="ne-btn">{{__('Trailer')}}</a>
+                    @endIsMovie
 
-                        <p class="card-text ne-short-description">{{mb_strimwidth($result->description, 0, 120, "...")}}</p>
-                        <a href="{{route('seriesShow', ['id' => $result->id])}}" class="ne-btn">{{__('Watch')}}</a>
-                    @endif 
+                    @IsSeries($item->getTable() == 'series')
+                        <a href="{{ get_item_url($item) }}" class="card-title ne-title">{{$item->title}}</a>
+
+                        <p class="card-text ne-short-description">{{mb_strimwidth($item->description, 0, 120, "...")}}</p>
+                        <a href="{{ get_item_url($item) }}" class="ne-btn">{{__('Watch')}}</a>
+                    @endIsSeries 
                     
                     @if($subscribed == false)
                         <a href="{{route('subscribe')}}" class="ne-btn ne-movie-premium">{{__('Subscribe')}}</a>
@@ -52,7 +48,7 @@
 
                 <div class="ne-card-bottom">
                     <div class="ne-card-bottom-text">
-                        <p>{{$result->getTable() == 'movies' ? __('Movie') : __('Series')}}</p>
+                        <p>{{$item->getTable() == 'movies' ? __('Movie') : __('Series')}}</p>
                     </div>
                 </div>
             </div>
@@ -65,7 +61,7 @@
 
     <div class="row">
         <div class="col text-center">
-            {{ $results->links(env('THEME') . '.pagination.simple-pagination') }}
+            {{ get_pagination($content, 'simple-pagination') }}
         </div>
     </div>
 </div>

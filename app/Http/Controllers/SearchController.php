@@ -117,7 +117,7 @@ class SearchController extends Controller
         }
 
         return view(env('theme') . '.search.index', [
-            'results' => $results,
+            'content' => $results,
             'subscribed' => $subscribed,
             'query' => $query
         ]);

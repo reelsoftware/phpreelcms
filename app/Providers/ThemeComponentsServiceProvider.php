@@ -57,6 +57,24 @@ class ThemeComponentsServiceProvider extends ServiceProvider
         });
 
         /**
+         * Checks to see if a particular item corresponds to the movies table
+         * 
+         * @param string $expression Storage medium used for the resource
+         */
+        Blade::if('IsMovie', function ($expression) {
+            return $expression === "movies";
+        });
+
+        /**
+         * Checks to see if a particular item corresponds to the series table
+         * 
+         * @param string $expression Storage medium used for the resource
+         */
+        Blade::if('IsSeries', function ($expression) {
+            return $expression === "series";
+        });
+
+        /**
          * Returns the element that will contain all the credit card information
          * 
          */

@@ -27,7 +27,7 @@
                         <a href="{{ get_item_url($item) }}" class="card-title ne-title">{{$item->title}}</a>
 
                         <p class="card-text ne-short-description">{{mb_strimwidth($item->description, 0, 120, "...")}}</p>
-                        <a href="{{ get_trailer_url($item->id)}}" class="ne-btn">{{__('Trailer')}}</a>
+                        <a href="{{ get_trailer_url($item->id) }}" class="ne-btn">{{__('Trailer')}}</a>
                         
                         @if($subscribed == false)
                             <a href="{{route('subscribe')}}" class="ne-btn ne-movie-premium">{{__('Subscribe')}}</a>
