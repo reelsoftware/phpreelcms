@@ -7,6 +7,27 @@ use File;
 class Theme
 {
     /**
+     * Return true if there is a child view and false if there is not a child view
+     *
+     * @param string $view path to the view to be checked
+     * 
+     */
+    public static function existsChildView(string $view): bool
+    {
+        //Path to the file inside the theme
+        $themePath = config('app.theme') . '.' . $view;
+
+        //Path to the file inside the child theme
+        $childThemePath = 'child-' . $themePath;
+
+        //If the child theme file exists then render that file else render the theme file
+        if(View::exists($childThemePath))
+            return true;
+        else
+            return false;
+    }
+
+    /**
      * Return a specific view
      * If there is a child theme set then return that file, else return the theme file
      *
@@ -16,18 +37,17 @@ class Theme
      */
     public static function view(string $view, array $data)
     {
-        //Path to the file inside the theme
-        $themePath = config('app.theme') . '.' . $view;
-
-        //Path to the file inside the child theme
-        $childThemePath = 'child-' . $themePath;
-
-
         //If the child theme file exists then render that file else render the theme file
-        if(View::exists($childThemePath))
+        if(Theme::existsChildView($view))
+        {
+            $childThemePath = 'child-' . config('app.theme') . '.' . $view;
             return view($childThemePath, $data);
+        }      
         else
+        {
+            $themePath = config('app.theme') . '.' . $view;
             return view($themePath, $data);
+        }
     }
 
     /**

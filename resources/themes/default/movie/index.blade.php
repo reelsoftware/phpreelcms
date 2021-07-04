@@ -14,8 +14,8 @@
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <div class="card ne-card">
                     <div class="ne-image-container">
-                        <a href="@itemUrl($item, $item->id)">
-                            <img src="{{ route('fileResourceImage', ['fileName' => $item->image_name, 'storage' => $item->image_storage]) }}" class="card-img">
+                        <a href="{{ get_item_url($item) }}">
+                            <img src="{{ get_image_url($item->image_name, $item->image_storage) }}" class="card-img">
                         </a>
 
                         <div class="ne-image-container-bottom-right">
@@ -24,10 +24,10 @@
                     </div>      
                     
                     <div class="card-body">
-                        <a href="{{route('movieShow', ['id' => $item->id])}}" class="card-title ne-title">{{$item->title}}</a>
+                        <a href="{{ get_item_url($item) }}" class="card-title ne-title">{{$item->title}}</a>
 
                         <p class="card-text ne-short-description">{{mb_strimwidth($item->description, 0, 120, "...")}}</p>
-                        <a href="{{route('trailerMovieShow', ['id' => $item->id])}}" class="ne-btn">{{__('Trailer')}}</a>
+                        <a href="{{ get_trailer_url($item->id)}}" class="ne-btn">{{__('Trailer')}}</a>
                         
                         @if($subscribed == false)
                             <a href="{{route('subscribe')}}" class="ne-btn ne-movie-premium">{{__('Subscribe')}}</a>
@@ -44,7 +44,7 @@
 
     <div class="row">
         <div class="col text-center">
-            {{ $content->links(env('THEME') . '.pagination.simple-pagination') }}
+            {{ get_pagination($content, 'simple-pagination') }}
         </div>
     </div>
 </div>

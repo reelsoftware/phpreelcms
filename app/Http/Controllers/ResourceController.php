@@ -13,6 +13,7 @@ use App\Helpers\FileUpload\StorageMethods\StorageContext;
 use App\Helpers\FileUpload\StorageMethods\LocalStrategy;
 use App\Helpers\FileUpload\StorageMethods\S3Strategy;
 use App\Helpers\Resource\StreamResource;
+use Storage;
 
 
 class ResourceController extends Controller

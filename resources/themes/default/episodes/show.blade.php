@@ -21,19 +21,23 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            @if($episodes['current']->video_storage == 'vimeo')
+            @vimeo($episodes['current']->video_storage == 'vimeo')
                 <div class="plyr__video-embed" id="player">
-                    <iframe src="https://player.vimeo.com/video/{{$episodes['current']->video_name}}"></iframe>
+                    @vimeoEmbed($episodes['current']->video_name)
                 <div>
-            @elseif($episodes['current']->video_storage == 's3' || $episodes['current']->video_storage == 'local')
+            @endvimeo
+
+            @html5($episodes['current']->video_storage)
                 <video id="player" playsinline controls>
-                    <source src="{{route('fileResource', ['fileName' => $episodes['current']->video_name, 'storage' => $episodes['current']->video_storage])}}">
+                    @html5Source($episodes['current']->video_name, $episodes['current']->video_storage)
                 </video> 
-            @elseif($episodes['current']->video_storage == 'youtube')
+            @endhtml5
+
+            @youtube($episodes['current']->video_storage)
                 <div class="plyr__video-embed" id="player">
-                    <iframe src="https://www.youtube.com/embed/{{$episodes['current']->video_name}}"></iframe>
+                    @youtubeEmbed($episodes['current']->video_name)
                 <div>
-            @endif
+            @endyoutube
         </div>
     </div>
 
@@ -42,7 +46,7 @@
         @if($episodes['previous'] != null)
             <div class="col-6">
                 <p class="text-center">
-                    <a href="{{route('episodeShow', ['id' => $episodes['previous']['id']])}}" class="btn ne-previous-next-lesson ne-btn">{{__('Previous episode')}}</a>
+                    <a href="{{route('episodeShow', ['id' = > $episodes['previous']['id']])}}" class="btn ne-previous-next-lesson ne-btn">{{__('Previous episode')}}</a>
                 </p>
             </div>
         @endif

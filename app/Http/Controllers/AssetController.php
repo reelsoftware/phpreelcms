@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Helpers\Theme\Theme;
 use File;
 
 class AssetController extends Controller
@@ -16,7 +17,14 @@ class AssetController extends Controller
      */
     public function javascript($scriptName)
     {
-        return response()->file(resource_path('themes/'. env('theme') . '/js/' . $scriptName));
+        $path = '';
+
+        if(Theme::existsChildView($scriptName))
+            $path = 'themes/'. 'child-' . config('app.theme') . '/js//' . $scriptName;
+        else
+            $path = 'themes/' . config('app.theme') . '/js//' . $scriptName;
+
+        return response()->file(resource_path($path));
     }
 
     /**
@@ -28,7 +36,14 @@ class AssetController extends Controller
      */
     public function css($styleName)
     {
-        return response()->file(resource_path('themes/'. env('theme') . '/css/' . $styleName));
+        $path = '';
+
+        if(Theme::existsChildView($styleName))
+            $path = 'themes/'. 'child-' . config('app.theme') . '/css//' . $styleName;
+        else
+            $path = 'themes/' . config('app.theme') . '/css//' . $styleName;
+
+        return response()->file(resource_path($path));
     }
 
     /**
@@ -40,6 +55,13 @@ class AssetController extends Controller
      */
     public function image($imageName)
     {
-        return response()->file(resource_path('themes/'. env('theme') . '/img/' . $imageName));
+        $path = '';
+
+        if(Theme::existsChildView($imageName))
+            $path = 'themes/'. 'child-' . config('app.theme') . '/img//' . $imageName;
+        else
+            $path = 'themes/' . config('app.theme') . '/img//' . $imageName;
+
+        return response()->file(resource_path($path));
     }
 }
