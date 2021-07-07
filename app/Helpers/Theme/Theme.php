@@ -28,6 +28,17 @@ class Theme
     }
 
     /**
+     * Return the name of the theme or child theme folder
+     *
+     * @param string $view path to the view to be checked
+     * 
+     */
+    public static function getThemeFolder(string $view): bool
+    {
+        //TO DO: Check if a file exists in the child folder, then return child, else return theme
+    }
+
+    /**
      * Return a specific view
      * If there is a child theme set then return that file, else return the theme file
      *

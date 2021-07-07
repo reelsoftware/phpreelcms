@@ -9,7 +9,7 @@ use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Traits\StoreResourceTrait;
 use App\Helpers\Content\MovieHelper; 
-use App\Helpers\Content\ContentManager; 
+use App\Helpers\Content\ContentHandler; 
 use App\Models\Movie;
 use App\Helpers\Content\MovieBuilder; 
 use App\Helpers\User\UserHandler;
@@ -27,21 +27,7 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $content = Movie::orderByDesc('movies.id')
-            ->where('public', '=', '1')
-            ->join('images', 'images.id', '=', 'movies.thumbnail')
-            ->select(
-                'movies.id as id',
-                'movies.title as title',
-                'movies.description as description',
-                'movies.year as year',
-                'movies.length as length',
-                'movies.cast as cast',
-                'movies.genre as genre',
-                'images.name as image_name',
-                'images.storage as image_storage',
-            )
-            ->simplePaginate(9);
+        $content = ContentHandler::getLatestMoviesSimplePaginate(9);
 
         $subscribed = UserHandler::checkSubscription();
 
@@ -97,21 +83,7 @@ class MovieController extends Controller
      */
     public function show($id)
     {
-        $movie = Movie::where([['movies.public', '=', '1'], ['movies.id', '=', $id]])
-            ->join('videos', 'videos.id', '=', 'movies.video')
-            ->select(
-                'movies.id as id',
-                'movies.title as title',
-                'movies.description as description',
-                'movies.year as year',
-                'movies.length as length',
-                'movies.cast as cast',
-                'movies.genre as genre',
-                'movies.rating as rating',
-                'videos.name as video_name',
-                'videos.storage as video_storage',
-            )
-            ->first();
+        $movie = ContentHandler::getMovie($id);
 
         if($movie == null)
             return abort(404);

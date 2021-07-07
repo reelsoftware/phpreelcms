@@ -9,6 +9,10 @@ use Auth;
 use App\Models\Series;
 use App\Models\Episode;
 use App\Http\Traits\StoreResourceTrait;
+use App\Helpers\Content\ContentHandler;
+use App\Helpers\User\UserHandler;
+use App\Helpers\Theme\Theme;
+use App\Helpers\Content\SeriesBuilder; 
 
 class SeriesController extends Controller
 {
@@ -30,30 +34,11 @@ class SeriesController extends Controller
      */
     public function index()
     {
-        $series = Series::orderByDesc('series.id')
-            ->where('public', '=', '1')
-            ->join('images', 'images.id', '=', 'series.thumbnail')
-            ->select([
-                'series.id as series_id',
-                'series.title as series_title',
-                'series.description as series_description',
-                'images.name as image_name',
-                'images.storage as image_storage'
-            ])
-            ->simplePaginate(9);
-        
-        $user = Auth::user();
-        if($user != null)
-        {
-            $defaultSubscription = 'default';
-            $subscribed = $user->subscribed($defaultSubscription);
-        }
-        else
-        {
-            $subscribed = false;
-        }
+        $series = ContentHandler::getLatestSeriesSimplePaginate(9);
 
-        return view('series.index', [
+        $subscribed = UserHandler::checkSubscription();
+
+        return Theme::view('series.index', [
             'series' => $series, 
             'subscribed' => $subscribed,
         ]);
@@ -76,31 +61,10 @@ class SeriesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $validationArray = [
-            'title' => 'required|max:255',
-            'description' => 'required|max:500',
-            'year' => 'required',
-            'rating' => 'required|max:25',
-            'cast' => 'required|max:500',
-            'genre' => 'required|max:500',
-            'thumbnail' => 'required|max:45',
-            'public' => 'required|boolean',
-        ];
-        
-        $validated = $request->validate($validationArray);
+    {   
+        $builder = new SeriesBuilder();
 
-        $series = new Series();
-        $series->title = $request->title;
-        $series->description = $request->description;
-        $series->year = $request->year;
-        $series->rating = $request->rating;
-        $series->cast = $request->cast;
-        $series->genre = $request->genre;
-        $series->thumbnail = $this->storeImage($request->thumbnail);
-        $series->public = $request->public;
-        
-        $series->save();
+        $builder->setRequest($request)->validate()->store();
         return redirect()->route('seriesDashboard');
     }
 
@@ -112,34 +76,7 @@ class SeriesController extends Controller
      */
     public function show($id)
     {
-        //Get the id of all the seasons from a specific series
-        $seasons = Series::where([['series.id', '=', $id], ['series.public', '=', 1]])
-            ->join('seasons', 'seasons.series_id', '=', 'series.id')->orderBy('seasons.order', 'asc')
-            ->join('images', 'images.id', '=', 'seasons.thumbnail')
-            ->get([
-                'seasons.id as season_id', 
-                'seasons.title', 
-                'series.description as series_description',
-                'series.title as series_title', 
-                'series.id as series_id', 
-                'images.name as image_name',
-                'images.storage as image_storage'
-            ]);            
-
-        //All the episodes and seasons as separate array elements
-        $series = [];
-
-        for($i=0;$i<count($seasons);$i++)
-        {
-            $episode = Episode::where([['episodes.season_id', '=', $seasons[$i]->season_id], ['episodes.public', '=', 1]])
-                ->orderBy('order', 'asc')
-                ->get();
-            
-            $series[$i] = [
-                'episode' => $episode,
-                'season' => $seasons[$i]
-            ];
-        }
+        $series = ContentHandler::getSeries($id);
 
         if($series == null)
             return view('series.show', [
@@ -197,10 +134,7 @@ class SeriesController extends Controller
         if($series == null || isset($series[0]) == false)
             return abort(404);
 
-        //checks if the user is subscribed
-        $user = Auth::user();
-
-        return view('series.show', [
+        return Theme::view('series.show', [
             'content' => $series,
             'seriesLength' => $seriesLength,
             'seasonsLength' => $seasonsLength
@@ -237,33 +171,9 @@ class SeriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validationArray = [
-            'title' => 'required|max:255',
-            'description' => 'required|max:500',
-            'year' => 'required',
-            'rating' => 'required|max:25',
-            'cast' => 'required|max:500',
-            'genre' => 'required|max:500',
-            'public' => 'required|boolean',
-        ];
+        $builder = new SeriesBuilder();
 
-        $validated = $request->validate($validationArray);
-
-        $series = Series::find($id);
-        $series->title = $request->title;
-        $series->description = $request->description;
-        $series->year = $request->year;
-        $series->rating = $request->rating;
-        $series->cast = $request->cast;
-        $series->genre = $request->genre;
-        $series->public = $request->public;
-
-        if($request->thumbnail != null)
-        {
-            $this->updateImageResource($request->thumbnail, $series->thumbnail, config('app.storage_disk'));
-        }
-        
-        $series->save();
+        $builder->setRequest($request)->validate()->update($id);
 
         return redirect()->route('seriesDashboard');
     }
