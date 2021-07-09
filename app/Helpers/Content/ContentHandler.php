@@ -135,7 +135,7 @@ class ContentHandler
             )
             ->first();
 
-        return $movies;
+        return $movie;
     }
 
     /**
@@ -261,4 +261,5 @@ class ContentHandler
             ->get();
 
         return $series;
+    }
 }

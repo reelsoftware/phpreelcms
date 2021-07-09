@@ -28,14 +28,24 @@ class Theme
     }
 
     /**
-     * Return the name of the theme or child theme folder
+     * Return the name of the current theme or child theme folder
      *
-     * @param string $view path to the view to be checked
+     * @param string $path path to the file to be checked (starting from theme root)
      * 
      */
-    public static function getThemeFolder(string $view): bool
+    public static function getThemeFolder(string $path)
     {
-        //TO DO: Check if a file exists in the child folder, then return child, else return theme
+        //Path to the file inside the theme
+        $themePath = config('app.theme');
+
+        //Path to the file inside the child theme
+        $childThemePath = 'child-' . $themePath;
+
+        //If the file exist in the child theme then return the child theme
+        if(File::exists(base_path() . '/resources/themes/' . $childThemePath . $path))
+            return $childThemePath;
+        else 
+            return $themePath;
     }
 
     /**

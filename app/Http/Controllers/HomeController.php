@@ -8,7 +8,7 @@ use App\Models\Movie;
 use App\Models\Series;
 use App\Helpers\Content\ContentHandler;
 use App\Helpers\Theme\Theme;
-user App\Helpers\User\UserHandler; 
+use App\Helpers\User\UserHandler; 
 use Auth;
 
 class HomeController extends Controller
