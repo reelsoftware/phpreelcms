@@ -1,0 +1,65 @@
+<?php
+namespace App\Helpers\Translation; 
+
+use App\Models\Translation;
+use App\Helpers\Theme\Theme;
+use File;
+
+class TranslationHandler
+{
+    /**
+     * Return the latest available translations
+     *
+     * @param int $limit how many of the latest series to get
+     */
+    public static function getTranslationsSimplePaginate(int $limit)
+    {
+        //Error handling
+        if($limit < 0)
+            throw new Exception("\$limit must be a non-negative integer");
+
+        return Translation::orderByDesc('id')->simplePaginate($limit);
+    }
+
+    /**
+     * Return the content of the default translation file from either theme or child theme (as json)
+     *
+     */
+    public static function getDefaultTranslationFileContent()
+    {
+        $languageFile = json_decode(File::get(base_path().'/resources/themes/' . Theme::getThemeFolder() . '/lang/default/default.json'), true);
+
+        return $languageFile;
+    }
+
+    /**
+     * Return the content of the default translation file from either theme or child theme (as json)
+     *
+     * @param string $language name of the requested language file
+     */
+    public static function getTranslationFileContent(string $language)
+    {
+        return json_decode(File::get(base_path().'/resources/themes/' . Theme::getThemeFolder() . '/lang/' . $language . '.json'), true);
+    }
+
+    /**
+     * Delete the specified translation file
+     *
+     * @param string $language name of the requested language file
+     */
+    public static function deteleTranslationFile(string $language)
+    {
+        File::delete(base_path().'/resources/themes/' . Theme::getThemeFolder() . '/lang/' . $language . '.json');
+    }
+
+    /**
+     * Delete the specified translation file
+     *
+     * @param string $language name of the requested language file
+     * @param string $fileContent content to be saved as a json file
+     */
+    public static function saveTranslationFile(string $language, $fileContent)
+    {
+        File::put(base_path().'/resources/themes/' . env('theme') . '/lang/' . $language . '.json', (json_encode($fileContent)));
+    }
+}

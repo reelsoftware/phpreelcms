@@ -7,7 +7,7 @@
 @endsection
 
 @section('style')
-    @styleCss('https://cdn.plyr.io/3.6.4/plyr.css', external)
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.4/plyr.css">
 @endsection
 
 @section('content')
@@ -16,21 +16,21 @@
         <div class="col-12">
             @vimeo($item->video_storage)
                 <div class="plyr__video-embed" id="player">
-                    @vimeoEmbed($item->video_name)
+                    <iframe src="{{ get_video_url($item->video_name, $item->video_storage) }}"></iframe>
                 </div>
             @endvimeo
-               
+
             @html5($item->video_storage)
                 <video id="player" playsinline controls>
-                    @html5Source($item->video_name, $item->video_storage)
+                    <source src="{{ get_video_url($item->video_name, $item->video_storage) }}">
                 </video> 
             @endhtml5
 
             @youtube($item->video_storage)
                 <div class="plyr__video-embed" id="player">
-                    @youtubeEmbed($item->video_name);
+                    <iframe src="{{ get_video_url($item->video_name, $item->video_storage) }}"></iframe>
                 </div>
-            @endyoutube()
+            @endyoutube
         </div>
     </div>
 
@@ -50,6 +50,6 @@
 @endsection
 
 @section('script')
-    @scriptJs("https://cdn.plyr.io/3.6.4/plyr.js", external)
-    @scriptJs('player.js', local)
+    <script src="https://cdn.plyr.io/3.6.4/plyr.js"></script>
+    <script src="{{ get_js_url("player.js") }}"></script>
 @endsection

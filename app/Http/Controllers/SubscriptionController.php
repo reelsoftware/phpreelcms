@@ -44,8 +44,12 @@ class SubscriptionController extends Controller
             ->where('subscription_plans.public', '=', 1)
             ->get();
 
+        //TO DO Check if benefits can have empty fields
+        $benefits = explode(',', $plan->benefits);
+
         return view('subscribe.index', [
             'plans' => $plans,
+            'benefits' => $benefits,
             'subscription' => $subscription
         ]);
     }

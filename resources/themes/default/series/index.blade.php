@@ -23,7 +23,7 @@
                         <div class="card-body">
                             <a href="{{route('seriesShow', ['id' => $movie->series_id])}}" class="card-title ne-title">{{$movie->series_title}}</a>
 
-                            <p class="card-text ne-short-description">{{mb_strimwidth($movie->series_description, 0, 120, "...")}}</p>
+                            <p class="card-text ne-short-description">{{ get_excerpt($movie->series_description, 120, "...") }}</p>
                             <a href="{{route('seriesShow', ['id' => $movie->series_id])}}" class="ne-btn">{{__('Watch')}}</a>
                             
                             @if($subscribed == false)

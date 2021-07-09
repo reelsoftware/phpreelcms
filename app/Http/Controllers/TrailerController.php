@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Movie;
 use App\Models\Seasons;
+use App\Handler\Content\ContentHandler;
+use App\Handler\Theme\Theme;
 
 
 class TrailerController extends Controller
 {
     public function showSeason($id)
     {
+        //TO DO Check if the series is public or not
         $trailer = Seasons::where('seasons.id', '=', $id)
             ->join('series', 'seasons.series_id', '=', 'series.id')
             ->join('videos', 'videos.id', '=', 'seasons.trailer')
@@ -25,27 +28,19 @@ class TrailerController extends Controller
         if($trailer == null)
             return abort(404);
 
-        return view(env('theme') . '.trailer.show', [
+        return Theme::view('trailer.show', [
             'item' => $trailer,
         ]);
     }
 
     public function showMovie($id)
     {
-        $trailer = Movie::where([['movies.public', '=', '1'], ['movies.id', '=', $id]])
-            ->join('videos', 'videos.id', '=', 'movies.trailer')
-            ->select(
-                'movies.id as id',
-                'movies.title as title',
-                'videos.name as video_name',
-                'videos.storage as video_storage',
-            )
-            ->first();
+        $trailer = ContentHandler::getMovieTrailer($id);
 
         if($trailer == null)
             return abort(404);
 
-        return view(env('theme') . '.trailer.show', [
+        return Theme::view('trailer.show', [
             'item' => $trailer,
         ]);
     }

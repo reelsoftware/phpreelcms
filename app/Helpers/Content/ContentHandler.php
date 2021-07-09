@@ -165,6 +165,26 @@ class ContentHandler
     }
 
     /**
+     * Return the trailer for the movie with the specified id
+     *
+     * @param int $id movie to be returned
+     */
+    public static function getMovieTrailer(int $id)
+    {
+        $movie = Movie::where([['movies.public', '=', '1'], ['movies.id', '=', $id]])
+            ->join('videos', 'videos.id', '=', 'movies.trailer')
+            ->select(
+                'movies.id as id',
+                'movies.title as title',
+                'videos.name as video_name',
+                'videos.storage as video_storage',
+            )
+            ->first();
+
+        return $movie;
+    }
+
+    /**
      * Return all the public seasons of a particular series
      *
      * @param int $id series that contains the seasons

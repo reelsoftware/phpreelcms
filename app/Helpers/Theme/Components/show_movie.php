@@ -133,3 +133,42 @@ if (!function_exists('get_pagination'))
         return $content->links($theme);
     }
 }
+
+/**
+ * Render a specific pagination file
+ *
+ * @param string $price of the subscription plan
+ * @param string $stripe_price_id id of the subscription plan from stripe
+ * @param string $name of the subscription plan
+ * @param string $currency of the subscription plan
+ * 
+ */
+if (!function_exists('add_required_fields_subscription')) 
+{
+    function add_required_fields_subscription($price, $stripe_price_id, $name, $currency)
+    {
+        return "
+            <input type=\"hidden\" value=\"$price\" name=\"price\">
+            <input type=\"hidden\" value=\"$stripe_price_id\" name=\"plan\">
+            <input type=\"hidden\" value=\"{{$name}}\" name=\"planName\">
+            <input type=\"hidden\" value=\"{{$currency}}\" name=\"currency\">
+        ";
+    }
+}
+
+/**
+ * Render a specific pagination file
+ *
+ * @param string $text to be excerpted
+ * @param int $length of the resulting text
+ * @param string $trimMarker string to be added after the chunk of text
+ * 
+ */
+if (!function_exists('get_excerpt')) 
+{
+    function get_excerpt(string $text, int $length, string $trimMarker)
+    {
+        return mb_strimwidth($text, 0, $length, $trimMarker);
+    }
+}
+

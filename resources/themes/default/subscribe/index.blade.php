@@ -45,12 +45,8 @@
                     <p class="ne-short-description text-center">{{$plan->description}}</p>
                 </div>
                 
-                @php
-                    $benefitsArray = explode(',', $plan->benefits);
-                @endphp
-
                 <ul class="list-group list-group-flush">
-                    @foreach ($benefitsArray as $benefit)
+                    @foreach ($benefits as $benefit)
                         @if($benefit != '')
                             <li class="list-group-item ne-list-item">{{$benefit}}</li>
                         @endif
@@ -68,6 +64,8 @@
                         @if($subscription == false)
                             <form action="{{route('subscribeCreate')}}" method="POST">
                                 @csrf
+                                <!--Check if the bellow function works the same as the next 4 inputs-->
+                                {{ add_required_fields_subscription($plan->price, $plan->stripe_price_id, $plan->name, $plan->currency) }}
                                 <input type="hidden" value="{{$plan->price}}" name="price">
                                 <input type="hidden" value="{{$plan->stripe_price_id}}" name="plan">
                                 <input type="hidden" value="{{$plan->name}}" name="planName">
