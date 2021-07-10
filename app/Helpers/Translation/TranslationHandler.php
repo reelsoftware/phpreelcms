@@ -27,7 +27,7 @@ class TranslationHandler
      */
     public static function getDefaultTranslationFileContent()
     {
-        $languageFile = json_decode(File::get(base_path().'/resources/themes/' . Theme::getThemeFolder() . '/lang/default/default.json'), true);
+        $languageFile = json_decode(File::get(Theme::getFilePath('lang\default\default.json')), true);
 
         return $languageFile;
     }
@@ -39,7 +39,7 @@ class TranslationHandler
      */
     public static function getTranslationFileContent(string $language)
     {
-        return json_decode(File::get(base_path().'/resources/themes/' . Theme::getThemeFolder() . '/lang/' . $language . '.json'), true);
+        return json_decode(File::get(Theme::getFilePath("lang\\$language.json")), true);
     }
 
     /**
@@ -49,7 +49,7 @@ class TranslationHandler
      */
     public static function deteleTranslationFile(string $language)
     {
-        File::delete(base_path().'/resources/themes/' . Theme::getThemeFolder() . '/lang/' . $language . '.json');
+        File::delete(Theme::getFilePath("lang\\$language.json"));
     }
 
     /**
@@ -60,6 +60,6 @@ class TranslationHandler
      */
     public static function saveTranslationFile(string $language, $fileContent)
     {
-        File::put(base_path().'/resources/themes/' . env('theme') . '/lang/' . $language . '.json', (json_encode($fileContent)));
+        File::put(resource_path("themes\\" . Theme::getActiveTheme() . "\lang\\$language.json"), json_encode($fileContent));
     }
 }

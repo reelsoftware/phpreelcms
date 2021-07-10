@@ -28,24 +28,39 @@ class Theme
     }
 
     /**
-     * Return the name of the current theme or child theme folder
+     * Checks if there is a child theme defined, if not thn it returns the active theme, else it's child theme
+     * 
+     */
+    public static function getActiveTheme(): string
+    {
+        if(File::isDirectory(resource_path("themes\\child-" . config('app.theme'))))
+            return 'child-' . config('app.theme');
+        else
+            return config('app.theme');
+    }
+
+    /**
+     * Return the file path of a file either from the theme or child theme 
+     * This should be used for anything that is not a view
      *
      * @param string $path path to the file to be checked (starting from theme root)
      * 
      */
-    public static function getThemeFolder(string $path)
+    public static function getFilePath(string $path)
     {
         //Path to the file inside the theme
-        $themePath = config('app.theme');
+        $themePath = resource_path("themes\\" . config('app.theme') . "\\$path");
 
         //Path to the file inside the child theme
-        $childThemePath = 'child-' . $themePath;
+        $childThemePath = resource_path("themes\\" . "child-" . config('app.theme') . "\\$path");
 
         //If the file exist in the child theme then return the child theme
-        if(File::exists(base_path() . '/resources/themes/' . $childThemePath . $path))
+        if(File::exists($childThemePath))
             return $childThemePath;
-        else 
+        else if(File::exists($themePath))
             return $themePath;
+        else 
+            return null;
     }
 
     /**
@@ -101,5 +116,14 @@ class Theme
     public static function getCover(string $theme): string
     {
         return route('themeCover', ['theme' => $theme]);
+    }
+
+    /**
+     * Generates the child theme directory and it's subdirectories
+     * 
+     */
+    public static function generateChildTheme()
+    {
+        File::makeDirectory(resource_path('themes/child-' . config('app.theme')));
     }
 }

@@ -17,14 +17,9 @@ class AssetController extends Controller
      */
     public function javascript($scriptName)
     {
-        $path = '';
+        $path = Theme::getFilePath("js\\$scriptName");
 
-        if(Theme::existsChildView($scriptName))
-            $path = 'themes/'. 'child-' . config('app.theme') . '/js//' . $scriptName;
-        else
-            $path = 'themes/' . config('app.theme') . '/js//' . $scriptName;
-
-        return response()->file(resource_path($path));
+        return response()->file($path);
     }
 
     /**
@@ -36,12 +31,7 @@ class AssetController extends Controller
      */
     public function css($styleName)
     {
-        $path = '';
-
-        if(Theme::existsChildView($styleName))
-            $path = 'themes/'. 'child-' . config('app.theme') . '/css//' . $styleName;
-        else
-            $path = 'themes/' . config('app.theme') . '/css//' . $styleName;
+        $path = Theme::getFilePath("css\\$styleName");
 
         return response()->file(resource_path($path));
     }
@@ -55,12 +45,7 @@ class AssetController extends Controller
      */
     public function image($imageName)
     {
-        $path = '';
-
-        if(Theme::existsChildView($imageName))
-            $path = 'themes/'. 'child-' . config('app.theme') . '/img//' . $imageName;
-        else
-            $path = 'themes/' . config('app.theme') . '/img//' . $imageName;
+        $path = Theme::getFilePath("img\\$imageName");
 
         return response()->file(resource_path($path));
     }
