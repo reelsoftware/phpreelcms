@@ -27,7 +27,7 @@
 
                     <div class="form-group mt-3">
                         <button type="submit" class="btn ne-btn pay">
-                            Subscribe for {{$price/100}}{{$price%100 ? '.' . $price%100 : ''}} {{$currency}}
+                            Subscribe for {{ get_price($price) }} {{$currency}}
                         </button>
                     </div>
                 </div>

@@ -2,6 +2,8 @@
 namespace App\Helpers\Categories; 
 
 use Illuminate\Http\Request;
+use App\Models\Movie;
+use App\Models\Series;
 
 class CategoriesHandler
 {

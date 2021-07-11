@@ -48,10 +48,7 @@ class SubscriptionController extends Controller
         foreach($plans as $plan)
             $benefits[] = explode(',', $plan->benefits);
 
-        //TO DO Check if benefits can have empty fields
-      
-
-        return view('subscribe.index', [
+        return Theme::view('subscribe.index', [
             'plans' => $plans,
             'benefits' => $benefits,
             'subscription' => $subscription

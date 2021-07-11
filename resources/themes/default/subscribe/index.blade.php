@@ -39,17 +39,16 @@
                     {{$plan->billing_interval == 'month' ? __('Monthly') : ''}}
                     {{$plan->billing_interval == 'year' ? __('Yearly') : ''}}
                 </div>
+
                 <div class="card-body">
                     <h5 class="card-title ne-title">{{$plan->name}}</h5>
-                    <h6 class="card-title ne-title">{{$plan->price/100}}{{$plan->price%100 ? '.' . $plan->price%100 : ''}} {{$plan->currency}}</h6>
+                    <h6 class="card-title ne-title">{{ get_price($plan->price) }} {{$plan->currency}}</h6>
                     <p class="ne-short-description text-center">{{$plan->description}}</p>
                 </div>
                 
                 <ul class="list-group list-group-flush">
-                    @foreach ($benefits as $benefit)
-                        @if($benefit != '')
-                            <li class="list-group-item ne-list-item">{{$benefit}}</li>
-                        @endif
+                    @foreach ($benefits[$loop->index] as $benefit)
+                        <li class="list-group-item ne-list-item">{{ $benefit }}</li>
                     @endforeach
                 </ul>
                 

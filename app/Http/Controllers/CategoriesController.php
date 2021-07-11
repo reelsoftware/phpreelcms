@@ -24,25 +24,21 @@ class CategoriesController extends Controller
         $movies = CategoriesHandler::getMovieByCategory('cast', $slug);
 
         //Gets all the series that have a cast value similar to the given slug
-        $series = CategoriesHandler::getMovieByCategory('cast', $slug);
+        $series = CategoriesHandler::getSeriesByCategory('cast', $slug);
 
         $results = [];
 
         //Add movies to results array
         foreach($movies as $movie)
-        {
             $results[] = $movie;
-        }
 
         //Add series to results array
         foreach($series as $s)
-        {
             $results[] = $s;
-        }
+        
         shuffle($results);
 
         $results = collect($results)->paginate(9);
-
 
         $subscribed = UserHandler::checkSubscription();
 
@@ -65,24 +61,18 @@ class CategoriesController extends Controller
         $movies = CategoriesHandler::getMovieByCategory('genre', $slug);
 
         //Gets all the series that have a genre value similar to the given genre
-        $series = CategoriesHandler::getMovieByCategory('genre', $slug);
+        $series = CategoriesHandler::getSeriesByCategory('genre', $slug);
 
         $results = [];
 
-
-        //TO DO: better method of merging movies and series
-
         //Add movies to results array
         foreach($movies as $movie)
-        {
             $results[] = $movie;
-        }
 
         //Add series to results array
         foreach($series as $s)
-        {
             $results[] = $s;
-        }
+        
         shuffle($results);
 
         $results = collect($results)->paginate(9);
@@ -108,21 +98,18 @@ class CategoriesController extends Controller
         $movies = CategoriesHandler::getMovieByCategory('year', $year);
 
         //Gets all the series that have a year value similar to the given year
-        $series = CategoriesHandler::getMovieByCategory('year', $year);
+        $series = CategoriesHandler::getSeriesByCategory('year', $year);
 
         $results = [];
 
         //Add movies to results array
         foreach($movies as $movie)
-        {
             $results[] = $movie;
-        }
 
         //Add series to results array
         foreach($series as $s)
-        {
             $results[] = $s;
-        }
+        
         shuffle($results);
 
         $results = collect($results)->paginate(9);    
@@ -148,21 +135,18 @@ class CategoriesController extends Controller
         $movies = CategoriesHandler::getMovieByCategory('rating', $grade);
 
         //Gets all the series that have a rating value similar to the given grade
-        $series = CategoriesHandler::getMovieByCategory('rating', $grade);
+        $series = CategoriesHandler::getSeriesByCategory('rating', $grade);
 
         $results = [];
 
         //Add movies to results array
         foreach($movies as $movie)
-        {
             $results[] = $movie;
-        }
 
         //Add series to results array
         foreach($series as $s)
-        {
             $results[] = $s;
-        }
+
         shuffle($results);
 
         $results = collect($results)->paginate(9);
