@@ -27,6 +27,7 @@ class SubscriptionController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $benefits = [];
         
         if($user != null)
         {
@@ -42,17 +43,13 @@ class SubscriptionController extends Controller
             ->join('subscription_types', 'subscription_types.name', '=', 'settings.value')
             ->join('subscription_plans', 'subscription_plans.subscription_type_id', '=', 'subscription_types.id')
             ->where('subscription_plans.public', '=', 1)
-            ->get()->toArray();
-
-            dd($plans);
+            ->get();
 
         foreach($plans as $plan)
-        {
-            
-        }
+            $benefits[] = explode(',', $plan->benefits);
 
         //TO DO Check if benefits can have empty fields
-        $benefits = explode(',', $plans->benefits);
+      
 
         return view('subscribe.index', [
             'plans' => $plans,
