@@ -75,7 +75,10 @@ Route::middleware(['setLanguage'])->group(function ()
     require __DIR__.'/auth.php';
 
     //Resources
-    Route::get('/resource/video/{storage}/{fileName}', [ResourceController::class, 'file'])->name('fileResource');
+    Route::get('/resource/video/{storage}/{fileName}', [ResourceController::class, 'file'])
+        ->middleware('access.availability')
+        ->name('fileResource');
+
     Route::get('/resource/image/{storage}/{fileName}', [ResourceController::class, 'imageFile'])->name('fileResourceImage');
 
     //Categories
@@ -118,6 +121,17 @@ Route::middleware(['setLanguage'])->group(function ()
     Route::get('/trailer/season/{id}', [TrailerController::class, 'showSeason'])
         ->name('trailerSeasonShow');
 
+    //Check if the content is free and if requires auth
+    Route::middleware(['access.availability'])->group(function () 
+    {
+        Route::get('/movie/{id}', [MovieController::class, 'show'])
+            ->name('movieShow');
+
+        //Episodes
+        Route::get('/episode/{id}', [EpisodeController::class, 'show'])
+            ->name('episodeShow');
+    });
+
     Route::middleware(['auth'])->group(function () 
     {
         //Users
@@ -140,13 +154,6 @@ Route::middleware(['setLanguage'])->group(function ()
 
         Route::middleware(['subscribed'])->group(function () 
         {
-            Route::get('/movie/{id}', [MovieController::class, 'show'])
-                ->name('movieShow');
-
-            //Episodes
-            Route::get('/episode/{id}', [EpisodeController::class, 'show'])
-                ->name('episodeShow');
-
             Route::get('/subscribe/edit', [SubscriptionController::class, 'edit'])
                 ->name('subscribeEdit');
 

@@ -50,10 +50,6 @@ class StreamResource
             {
                 if (Storage::disk($storage)->exists('resources/' . $fileName)) 
                 {
-                    $url = Storage::disk($storage)->temporaryUrl(
-                        'resources/' . $fileName, now()->addMinutes(5)
-                    );
-
                     $this->setter('resources/' . $fileName, $storage, $fileName);
 
                     $filestream = $this->output();

@@ -31,7 +31,9 @@ class ValidationManager
             'trailer' => 'required|max:45',
             'trailerId' => 'required|max:45',
             'platformVideo' => 'required',
-            'platformTrailer' => 'required'
+            'platformTrailer' => 'required',
+            'access' => 'required',
+            'availability' => 'required',
         ];
 
         if (isset($validationData[$field]))

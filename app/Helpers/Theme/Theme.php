@@ -124,6 +124,16 @@ class Theme
      */
     public static function generateChildTheme()
     {
-        File::makeDirectory(resource_path('themes/child-' . config('app.theme')));
+        $path = resource_path('themes/child-' . config('app.theme'));
+        $directories = ['auth', 'categories', 'css', 'episodes', 'img', 'js', 'lang', 'layouts', 'movie', 'pagination', 'search', 'series', 'subscribe', 'trailer', 'user'];
+
+        //Generate the root child theme directory
+        if(!File::isDirectory($path))
+            File::makeDirectory($path);
+
+        //Generate the child theme directories
+        foreach($directories as $directory)
+            if(!File::isDirectory("$path//$directory"))
+                File::makeDirectory("$path//$directory");
     }
 }

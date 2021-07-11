@@ -59,10 +59,17 @@ class MovieBuilder implements IContentBuilder
         $movie->cast = $this->request->cast;
         $movie->genre = $this->request->genre;
         $movie->public = $this->request->public;
+        $movie->premium = $this->request->availability;
+
+        //If the content is not free it means that we must use auth
+        if($movie->premium != 1)
+            $movie->auth = $this->request->access;
+        else
+            $movie->auth = 1;
 
         //Link the thumbnail from images table to movies table
         $movie->thumbnail = ResourceHandler::addImage($this->request->thumbnail);
-        $movie->video = ResourceHandler::addVideo($this->request->video, $this->request->platformVideo);
+        $movie->video = ResourceHandler::addVideo($this->request->video, $this->request->platformVideo, $this->request->availability);
         $movie->trailer = ResourceHandler::addVideo($this->request->trailer, $this->request->platformTrailer, 0);
 
         $movie->save();

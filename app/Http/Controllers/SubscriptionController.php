@@ -42,10 +42,17 @@ class SubscriptionController extends Controller
             ->join('subscription_types', 'subscription_types.name', '=', 'settings.value')
             ->join('subscription_plans', 'subscription_plans.subscription_type_id', '=', 'subscription_types.id')
             ->where('subscription_plans.public', '=', 1)
-            ->get();
+            ->get()->toArray();
+
+            dd($plans);
+
+        foreach($plans as $plan)
+        {
+            
+        }
 
         //TO DO Check if benefits can have empty fields
-        $benefits = explode(',', $plan->benefits);
+        $benefits = explode(',', $plans->benefits);
 
         return view('subscribe.index', [
             'plans' => $plans,

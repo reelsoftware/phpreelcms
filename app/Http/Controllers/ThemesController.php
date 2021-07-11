@@ -19,7 +19,7 @@ class ThemesController extends Controller
         //Get all the themes available in themes folder
         
     
-
+        dd(Theme::generateChildTheme());
 
         dd(Theme::getCover('default'));
         

@@ -75,15 +75,17 @@ class ResourceHandler
      * @param string $fileName name of the
      * @param string $storage storage medium of the external file (youtube, vimeo)
      * @param int $premium by default every video is saved as premium (0=non premium, 1=premium)
+     * @param int $auth by default every video requires auth (0=no auth required, 1=requires auth)
      * 
      * @return int id of the new row from the video table
      */
-    public static function addVideo($fileName, $storage, $premium = 1)
+    public static function addVideo($fileName, $storage, $premium = 1, $auth = 1)
     {
         $video = new Video();
         $video->name = $fileName;
         $video->storage = $storage;
         $video->premium = $premium;
+        $video->auth = $auth;
 
         $video->save();
 
@@ -110,9 +112,10 @@ class ResourceHandler
      * @param string $videoId id of the database row that contains that specific video
      * @param string $storage storage medium 
      * @param int $premium by default every video is saved as premium (0=non premium, 1=premium)
+     * @param int $auth by default every video requires auth (0=no auth required, 1=requires auth)
      * 
      */
-    public static function updateVideo($fileName, $videoId, $storage, $premium=1)
+    public static function updateVideo($fileName, $videoId, $storage, $premium = 1, $auth = 1)
     {
         //Get video name and storage location for video
         $video = Video::where('id', '=', $videoId)->first();
@@ -125,6 +128,8 @@ class ResourceHandler
         $video->name = $fileName;
         $video->storage = $storage;
         $video->premium = $premium;
+        $video->auth = $auth;
+
         $video->save();
     }
 
@@ -149,5 +154,18 @@ class ResourceHandler
         $image->storage = $storage;
 
         $image->save();
+    }
+
+    /**
+     * Return the values stored in the premium and auth fields of a video
+     *
+     * @param string $fileName name of the video file
+     */
+    public static function getAccessAvailabilityVideo(string $fileName): array
+    {
+        $video = Video::where('name', '=', $fileName)
+            ->first(['premium', 'auth']);
+
+        return $video->toArray();
     }
 }

@@ -22,7 +22,7 @@ class UserHandler
         {
             $defaultSubscription = 'default';
             $subscribed = $user->subscribed($defaultSubscription);
-
+            
             if($subscribed == 1)
                 return true;
         }
@@ -35,14 +35,8 @@ class UserHandler
      */
     public static function getUserRole()
     {
-        $user = Auth::user();
-
         if(Auth::check())
-        {
-            $user = Auth::user()->first('roles');
-
-            return $user->roles;
-        }
+            return Auth::user()->roles;
 
         return null;
     }

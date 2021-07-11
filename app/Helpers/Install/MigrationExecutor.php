@@ -229,5 +229,13 @@ class MigrationExecutor
             CONSTRAINT `episodes_thumbnail_foreign` FOREIGN KEY (`thumbnail`) REFERENCES `images` (`id`),
             CONSTRAINT `episodes_video_foreign` FOREIGN KEY (`video`) REFERENCES `videos` (`id`)
         )");
+
+        //v0.2.0 
+        DB::statement("ALTER TABLE movies ADD premium BOOLEAN NOT NULL DEFAULT 1");
+        DB::statement("ALTER TABLE movies ADD auth BOOLEAN NOT NULL DEFAULT 1");
+        DB::statement("ALTER TABLE episodes ADD premium BOOLEAN NOT NULL DEFAULT 1");
+        DB::statement("ALTER TABLE episodes ADD auth BOOLEAN NOT NULL DEFAULT 1");
+        DB::statement("ALTER TABLE videos ADD auth BOOLEAN NOT NULL DEFAULT 1");
+        
     }
 }
