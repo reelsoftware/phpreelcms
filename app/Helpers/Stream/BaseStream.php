@@ -1,67 +1,64 @@
 <?php
+namespace App\Helpers\Stream; 
 
-namespace App\Http\Traits;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use App\Models\Image;
-use Symfony\Component\HttpFoundation\StreamedResponse;
-use App\Models\Video;
+use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
 
-trait RetreiveResourceTrait 
+abstract class BaseStream
 {
     /**
      * @var \League\Flysystem\AwsS3v3\AwsS3Adapter
      */
-    private $adapter;
+    protected $adapter;
 
     /**
      * Name of adapter
      *
      * @var string
      */
-    private $adapterName;
+    protected $adapterName;
 
     /**
      * Storage disk
      *
      * @var FilesystemAdapter
      */
-    private $disk;
+    protected $disk;
 
     /**
      * @var int file end byte
      */
-    private $end;
+    protected $end;
 
     /**
      * @var string
      */
-    private $filePath;
+    protected $filePath;
 
     /**
      * @var bool storing if request is a range (or a full file)
      */
-    private $isRange = false;
+    protected $isRange = false;
 
     /**
      * @var int|null length of bytes requested
      */
-    private $length = null;
+    protected $length = null;
 
     /**
      * @var array
      */
-    private $returnHeaders = [];
+    protected $returnHeaders = [];
 
     /**
      * @var int file size
      */
-    private $size;
+    protected $size;
 
     /**
      * @var int start byte
      */
-    private $start;
+    protected $start;
 
     /**
      * S3FileStream constructor.
@@ -69,7 +66,6 @@ trait RetreiveResourceTrait
      * @param string $adapter
      * @param string $humanName
      */
-
     public function setter(string $filePath, string $adapter = 's3')
     {
         $this->filePath    = $filePath;
@@ -165,48 +161,5 @@ trait RetreiveResourceTrait
         return $this->stream();
     }
 
-    /**
-     * Stream file to client.
-     * @throws Exception
-     * @return StreamedResponse
-     */
-    protected function stream(): StreamedResponse
-    {
-        $this->adapter->getClient()->registerStreamWrapper();
-        // Create a stream context to allow seeking
-        $context = stream_context_create([
-            's3' => [
-                'seekable' => true,
-            ],
-        ]);
-        // Open a stream in read-only mode
-        if (!($stream = fopen("s3://{$this->adapter->getBucket()}/{$this->filePath}", 'rb', false, $context))) 
-            throw new Exception('Could not open stream for reading export [' . $this->filePath . ']');
-       
-        if (isset($this->start) && $this->start > 0) 
-            fseek($stream, $this->start, SEEK_SET);
-
-        $remainingBytes = $this->length ?? $this->size;
-
-        //Chunk size in bytes
-        $chunkSize = 100;
-
-        //stream(Closure $callback, int $status = 200, array $headers = [])
-        $video = response()->stream(
-            function () use ($stream, $remainingBytes, $chunkSize) {
-                while (!feof($stream) && $remainingBytes > 0) {
-                    $toGrab = min($chunkSize, $remainingBytes);
-                    echo fread($stream, $toGrab);
-                    $remainingBytes -= $toGrab;
-                    flush();
-                }
-                fclose($stream);
-            },
-            ($this->isRange ? 206 : 200),
-            $this->returnHeaders
-        );
-
-        return $video;
-    }
-    
+    abstract protected function stream(): StreamedResponse;
 }

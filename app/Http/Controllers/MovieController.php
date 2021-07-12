@@ -107,8 +107,21 @@ class MovieController extends Controller
     public function edit($id)
     {
         $movie = Movie::where('id', '=', $id)
-            ->select('title', 'description', 'year', 'length', 'cast', 'genre', 'rating', 'public', 'video', 'trailer', 'thumbnail')
-            ->first();
+            ->select([
+                'title', 
+                'description', 
+                'year', 
+                'length', 
+                'cast', 
+                'genre', 
+                'rating', 
+                'public', 
+                'video', 
+                'trailer', 
+                'thumbnail', 
+                'premium as availability', 
+                'auth as access'
+            ])->first();
 
         if($movie != null)
             $content = $movie;
