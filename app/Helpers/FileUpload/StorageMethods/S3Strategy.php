@@ -1,6 +1,8 @@
 <?php
 namespace App\Helpers\FileUpload\StorageMethods;
+
 use App\Helpers\FileUpload\StorageMethods\IStorageStrategy;
+use App\Helpers\FileUpload\UploadHandler;
 use Aws\S3\S3Client;
 use Aws\Exception\AwsException;
 use Illuminate\Http\Request;
@@ -55,7 +57,7 @@ class S3Strategy implements IStorageStrategy
         if($request->videoId == '')
         {
             $this->fileName = UploadHandler::storeResource($request->file('file'));
-            $this->path .= '/resources/' . $this->fileName;
+            $this->path .= '//resources/' . $this->fileName;
         }
         else  
         {
@@ -64,7 +66,7 @@ class S3Strategy implements IStorageStrategy
             //Set file name from previous chunk
             $this->fileName = $request->videoId;
 
-            $this->path .= '/resources/' . $this->fileName;
+            $this->path .= '//resources/' . $this->fileName;
 
             //Get the files chunks that were already saved
             $savedChunks = fopen($this->path, 'a');

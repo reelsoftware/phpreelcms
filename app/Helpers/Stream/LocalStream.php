@@ -1,26 +1,27 @@
 <?php
 namespace App\Helpers\Stream; 
 
+use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use App\Models\Image;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use App\Models\Video;
+use Exception;
+use Arr;
 
-class S3Stream extends BaseStream
+
+class LocalStream extends BaseStream
 {
     /**
      * Stream file to client.
      * @throws Exception
-     * @return StreamedResponse
      */
     protected function stream(): StreamedResponse
     {
-        $this->adapter->getClient()->registerStreamWrapper();
-        // Create a stream context to allow seeking
-        $context = stream_context_create([
-            's3' => [
-                'seekable' => true,
-            ],
-        ]);
         // Open a stream in read-only mode
-        if (!($stream = fopen("s3://{$this->adapter->getBucket()}/{$this->filePath}", 'rb', false, $context))) 
+        if (!($stream = fopen(storage_path("app\\resources\\$this->filePath"), 'rb', false))) 
             throw new Exception('Could not open stream for reading export [' . $this->filePath . ']');
        
         if (isset($this->start) && $this->start > 0) 

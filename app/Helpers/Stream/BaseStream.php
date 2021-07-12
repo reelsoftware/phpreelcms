@@ -3,6 +3,13 @@ namespace App\Helpers\Stream;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use App\Models\Image;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use App\Models\Video;
+use Exception;
+use Arr;
 
 abstract class BaseStream
 {
@@ -95,6 +102,8 @@ abstract class BaseStream
      */
     protected function setHeadersAndStream()
     {
+
+
         if (!$this->disk->exists($this->filePath)) {
             report(new Exception('S3 File Not Found in S3FileStream - ' . $this->adapterName . ' - ' . $this->disk->path($this->filePath)));
             return response('File Not Found', 404);
@@ -111,10 +120,14 @@ abstract class BaseStream
             'Last-Modified'       => $this->disk->lastModified($this->filePath),
             'Accept-Ranges'       => 'bytes',
             'Content-Type'        => $this->disk->mimeType($this->filePath),
-            'Content-Disposition' => 'inline; filename=' . basename($this->filePath) . '.' . Arr::last(explode('.', $this->filePath))),
+            'Content-Disposition' => 'inline; filename=' . basename($this->filePath) . '.' . Arr::last(explode('.', $this->filePath)),
             'Content-Length'      => $this->length,
         ];
 
+
+        //dd(request()->server());
+
+        
         //Handle ranges here
         if (!is_null(request()->server('HTTP_RANGE'))) 
         {
@@ -152,6 +165,9 @@ abstract class BaseStream
 
             $this->start                           = intval($cStart);
             $this->end                             = intval($cEnd);
+
+
+
             $this->length                          = min($this->end - $this->start + 1, $this->size);
             $this->returnHeaders['Content-Length'] = $this->length;
             $this->returnHeaders['Content-Range']  = 'bytes ' . $this->start . '-' . $this->end . '/' . $this->size;
@@ -161,5 +177,5 @@ abstract class BaseStream
         return $this->stream();
     }
 
-    abstract protected function stream(): StreamedResponse;
+    //abstract protected function stream(): StreamedResponse;
 }

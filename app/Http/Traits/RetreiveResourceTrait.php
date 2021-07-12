@@ -115,7 +115,7 @@ trait RetreiveResourceTrait
             'Last-Modified'       => $this->disk->lastModified($this->filePath),
             'Accept-Ranges'       => 'bytes',
             'Content-Type'        => $this->disk->mimeType($this->filePath),
-            'Content-Disposition' => 'inline; filename=' . basename($this->filePath) . '.' . Arr::last(explode('.', $this->filePath))),
+            'Content-Disposition' => 'inline; filename=' . basename($this->filePath) . '.' . Arr::last(explode('.', $this->filePath)),
             'Content-Length'      => $this->length,
         ];
 

@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\URL;
 use App\Helpers\User\UserHandler;
 use Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Helpers\Stream\LocalStream;
+use App\Helpers\Stream\S3Stream;
 
 
 class StreamResource
@@ -48,11 +50,11 @@ class StreamResource
             //If storage disk is set to s3 then return files from S3 Bucket
             if($storage == 's3')
             {
-                if (Storage::disk($storage)->exists('resources/' . $fileName)) 
+                if (Storage::disk($storage)->exists($fileName)) 
                 {
-                    $this->setter('resources/' . $fileName, $storage, $fileName);
-
-                    $filestream = $this->output();
+                    $stream = new S3Stream();
+                    $stream->setter($fileName, $storage, $fileName);
+                    $filestream = $stream->output();
 
                     return $filestream;
                 }
@@ -61,12 +63,11 @@ class StreamResource
             }
             else if($storage == 'local')
             {
-                $exists = Storage::disk('local')->exists($fileName);
+                $stream = new LocalStream();
+                $stream->setter($fileName, $storage, $fileName);
+                $filestream = $stream->output();
 
-                if($exists)
-                    return response()->file(storage_path('app/resources/' . $fileName));
-                else 
-                    return abort(404);
+                return $filestream;
             }
         }
         else

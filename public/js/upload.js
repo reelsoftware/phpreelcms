@@ -39,6 +39,9 @@ inputField.addEventListener('change', () => {
 		//Add chunk to form
 		chunkForm.append('file', chunk, filename);
 
+		console.log(videoId);
+		console.log(filename);
+
 		uploadChunk(chunkForm, start, chunkEnd);
 	}
 
