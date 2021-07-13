@@ -6,16 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Episode;
 use App\Models\Seasons;
 use App\Models\Video;
-use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Traits\StoreResourceTrait;
 use App\Helpers\Content\EpisodeBuilder;
-use Auth;
 
 class EpisodeController extends Controller
 {
-    use StoreResourceTrait;
-
     public function episodesOrderEdit($id)
     {
         $episodes = Episode::where('season_id', '=', $id)
@@ -188,10 +183,6 @@ class EpisodeController extends Controller
         $episodes['previous'] = $prevEpisode;
         $episodes['current'] = $currentEpisode;
         $episodes['next'] = $nextEpisode;
-
-        //checks if the user is subscribed
-        $user = Auth::user();
-        $subscribed = false;
 
         $cast = explode(", ", $currentEpisode['cast']);
         $genre = explode(", ", $currentEpisode['genre']);

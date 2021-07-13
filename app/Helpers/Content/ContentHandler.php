@@ -185,6 +185,27 @@ class ContentHandler
     }
 
     /**
+     * Return the trailer for the season with the specified id
+     *
+     * @param int $id season to be returned
+     */
+    public static function getSeasonTrailer(int $id)
+    {
+        $season = Seasons::where('seasons.id', '=', $id)
+            ->join('series', 'seasons.series_id', '=', 'series.id')
+            ->join('videos', 'videos.id', '=', 'seasons.trailer')
+            ->first([
+                'series.title as series_title',
+                'seasons.title as season_title',
+                'series.id as series_id',
+                'videos.name as video_name',
+                'videos.storage as video_storage',
+            ]);
+
+        return $season;
+    }
+
+    /**
      * Return all the public seasons of a particular series
      *
      * @param int $id series that contains the seasons
@@ -294,5 +315,68 @@ class ContentHandler
             ->first(['premium', 'auth']);
 
         return $movie->toArray();
+    }
+
+    /**
+     * Return the values stored in the free and auth fields
+     *
+     * @param $series
+     * 
+     * @return array
+     */
+    public static function getSeriesSeasonsLength($series): array
+    {
+        //Calculate length of the whole series and of each season
+        $seriesLength = 0;
+        $seasonsLength = [];
+
+        //Set the current season id
+        $currentSeasonId = $series[0]['season']->season_id;
+
+        //Temp variable to calculate the length of the season
+        $currentSeasonLength = 0;
+        foreach($series as $content) 
+        {
+            foreach($content['episode'] as $episode)
+            {
+                $seriesLength += $episode['length'];
+
+                //Check if the current season is the same with the current iterating season
+                if($currentSeasonId == $content['season']['season_id'])
+                    $currentSeasonLength += $episode['length'];
+                else
+                {
+                    //Add the season length to the array
+                    $seasonsLength[$currentSeasonId] = $currentSeasonLength;
+
+                    //Set the new $currentSeasonId
+                    $currentSeasonId = $content['season']['season_id'];
+
+                    //Set the $currentSeasonLength to the length of the first episode of the new season
+                    $currentSeasonLength = $episode['length'];
+                }
+            }
+
+            //If there are no episodes then just add 0 to season length
+            if(count($content['episode']) == 0)
+            {
+                //Add the season length to the array
+                $seasonsLength[$currentSeasonId] = 0;
+
+                //Set the new $currentSeasonId
+                $currentSeasonId = $content['season']['season_id'];
+            }
+        }
+
+        //Add the last season length to the array
+        $seasonsLength[$currentSeasonId] = $currentSeasonLength;
+
+        //Add results to the return array
+        $return = [];
+        
+        $return['seriesLength'] = $seriesLength;
+        $return['seasonsLength'] = $seasonsLength;
+
+        return $return;
     }
 }

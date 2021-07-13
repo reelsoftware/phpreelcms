@@ -1,10 +1,7 @@
 <?php
 namespace App\Helpers\Resource; 
 
-use Illuminate\Http\Request;
-use Jackiedo\DotenvEditor\Facades\DotenvEditor;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Video;
 use App\Models\Image;
@@ -36,7 +33,7 @@ class ResourceHandler
      *
      * @return bool
      */
-    public static function checkPremium($storage, $fileName)
+    public static function checkPremium($storage, $fileName): bool
     {
         //Check if the video files is premium
         $file = Video::where([
@@ -57,9 +54,10 @@ class ResourceHandler
      * Add a image resource to the database
      *
      * @param string $fileName name of the image
-     * @return bool
+     * 
+     * @return int id of the new row from the image table
      */
-    public static function addImage($fileName)
+    public static function addImage($fileName): int
     {
         $image = new Image();
         $image->name = $fileName;
@@ -79,7 +77,7 @@ class ResourceHandler
      * 
      * @return int id of the new row from the video table
      */
-    public static function addVideo($fileName, $storage, $premium = 1, $auth = 1)
+    public static function addVideo($fileName, $storage, $premium = 1, $auth = 1): int
     {
         $video = new Video();
         $video->name = $fileName;
@@ -98,6 +96,7 @@ class ResourceHandler
      * @param string $fileName name of the
      * @param string $storage storage medium of the external file (youtube, vimeo)
      * 
+     * @return Illuminate\Support\Facades\Storage
      */
     public static function delete($fileName, $storage)
     {
@@ -160,6 +159,8 @@ class ResourceHandler
      * Return the values stored in the premium and auth fields of a video
      *
      * @param string $fileName name of the video file
+     * 
+     * @return array
      */
     public static function getAccessAvailabilityVideo(string $fileName): array
     {

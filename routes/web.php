@@ -24,6 +24,7 @@ use App\Http\Controllers\TranscodingController;
 use App\Http\Controllers\ThemesController;
 use App\Http\Controllers\AssetController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\EpisodeOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -246,10 +247,10 @@ Route::middleware(['setLanguage'])->group(function ()
         Route::post('dashboard/episode/update/{id}', [EpisodeController::class, 'update'])
             ->name('episodeUpdate');
 
-        Route::get('dashboard/episode/order/{id}', [EpisodeController::class, 'episodesOrderEdit'])
+        Route::get('dashboard/episode/order/{id}', [EpisodeOrderController::class, 'edit'])
             ->name('episodesOrderEdit');
 
-        Route::post('dashboard/episode/order/{id}', [EpisodeController::class, 'episodesOrderUpdate'])
+        Route::post('dashboard/episode/order/{id}', [EpisodeOrderController::class, 'update'])
             ->name('episodesOrderUpdate');
 
         Route::middleware(['stripe'])->group(function () 

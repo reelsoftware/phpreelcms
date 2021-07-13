@@ -102,8 +102,6 @@ abstract class BaseStream
      */
     protected function setHeadersAndStream()
     {
-
-
         if (!$this->disk->exists($this->filePath)) {
             report(new Exception('S3 File Not Found in S3FileStream - ' . $this->adapterName . ' - ' . $this->disk->path($this->filePath)));
             return response('File Not Found', 404);

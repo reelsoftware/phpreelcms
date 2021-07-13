@@ -3,23 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Image;
 use App\Models\Video;
-use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Traits\StoreResourceTrait;
-use App\Helpers\Content\MovieHelper; 
 use App\Helpers\Content\ContentHandler; 
 use App\Models\Movie;
 use App\Helpers\Content\MovieBuilder; 
 use App\Helpers\User\UserHandler;
 use App\Helpers\Theme\Theme;
-use Auth;
 
 class MovieController extends Controller
 {
-    use StoreResourceTrait;
-
     /**
      * Display a listing of the resource.
      *
@@ -58,7 +51,7 @@ class MovieController extends Controller
      */
     public function create()
     {
-        return view('movie.create');
+        return Theme::view('movie.create');
     }
 
     /**
@@ -91,7 +84,7 @@ class MovieController extends Controller
         $cast = explode(", ", $movie['cast']);
         $genre = explode(", ", $movie['genre']);
 
-        return view(env('THEME') . '.movie.show', [
+        return Theme::view('movie.show', [
             'item' => $movie,
             'cast' => $cast, 
             'genre' => $genre

@@ -8,6 +8,8 @@ use App\Models\Setting;
 use App\Helpers\PaymentProcessor\PaymentContext;
 use App\Helpers\PaymentProcessor\CardStrategy;
 use App\Helpers\Theme\Theme;
+use App\Helpers\User\UserHandler;
+use App\Helpers\Subscription\PlanHandler;
 use Auth;
 
 class SubscriptionController extends Controller
@@ -16,8 +18,6 @@ class SubscriptionController extends Controller
     {
         $this->paymentContext = new PaymentContext();   
     } 
-
-
 
     /**
      * Display a listing of the resource.
@@ -29,21 +29,9 @@ class SubscriptionController extends Controller
         $user = Auth::user();
         $benefits = [];
         
-        if($user != null)
-        {
-            $defaultSubscription = 'default';
-            $subscription = $user->subscribed($defaultSubscription);
-        }
-        else
-        {
-            $subscription = false;
-        }
+        $subscription = UserHandler::checkSubscription();
 
-        $plans = Setting::where('setting', '=', 'default_subscription')
-            ->join('subscription_types', 'subscription_types.name', '=', 'settings.value')
-            ->join('subscription_plans', 'subscription_plans.subscription_type_id', '=', 'subscription_types.id')
-            ->where('subscription_plans.public', '=', 1)
-            ->get();
+        $plans = PlanHandler::getPublicPlans();
 
         foreach($plans as $plan)
             $benefits[] = explode(',', $plan->benefits);
@@ -99,14 +87,14 @@ class SubscriptionController extends Controller
 
         $success = $this->paymentContext->execute();
 
-        return view(env('THEME') . '.subscribe.result', [
+        return Theme::view('subscribe.result', [
             'success' => $success
         ]);
     }
 
     public function result()
     {
-        return view(env('THEME') . '.subscribe.result', [
+        return Theme::view('subscribe.result', [
             'success' => $success
         ]);
     }
