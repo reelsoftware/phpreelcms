@@ -8,12 +8,10 @@ use App\Models\Seasons;
 use App\Models\Video;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Traits\StoreResourceTrait;
+use App\Helpers\Content\SeasonBuilder; 
 
 class SeasonController extends Controller
 {
-    use StoreResourceTrait;
-
     public function seasonsOrderEdit($id)
     {
         $seasons = Seasons::where('series_id', '=', $id)
@@ -110,47 +108,9 @@ class SeasonController extends Controller
      */
     public function store(Request $request)
     {
-        $validationArray = [
-            'title' => 'required|max:255',
-            'description' => 'required|max:500',
-            'year' => 'required',
-            'thumbnail' => 'required|max:45',
-            'series_id' => 'required|numeric'
-        ];
+        $builder = new SeasonBuilder();
 
-        $validated = $request->validate($validationArray);
-
-        $season = new Seasons();
-        $season->title = $request->title;
-        $season->description = $request->description;
-        $season->year = $request->year;
-        $season->series_id = $request->series_id;
-
-        //Link the thumbnail from images table to movies table
-        $season->thumbnail = $this->storeImage($request->thumbnail);
-
-        //Store trailer to the database and file
-        if($request->platformTrailer == 'html5')
-        {
-            //Link the video from videos table to movies table
-            $season->trailer = $this->storeVideo($request->trailer, 0);
-        }
-        else
-        {
-            $season->trailer = $this->storeVideoExternal($request->trailerId, $request->platformTrailer);
-        }
-
-        //Set the order of the season as the last season of the series
-        $lastOrder = Seasons::where('series_id', '=', $request->series_id)
-            ->orderBy('order', 'desc')
-            ->first(['order']);
-
-        if($lastOrder != null)
-            $season->order = $lastOrder['order'] + 1;
-        else 
-            $season->order = 1;
-        
-        $season->save();
+        $builder->setRequest($request)->validate()->store();
 
         return redirect()->route('seasonDashboard');
     }
@@ -192,77 +152,9 @@ class SeasonController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validationArray = [
-            'title' => 'required|max:255',
-            'description' => 'required|max:500',
-            'year' => 'required',
-            'series_id' => 'required|numeric'
-        ];
+        $builder = new SeasonBuilder();
 
-        //Check for updated thumbnail
-        if($request->thumbnail != null)
-            $validationArray['thumbnail'] = 'required|max:45';
-
-        //Check for updated trailer
-        if($request->trailer != null)  
-        {
-            //Platform for trailer 
-            if($request->platformTrailer == 'html5')
-                $validationArray['trailer'] = 'required|max:45';
-            else
-                $validationArray['trailerId'] = 'required|max:45';
-        }
-
-        $validated = $request->validate($validationArray);
-
-        $season = Seasons::find($id);
-        $season->title = $request->title;
-        $season->description = $request->description;
-        $season->year = $request->year;
-        
-        //Update thumbnail
-        if($request->thumbnail != null)
-        {
-            $this->updateImageResource($request->thumbnail, $season->thumbnail, config('app.storage_disk'));
-        }
-
-        //Update trailer
-        if($request->platformTrailer == 'html5')
-        {
-            if($request->trailer != null)
-            {
-                //Update the old trailer field with the new uploaded trailer
-                $this->updateVideoResource($request->trailer, $season->trailer, config('app.storage_disk'), 0);
-            } 
-        }
-        else if($request->platformTrailer == 'youtube' || $request->platformTrailer == 'vimeo')
-        {
-            if($request->trailerId != null)
-            {
-                //Update the old trailer field with the new trailer id
-                $this->updateVideoResource($request->trailerId, $season->trailer, $request->platformTrailer);
-            }
-        }
-
-        //If you update the season of a episode then set the order as the last episode of the season
-        if($season->series_id != $request->series_id)
-        {
-            //Get the last value order for episodes
-            $lastOrder = Seasons::where("series_id", "=", $request->series_id)
-                            ->orderBy('order', 'DESC')
-                            ->limit(1)
-                            ->first('order');
-
-            //Set it to 1 if there is not last order
-            if($lastOrder == null)
-                $season->order = 1;
-            else
-                $season->order = $lastOrder->order + 1;
-        }
-
-        $season->series_id = $request->series_id;
-
-        $season->save();
+        $builder->setRequest($request)->validate()->update($id);
 
         return redirect()->route('seasonDashboard');
     }

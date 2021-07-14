@@ -11,6 +11,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Container\Container;
 use App\Helpers\Content\ContentHandler;
 use App\Helpers\User\UserHandler;
+use App\Helpers\Theme\Theme;
 use Auth;
 
 class SearchController extends Controller
@@ -49,7 +50,7 @@ class SearchController extends Controller
         
         $subscribed = UserHandler::checkSubscription();
 
-        return view(env('theme') . '.search.index', [
+        return Theme::view('search.index', [
             'content' => $results,
             'subscribed' => $subscribed,
             'query' => $query

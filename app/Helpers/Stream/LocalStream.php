@@ -21,7 +21,7 @@ class LocalStream extends BaseStream
     protected function stream(): StreamedResponse
     {
         // Open a stream in read-only mode
-        if (!($stream = fopen(storage_path("app\\resources\\$this->filePath"), 'rb', false))) 
+        if (!($stream = fopen(storage_path("app/resources/$this->filePath"), 'rb', false))) 
             throw new Exception('Could not open stream for reading export [' . $this->filePath . ']');
        
         if (isset($this->start) && $this->start > 0) 

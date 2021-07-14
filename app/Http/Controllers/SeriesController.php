@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Storage;
 use Auth;
 use App\Models\Series;
 use App\Models\Episode;
-use App\Http\Traits\StoreResourceTrait;
 use App\Helpers\Content\ContentHandler;
 use App\Helpers\User\UserHandler;
 use App\Helpers\Theme\Theme;
@@ -16,8 +15,6 @@ use App\Helpers\Content\SeriesBuilder;
 
 class SeriesController extends Controller
 {
-    use StoreResourceTrait;
-
     public function indexDashboard()
     {
         $series = Series::orderByDesc('id')->simplePaginate(10);
@@ -79,65 +76,21 @@ class SeriesController extends Controller
         $series = ContentHandler::getSeries($id);
 
         if($series == null)
-            return view('series.show', [
+            return Theme::view('series.show', [
                 'content' => null,
                 'seriesLength' => null,
                 'seasonsLength' => null
             ]);
 
-        //Calculate length of the whole series and of each season
-        $seriesLength = 0;
-        $seasonsLength = [];
-
-        //Set the current season id
-        $currentSeasonId = $series[0]['season']->season_id;
-
-        //Temp variable to calculate the length of the season
-        $currentSeasonLength = 0;
-        foreach($series as $content) 
-        {
-            foreach($content['episode'] as $episode)
-            {
-                $seriesLength += $episode['length'];
-
-                //Check if the current season is the same with the current iterating season
-                if($currentSeasonId == $content['season']['season_id'])
-                    $currentSeasonLength += $episode['length'];
-                else
-                {
-                    //Add the season length to the array
-                    $seasonsLength[$currentSeasonId] = $currentSeasonLength;
-
-                    //Set the new $currentSeasonId
-                    $currentSeasonId = $content['season']['season_id'];
-
-                    //Set the $currentSeasonLength to the length of the first episode of the new season
-                    $currentSeasonLength = $episode['length'];
-                }
-            }
-
-            //If there are no episodes then just add 0 to season length
-            if(count($content['episode']) == 0)
-            {
-                //Add the season length to the array
-                $seasonsLength[$currentSeasonId] = 0;
-
-                //Set the new $currentSeasonId
-                $currentSeasonId = $content['season']['season_id'];
-            }
-
-        }
-
-        //Add the last season length to the array
-        $seasonsLength[$currentSeasonId] = $currentSeasonLength;
+        $length = ContentHandler::getSeriesSeasonsLength($series);
                 
         if($series == null || isset($series[0]) == false)
             return abort(404);
 
         return Theme::view('series.show', [
             'content' => $series,
-            'seriesLength' => $seriesLength,
-            'seasonsLength' => $seasonsLength
+            'seriesLength' => $length['seriesLength'],
+            'seasonsLength' => $length['seasonsLength']
         ]);
     }
 

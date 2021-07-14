@@ -14,16 +14,7 @@ class TrailerController extends Controller
     public function showSeason($id)
     {
         //TO DO Check if the series is public or not
-        $trailer = Seasons::where('seasons.id', '=', $id)
-            ->join('series', 'seasons.series_id', '=', 'series.id')
-            ->join('videos', 'videos.id', '=', 'seasons.trailer')
-            ->first([
-                'series.title as series_title',
-                'seasons.title as season_title',
-                'series.id as series_id',
-                'videos.name as video_name',
-                'videos.storage as video_storage',
-            ]);
+        $trailer = ContentHandler::getSeriesTrailer($id);
 
         if($trailer == null)
             return abort(404);

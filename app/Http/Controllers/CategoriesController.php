@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Movie;
 use App\Models\Series;
 use App\Helpers\Categories\CategoriesHandler;
 use App\Helpers\User\UserHandler;
 use App\Helpers\Theme\Theme;
-use Auth;
 
 class CategoriesController extends Controller
 {

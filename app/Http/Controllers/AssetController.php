@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Helpers\Theme\Theme;
 use File;
 
@@ -17,7 +16,7 @@ class AssetController extends Controller
      */
     public function javascript($scriptName)
     {
-        $path = Theme::getFilePath("js\\$scriptName");
+        $path = Theme::getFilePath("js/$scriptName");
 
         return response()->file($path);
     }
@@ -31,7 +30,7 @@ class AssetController extends Controller
      */
     public function css($styleName)
     {
-        $path = Theme::getFilePath("css\\$styleName");
+        $path = Theme::getFilePath("css/$styleName");
 
         return response()->file(resource_path($path));
     }
@@ -45,7 +44,7 @@ class AssetController extends Controller
      */
     public function image($imageName)
     {
-        $path = Theme::getFilePath("img\\$imageName");
+        $path = Theme::getFilePath("img/$imageName");
 
         return response()->file(resource_path($path));
     }

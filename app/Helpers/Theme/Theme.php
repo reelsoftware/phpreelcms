@@ -33,7 +33,7 @@ class Theme
      */
     public static function getActiveTheme(): string
     {
-        if(File::isDirectory(resource_path("themes\\child-" . config('app.theme'))))
+        if(File::isDirectory(resource_path("themes/child-" . config('app.theme'))))
             return 'child-' . config('app.theme');
         else
             return config('app.theme');
@@ -49,10 +49,10 @@ class Theme
     public static function getFilePath(string $path)
     {
         //Path to the file inside the theme
-        $themePath = resource_path("themes\\" . config('app.theme') . "\\$path");
+        $themePath = resource_path("themes/" . config('app.theme') . "/$path");
 
         //Path to the file inside the child theme
-        $childThemePath = resource_path("themes\\" . "child-" . config('app.theme') . "\\$path");
+        $childThemePath = resource_path("themes/" . "child-" . config('app.theme') . "/$path");
 
         //If the file exist in the child theme then return the child theme
         if(File::exists($childThemePath))
@@ -96,6 +96,44 @@ class Theme
     }
 
     /**
+     * Return all the available base themes (not child themes)
+     * 
+     */
+    public static function getBaseThemes(): array
+    {
+        $allThemes = Theme::getThemes();
+        $baseThemes = [];
+
+        foreach($allThemes as $theme)
+        {
+            //Remove child themes from the list
+            if(substr($theme, 0, 6) != "child-")
+                array_push($baseThemes, $theme);
+        }
+
+        return $baseThemes;
+    }
+
+    /**
+     * Return all the details for a given array of themes
+     * 
+     * @param array $themes list of the themes we are requesting details for
+     */
+    public static function getThemesDetails(array $themes): array
+    {
+        $themeDetails = [];
+
+        foreach($themes as $theme)
+        {
+            $themeDetails[$theme]['config'] = Theme::getConfig($theme);
+            $themeDetails[$theme]['cover'] = Theme::getCover($theme);
+            $themeDetails[$theme]['directoryName'] = $theme;
+        }
+
+        return $themeDetails;
+    }
+
+    /**
      * Return the config.json file from the theme
      *
      * @param string $theme name of the theme
@@ -121,10 +159,11 @@ class Theme
     /**
      * Generates the child theme directory and it's subdirectories
      * 
+     * @param string $theme name of the theme
      */
-    public static function generateChildTheme()
+    public static function generateChildTheme($theme)
     {
-        $path = resource_path('themes/child-' . config('app.theme'));
+        $path = resource_path('themes/child-' . $theme);
         $directories = ['auth', 'categories', 'css', 'episodes', 'img', 'js', 'lang', 'layouts', 'movie', 'pagination', 'search', 'series', 'subscribe', 'trailer', 'user'];
 
         //Generate the root child theme directory
@@ -135,5 +174,17 @@ class Theme
         foreach($directories as $directory)
             if(!File::isDirectory("$path//$directory"))
                 File::makeDirectory("$path//$directory");
+    }
+
+    /**
+     * Remove theme from themes folder
+     * 
+     * @param string $theme name of the theme
+     * 
+     * @return bool returns true if succedes, false if not
+     */
+    public static function deleteTheme($theme): bool
+    {
+        return File::deleteDirectory(resource_path('themes/' . $theme));
     }
 }
