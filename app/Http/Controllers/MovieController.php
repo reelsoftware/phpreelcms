@@ -51,7 +51,7 @@ class MovieController extends Controller
      */
     public function create()
     {
-        return Theme::view('movie.create');
+        return view('movie.create');
     }
 
     /**

@@ -17,14 +17,10 @@ class ThemesController extends Controller
     public function index()
     {
         //Get all the themes available in themes folder
-        
-    
-        dd(Theme::generateChildTheme());
-
-        dd(Theme::getCover('default'));
-        
+        $themes = Theme::getThemesDetails(Theme::getBaseThemes());
+       
         return view('themes.index', [
-            'directories' => $directories
+            'themes' => $themes
         ]);
     }
 
@@ -94,6 +90,16 @@ class ThemesController extends Controller
 
         DotenvEditor::save();
 
-        return redirect()->route('themeEdit');
+        //Generate child theme if it doens't exist
+        Theme::generateChildTheme($request->theme);
+
+        return redirect()->route('themeIndex');
+    }
+
+    public function destroy(Request $request)
+    {
+        Theme::deleteTheme($request->theme);
+      
+        return redirect()->route('themeIndex');
     }
 }

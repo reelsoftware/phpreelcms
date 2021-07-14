@@ -6,31 +6,43 @@
 
 @section('pageTitle')
     Themes
+    <span class="badge badge-pill badge-default">{{ count($themes) }}</span>
+    <button type="button" class="btn btn-primary mx-1 btn-sm">Add theme</button>
 @endsection
 
 @section('content')
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col">
-            <form action="{{ route('themeUpdate') }}" method="POST">
-                {{ csrf_field() }}
-                <h2>Select theme</h2>
-                <p><small>Once you set a custom theme make sure to code every single page of the frontend. In case you miss any page your application will not display properly. Check the documentation regarding theme creation for further details.</small></p>
+         @foreach($themes as $theme)
+            <div class="col-sm-6 col-lg-4">
+                <div class="card" >
+                    <img class="card-img-top" src="{{ $theme['cover'] }}" alt="Card image cap">
 
-                <div class="form-group">
-                    <label for="theme">Selected theme</label><br>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $theme['config']['Theme name'] }}</h5>
+                        <p class="card-text">{{ $theme['config']['Description'] }}</p>
 
-                    <select name="theme" class="custom-select" id="theme">
-                        @foreach ($directories as $directory)
-                            <option value="{{$directory}}" @if(env('THEME') == $directory) selected @endif>{{$directory}}</option>    
-                        @endforeach
-                    </select>
+                        @if($theme['directoryName'] == config('app.theme'))
+                            <span class="badge badge-pill badge-success badge-lg" style="font-size:12px">Active</span>
+                        @else
+                            <form action="{{ route('themeUpdate') }}" method="POST" id="formUpdate{{ $loop->index }}">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="theme" value="{{ $theme['directoryName'] }}">
+                            </form>
+
+                            <form action="{{ route('themeDestroy') }}" method="POST" id="formDestroy{{ $loop->index }}">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="theme" value="{{ $theme['directoryName'] }}">
+                            </form>
+
+                            <button type="submit" class="btn btn-info" value="Set as active" form="formUpdate{{ $loop->index }}">Set as active</button>
+                            <button type="submit" class="btn btn-danger" value="Remove" form="formDestroy{{ $loop->index }}">Remove</button>
+                        @endif
+                    </div>
                 </div>
-
-                <input type="submit" class="btn btn-primary my-2" value="Update">
-            </form>
-        </div>
+            </div>
+        @endforeach
     </div>
 </div>
 @endsection

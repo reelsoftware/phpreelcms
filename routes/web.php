@@ -345,6 +345,9 @@ Route::middleware(['setLanguage'])->group(function ()
 
         Route::post('dashboard/themes', [ThemesController::class, 'update'])
             ->name('themeUpdate');
+
+        Route::post('dashboard/themes/destroy', [ThemesController::class, 'destroy'])
+            ->name('themeDestroy');
     });
 });
 

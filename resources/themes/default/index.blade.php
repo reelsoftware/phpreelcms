@@ -47,7 +47,7 @@
                                 <div class="col-sm-12 col-md-6 col-lg-4 slide slider1" id="{{'item' . $loop->index}}" >                              
                                     <div class="ne-image-container my-2">
                                         <a href="{{route('movieShow', ['id' => $movie->movie_id])}}">
-                                            <img src="{{route('fileResource', ['fileName' => $movie->image_name, 'storage' => $movie->image_storage])}}" class="card-img">
+                                            <img src="{{route('fileResourceImage', ['fileName' => $movie->image_name, 'storage' => $movie->image_storage])}}" class="card-img">
                                         </a>
                                     </div>      
                                 </div>
@@ -76,7 +76,7 @@
                                 <div class="col-sm-12 col-md-6 col-lg-4 slide slider2" id="{{'item' . $loop->index}}">                              
                                     <div class="ne-image-container my-2">
                                         <a href="{{route('seriesShow', ['id' => $s->series_id])}}">
-                                            <img src="{{route('fileResource', ['fileName' => $s->image_name, 'storage' => $s->image_storage])}}" class="card-img">
+                                            <img src="{{route('fileResourceImage', ['fileName' => $s->image_name, 'storage' => $s->image_storage])}}" class="card-img">
                                         </a>
                                     </div>      
                                 </div>
