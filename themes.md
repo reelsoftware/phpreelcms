@@ -4,6 +4,30 @@ phpReel introduces the concept of themes as a way of creating your custom design
 The theme is nothing more than a collection of folders and files that together will change the way your application will render to the end-user. To ease your development process, phpReel created components. These are similar to a function that you can call to bring content from phpReel to your HTML5 template. You will learn more about components later in this documentation. 
 
 # File structure
+In order to create a phpReel theme you must comply to the theme standard defined by us. Don't worry, it's pretty simple. You just have to create a couple of directories and files as described below. 
+```
+themes
+│
+└───themeFolder
+    │   config.json
+    │   cover.jpg
+    │   config.json   
+    └───auth
+    └───categories
+    └───css
+    └───episodes
+    └───img
+    └───js
+    └───lang
+    └───layouts
+    └───movie
+    └───pagination
+    └───search
+    └───series
+    └───subscribe
+    └───trailer
+    └───user
+```
 
 # Starter layout
 At the core of any theme there is a layout. This file includes general information which is required on every page of the theme. You can have as many layouts as you may wish. To create a new one just create a new ".blade.php" file inside the layouts folder. Down below you are going to find a template that can be used as a starter for your next theme.
@@ -34,11 +58,24 @@ At the core of any theme there is a layout. This file includes general informati
 </body>
 </html>
 ```
+A layout is a normal ".blade.php" file, thus you have access to any Blade, Laravel or phpReel components that you would normally use. Detailed description on these components is provided later in this documentation.
+
 
 # Components
 As we previously stated, components are basic functions that help you link phpReel to your HTML5 template (stuff like embedding a video, linking CSS or js files, and so on). In this section we will discuss in detail everything about these components, what is their purpose, and how you can use them to create your themes.
 
 !> **Keep in mind!** Components take arguments in order to work. These arguments are PHP variables accessible in the themes files. Every file inside the theme has access to the exact variables it needs to serve its purpose.
+
+## get_js_url("script.js")
+Returns the path to a Javascript resource stored inside the js folder of your theme. It takes only one string argument which is a path to the js file. If that file is inside a directory you can include that file too.
+
+```php
+//File is situated in js/script.js
+get_js_url("script.js")
+
+//File is situated in js/demo/script.js
+get_js_url("demo/script.js")
+```
 
 ## @html5Source(videoName, videoStorage)
 Return a source html tag for the html5 video component.
