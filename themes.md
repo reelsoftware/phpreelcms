@@ -1,10 +1,39 @@
 # Introduction
 phpReel introduces the concept of themes as a way of creating your custom designs while at the same time not requiring extensive programming knowledge.
 
-The theme is nothing more than a collection of folders and files that together will change the way your application will render to the end-user. To ease your development process, phpReel created components. These are similar to a function that you can call to bring content from phpReel to your HTML5 template. You will learn more about components later in this documentation.
+The theme is nothing more than a collection of folders and files that together will change the way your application will render to the end-user. To ease your development process, phpReel created components. These are similar to a function that you can call to bring content from phpReel to your HTML5 template. You will learn more about components later in this documentation. 
 
 # File structure
 
+# Starter layout
+At the core of any theme there is a layout. This file includes general information which is required on every page of the theme. You can have as many layouts as you may wish. To create a new one just create a new ".blade.php" file inside the layouts folder. Down below you are going to find a template that can be used as a starter for your next theme.
+
+```HTML
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
+	<meta name="description" content="@yield('meta_description')">
+
+	<link rel="stylesheet" href="{{ get_css_url('style.css') }}">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
+
+	@yield('style')
+
+	<title>@yield('title')</title>
+</head>
+<body>
+	@yield('content')
+
+	<script src="{{ get_js_url("jquery-3.6.0.min.js") }}"></script>
+	<script src="{{ get_js_url("bootstrap.bundle.min.js") }}"></script>
+
+	@yield('script')
+</body>
+</html>
+```
 
 # Components
 As we previously stated, components are basic functions that help you link phpReel to your HTML5 template (stuff like embedding a video, linking CSS or js files, and so on). In this section we will discuss in detail everything about these components, what is their purpose, and how you can use them to create your themes.
