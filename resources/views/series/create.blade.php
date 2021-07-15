@@ -92,7 +92,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="resourceFile" onchange="updateFileLabel('resourceFile')">
+                                        <input type="file" class="custom-file-input" id="resourceFile">
                                         <label class="custom-file-label" for="resourceFile">Upload files</label>
                                     </div>
                                 </div>
@@ -156,11 +156,9 @@
 @endsection
 
 @section('script')
-    <script>
-        const url = "{{route('resourceStoreApi')}}";
-        //chunk size in bytes (1MB)
-        const chunkSize = {{env('CHUNK_SIZE')}} * 1000000; 
-    </script>
-
     <script src="{{ URL::asset('js/upload.js') }}"></script>
+
+    <script>
+        let fileUpload = new FileUpload("resourceFile", "{{route('resourceStoreApi')}}", {{env('CHUNK_SIZE')}} * 1000000);
+    </script>
 @endsection

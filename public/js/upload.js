@@ -1,115 +1,136 @@
 'use strict';
 
-var chunkCounter = 0; 
-var videoId = "";
-var playerUrl = "";
-var filename = "";
-var inputField = document.getElementById("resourceFile");
-	  
-inputField.addEventListener('change', () => {
-	const file = inputField.files[0];
+class FileUpload {
+	/**
+	 * Constructor class
+	 * @param {String} inputFieldId id of the input field where the user will upload the file
+	 * @param {String} url API endpoint used to store the file
+	 * @param {Number} chunkSize size of a single chunk (bytes)
+	 */
+	constructor(inputFieldId, url, chunkSize) {
+		this.chunkCounter = 0;
+		this.videoId = "";
+		this.playerUrl = "";
+		this.fileName = "";
+		this.inputField = document.getElementById(inputFieldId);
+		this.file = null;
+		this.numberofChunks = null;
+		this.start = null;
+		this.chunkEnd = null;
+		this.url = url;
+		this.chunkSize = chunkSize;
+		this.inputField.addEventListener('change', this.fileUpload.bind(this));
+	}
 
-	var numberofChunks = Math.ceil(file.size/chunkSize);
-	var start = 0; 
-	var chunkEnd = start + chunkSize;
+	/**
+	 * Reset to default values
+	 * @param {String} inputFieldId id of the input field where the user will upload the file
+	 * @param {String} url API endpoint used to store the file
+	 * @param {Number} chunkSize size of a single chunk (bytes)
+	 */
+	reset(inputFieldId, url, chunkSize) {
+		this.chunkCounter = 0;
+		this.videoId = "";
+		this.playerUrl = "";
+		this.fileName = "";
+		this.inputField = document.getElementById(inputFieldId);
+		this.file = null;
+		this.numberofChunks = null;
+		this.start = null;
+		this.chunkEnd = null;
+		this.url = url;
+		this.chunkSize = chunkSize;
+	}
 
-	chunkCounter = 0;
-	videoId = "";
-	filename = inputField.files[0].name;
+	fileUpload() {
+		this.file = this.inputField.files[0];
+		this.numberofChunks = Math.ceil(this.file.size/this.chunkSize);
+		this.start = 0;
+		this.chunkEnd = this.start + this.chunkSize;
+		this.chunkCounter = 0;
+		this.videoId = "";
+		this.fileName = this.file.name;
+		this.createChunk();
+	}
 
-	//upload the first chunk to get the videoId
-	createChunk(videoId, start);
-
-	function createChunk(videoId, start, end)
-	{
-		chunkCounter++;
-		chunkEnd = Math.min(start + chunkSize , file.size );
+	createChunk() {
+		this.chunkCounter++;
+		this.chunkEnd = Math.min(this.start + this.chunkSize , this.file.size);
 		//Slice a chunk of the file
-		const chunk = file.slice(start, chunkEnd);
+		const chunk = this.file.slice(this.start, this.chunkEnd);
 
 		//Create a form to send data
 		const chunkForm = new FormData();
 
 		//If videoId is not set then set it
-		if(videoId.length != 0)
-		{
-			chunkForm.append('videoId', videoId);	
-		}
+		if(this.videoId.length != 0)
+			chunkForm.append('videoId', this.videoId);	
 
 		//Add chunk to form
-		chunkForm.append('file', chunk, filename);
+		chunkForm.append('file', chunk, this.fileName);
 
-		console.log(videoId);
-		console.log(filename);
-
-		uploadChunk(chunkForm, start, chunkEnd);
+		this.uploadChunk(chunkForm);
 	}
 
-	function uploadChunk(chunkForm, start, chunkEnd)
-	{
-		var httpRequest = new XMLHttpRequest();
-		var blobEnd = chunkEnd-1;
-		var contentRange = "bytes " + start + "-" + blobEnd + "/" + file.size;
+	uploadChunk(chunkForm) {
+		let httpRequest = new XMLHttpRequest();
+		let blobEnd = this.chunkEnd - 1;
+		let contentRange = "bytes " + this.start + "-" + blobEnd + "/" + this.file.size;
 
-		httpRequest.upload.addEventListener("progress", updateProgress);	
-		httpRequest.open("POST", url, true);
+		httpRequest.upload.addEventListener("progress", this.updateProgress.bind(this));	
+		httpRequest.open("POST", this.url, true);
 		
-		httpRequest.setRequestHeader("Content-Range",contentRange);
+		httpRequest.setRequestHeader("Content-Range", contentRange);
 		httpRequest.setRequestHeader("X-CSRF-TOKEN", document.querySelector('meta[name="csrf-token"]').content);
 
-		function updateProgress (event) 
-		{
-			if (event.lengthComputable) 
-			{  
-				var percentComplete = Math.round(event.loaded / event.total * 100);
-				
-				var totalPercentComplete = Math.round((chunkCounter -1)/numberofChunks*100 +percentComplete/numberofChunks);
+		//Save the class object to self, to be used inside onload (this refers to XMLHttpRequest inside the onload)
+		let self = this;
 
-				//Update progress bar
-				document.getElementById("progressBar").style.width = totalPercentComplete + "%";
-			} 
-		}
-
-		httpRequest.onload = function (event) {
-			//console.log(httpRequest.response);
-			var resp = JSON.parse(httpRequest.response)
-			videoId = resp.videoId;
+		httpRequest.onload = function () {
+			let resp = JSON.parse(httpRequest.response)
+			self.videoId = resp.videoId;
 			
 			//Create a new chunk, offset the start pointer with the chunkSize to get the next chunk
-			start += chunkSize;	
-			
+			self.start += self.chunkSize;	
+
 			//If start is lower than the size of the whole file it means the file is not completley done
-			if(start < file.size)
+			if(self.start < self.file.size)
 			{
 				//Create a new chunk from the new start
-				createChunk(videoId, start);
+				self.createChunk();
 			}
 			else
 			{
 				//File is fully uploaded then update the view
 				document.getElementById("progressBar").style.width = "0%";
-				document.getElementById("uploadedFiles").innerHTML += '<p class="card-text">' + filename + '</p>';
+				document.getElementById("uploadedFiles").innerHTML += '<p class="card-text">' + self.fileName + '</p>';
 
 				if(document.getElementById("thumbnail") != null)
-					document.getElementById("thumbnail").innerHTML += '<option value="' + videoId + '">' + filename + '</option>';
+					document.getElementById("thumbnail").innerHTML += '<option value="' + self.videoId + '">' + self.fileName + '</option>';
 
 				if(document.getElementById("video") != null)
-					document.getElementById("video").innerHTML += '<option value="' + videoId + '">' + filename + '</option>';
+					document.getElementById("video").innerHTML += '<option value="' + self.videoId + '">' + self.fileName + '</option>';
 
 				if(document.getElementById("trailer") != null)
-					document.getElementById("trailer").innerHTML += '<option value="' + videoId + '">' + filename + '</option>';
+					document.getElementById("trailer").innerHTML += '<option value="' + self.videoId + '">' + self.fileName + '</option>';
 			}				
 		};
 
+		//Update the data modified inside onload
+		this.videoId = self.videoId;
+		this.start = self.start;
+
 		httpRequest.send(chunkForm);				
 	}	
-});
 
-function updateFileLabel(id) 
-{
-	files = document.getElementById(id).value.split('\\');
-	file = files[files.length - 1];
+	updateProgress(event) {
+		if (event.lengthComputable) 
+		{  
+			var percentComplete = Math.round(event.loaded / event.total * 100);
+			var totalPercentComplete = Math.round((this.chunkCounter -1)/this.numberofChunks*100 +percentComplete/this.numberofChunks);
 
-	//Update label
-	document.getElementById(id).labels[0].textContent = file;
-}   
+			//Update progress bar
+			document.getElementById("progressBar").style.width = totalPercentComplete + "%";
+		} 
+	}
+}
