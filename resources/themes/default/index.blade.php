@@ -1,7 +1,7 @@
-@extends('layouts.frontend')
+@extends('default.layout.frontend')
 
 @section('style')
-    @styleCss('slider.css', local)
+    <link rel="stylesheet" href="{{ get_css_url('slider.css') }}">
 @endsection
 
 @section('content')

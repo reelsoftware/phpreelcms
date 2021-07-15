@@ -6,14 +6,16 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 	<meta name="description" content="@yield('meta_description')">
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
-	<link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ get_css_url('app.css') }}">
+    <link rel="stylesheet" href="{{ get_css_url('slider.css') }}">
+    <link rel="stylesheet" href="{{ get_css_url('style.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
 	
-  @yield('style')
+  	@yield('style')
+	
     <title>@yield('title'){{Config::get('app.name')}}</title>
 </head>
-<body onresize="@yield('bodyScript')">
+<body>
 	<nav class="navbar navbar-expand-lg navbar-dark">
 		<div class="container">
 		  <a class="navbar-brand" href="{{ route('home') }}">{{ config('app.name') }}</a>
@@ -90,8 +92,10 @@
 	</nav>
 
     @yield('content')
-    <script src="{{asset('js/jquery-3.6.0.min.js')}}"></script>
-    <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
+
+    <script src="{{ get_js_url("jquery-3.6.0.min.js") }}"></script>
+    <script src="{{ get_js_url("bootstrap.bundle.min.js") }}"></script>
+
     @yield('script')
 </body>
 </html>
