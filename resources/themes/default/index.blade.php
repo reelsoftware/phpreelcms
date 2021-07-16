@@ -1,4 +1,4 @@
-@extends('default.layout.frontend')
+@extends('default.layouts.layout')
 
 @section('style')
     <link rel="stylesheet" href="{{ get_css_url('slider.css') }}">

@@ -135,7 +135,7 @@ if (!function_exists('get_pagination'))
 }
 
 /**
- * Render a specific pagination file
+ * Returns an excerpt from a given input text
  *
  * @param string $text to be excerpted
  * @param int $length of the resulting text
