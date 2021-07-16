@@ -28,6 +28,34 @@ themes
     └───trailer
     └───user
 ```
+## config.json file
+This is a mandatory file that contains basic information about the theme. It's a simple JSON file that has to be structured exactly as bellow.
+```json
+{
+    "Theme name": "Default",
+    "Description": "This is the default theme for phpReel",
+    "Author": "phpReel team",
+    "Theme URL": "https://phpreel.org/",
+    "Version": "1.0.0",
+    "License": "MIT",
+    "License URL": "https://github.com/phpreel/phpreel/blob/main/LICENSE"
+}
+```
+## cover.jpg
+Mandatory image file used as a thumbnail image for the theme inside the dashboard. The file must have exactly the same name and extension.
+
+## Directories inside theme folder
+As shown in the File structure section, there are a number of directories and files (we call them views) in those directories. To make sure every page work you must create all of them. In addition you can add as many views or directories you want, the above structure is the bare minimum.
+
+## What is Blade?
+Blade is a template engine that ships with Laravel and it's also what phpReel uses to render it's pages. If Blade is not familiar to you we recommend to check out it's documentation available on the Laravel website, you can find it [here](https://laravel.com/docs/master/blade).
+
+## .blade.php file extension
+Every file that contains the design of a specific page is called a view and it must have the .blade.php extension. This let's Blade know that the view should be compiled and cached into plain PHP code so it can be later rendered to the user. 
+
+## Accessing a view
+Although all the views must have the .blade.php extension note that when you will refer to them inside the components you don't include the extension. Furthermore if a view is situated inside a directory you can get access to it using a dot (ie if the view "content.blade.php" is situated in a directory named "basicDirectory", you can refer to it like this: "basicDirectory .content "). You can nest as many directories as you want and access them the same way.
+
 
 # Starter layout
 At the core of any theme there is a layout. This file includes general information which is required on every page of the theme. You can have as many layouts as you may wish. To create a new one just create a new ".blade.php" file inside the layouts folder. Down below you are going to find a template that can be used as a starter for your next theme.
@@ -64,7 +92,50 @@ A layout is a normal ".blade.php" file, thus you have access to any Blade, Larav
 # Components
 As we previously stated, components are basic functions that help you link phpReel to your HTML5 template (stuff like embedding a video, linking CSS or js files, and so on). In this section we will discuss in detail everything about these components, what is their purpose, and how you can use them to create your themes.
 
+There are two types of components you can call from within your views: Blade directives and phpReel components.
+
 !> **Keep in mind!** Components take arguments in order to work. These arguments are PHP variables accessible in the themes files. Every file inside the theme has access to the exact variables it needs to serve its purpose.
+
+## Blade directives
+This components are provided directly by the Blade template engine or they are registered directly through it.
+
+```php
+@componentName(param1)
+```
+
+!> **Note** The Blade directives always start with @
+
+## phpReel components
+Are created by phpReel to provide functionality beyond what Blade has to offer. They are basic PHP functions that are meant to provide access to the core of phpReel.
+```php
+{{ component_name(param1, param2, ...) }}
+```
+
+They are always snake case and they can take any number of parameters or none at all depending on the specific component you are trying to call.
+
+!> **Note** In order to make them work, we must enclose them between two curly braces {{ component_call_goes_here() }}. This tells Blade that the component is just a simple PHP function and it should render the view accordingly.
+
+
+## get_excerpt($text, $length, $trimMarker)
+Returns an excerpt from a given input text.
+
+- `$text` Required, text to be excerpted 
+- `$length` Required, length of the returned string
+- `$trimMarker` Required, string to be added after the chunk of text (e.g. if the trimMarker is ... then the returned string will end with ...)
+
+```php
+{{ get_excerpt($longStringOfText, 200, "...") }}
+```
+
+## get_pagination($content, $paginationFileName)
+Renders the specified pagination file.
+
+- `$content` Required, content to be paginated
+- `$paginationFileName` Required, name of the view file, situated in the pagination folder of the theme that holds the design and functionality information for the paginator
+
+```php
+{{ get_pagination($content, "basicPagination") }}
+```
 
 ## get_js_url("script.js")
 Returns the path to a Javascript resource stored inside the js folder of your theme. It takes only one string argument which is a path to the js file. If that file is inside a directory you can include that file too.
