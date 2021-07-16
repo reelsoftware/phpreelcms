@@ -22,26 +22,6 @@ class FileUpload {
 		this.inputField.addEventListener('change', this.fileUpload.bind(this));
 	}
 
-	/**
-	 * Reset to default values
-	 * @param {String} inputFieldId id of the input field where the user will upload the file
-	 * @param {String} url API endpoint used to store the file
-	 * @param {Number} chunkSize size of a single chunk (bytes)
-	 */
-	reset(inputFieldId, url, chunkSize) {
-		this.chunkCounter = 0;
-		this.videoId = "";
-		this.playerUrl = "";
-		this.fileName = "";
-		this.inputField = document.getElementById(inputFieldId);
-		this.file = null;
-		this.numberofChunks = null;
-		this.start = null;
-		this.chunkEnd = null;
-		this.url = url;
-		this.chunkSize = chunkSize;
-	}
-
 	fileUpload() {
 		this.file = this.inputField.files[0];
 		this.numberofChunks = Math.ceil(this.file.size/this.chunkSize);
@@ -103,7 +83,9 @@ class FileUpload {
 			{
 				//File is fully uploaded then update the view
 				document.getElementById("progressBar").style.width = "0%";
-				document.getElementById("uploadedFiles").innerHTML += '<p class="card-text">' + self.fileName + '</p>';
+
+				if(document.getElementById("uploadedFiles") != null)
+					document.getElementById("uploadedFiles").innerHTML += '<p class="card-text">' + self.fileName + '</p>';
 
 				if(document.getElementById("thumbnail") != null)
 					document.getElementById("thumbnail").innerHTML += '<option value="' + self.videoId + '">' + self.fileName + '</option>';

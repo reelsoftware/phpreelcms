@@ -8,10 +8,16 @@
     Themes
     <span class="badge badge-pill badge-default">{{ count($themes) }}</span>
     <button type="button" class="btn btn-primary mx-1 btn-sm">Add theme</button>
+
+    <input type="file" class="custom-file-input" id="resourceFile">
+
+    <div class="progress mt-3 mb-1">
+        <div id="progressBar" class="progress-bar" role="progressbar"></div>
+    </div> 
+    
 @endsection
 
 @section('content')
-
 <div class="container-fluid">
     <div class="row">
          @foreach($themes as $theme)
