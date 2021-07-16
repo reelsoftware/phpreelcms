@@ -92,7 +92,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="resourceFile">
+                                        <input style="display: none" type="file" class="custom-file-input" id="resourceFile">
                                         <label class="custom-file-label" for="resourceFile">Upload files</label>
                                     </div>
                                 </div>
