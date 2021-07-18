@@ -6,7 +6,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 	<meta name="description" content="@yield('meta_description')">
 
-
     <link rel="stylesheet" href="{{ get_css_url('app.css') }}">
     <link rel="stylesheet" href="{{ get_css_url('slider.css') }}">
     <link rel="stylesheet" href="{{ get_css_url('style.css') }}">

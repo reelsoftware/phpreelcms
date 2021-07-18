@@ -23,7 +23,7 @@ class HomeController extends Controller
         //Get the latest series
         $series = ContentHandler::getLatestSeries(6);
                 
-        return Theme::view('index', [
+        return Theme::view('home.home', [
             'subscribed' => $subscription,
             'movies' => $movies,
             'series' => $series

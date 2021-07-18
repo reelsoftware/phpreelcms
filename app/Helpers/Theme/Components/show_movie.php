@@ -54,7 +54,7 @@ if (!function_exists('get_css_url'))
 {
     function get_css_url($styleName)
     {
-        return route('cssAsset', ['styleName' => $styleName]);
+        echo route('cssAsset', ['styleName' => $styleName]);
     }
 }
 

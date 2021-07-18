@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Theme\Theme;
 use File;
+use Response;
 
 class AssetController extends Controller
 {
@@ -18,7 +19,11 @@ class AssetController extends Controller
     {
         $path = Theme::getFilePath("js/$scriptName");
 
-        return response()->file($path);
+        $headers = [
+            'Content-Type' => 'text/javascript',
+        ];
+
+        return response()->file($path, $headers);
     }
 
     /**
@@ -32,7 +37,11 @@ class AssetController extends Controller
     {
         $path = Theme::getFilePath("css/$styleName");
 
-        return response()->file(resource_path($path));
+        $headers = [
+            'Content-Type' => 'text/css',
+        ];
+
+        return response()->file($path, $headers);
     }
 
     /**

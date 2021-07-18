@@ -1,4 +1,4 @@
-@extends('layouts.frontend')
+@extends('layouts.layout')
 
 @section('meta_description', $item->description)
 

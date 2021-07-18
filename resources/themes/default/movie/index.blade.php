@@ -1,4 +1,4 @@
-@extends('layouts.frontend')
+@extends('default.layouts.layout')
 
 @section('meta_description', '')
 
