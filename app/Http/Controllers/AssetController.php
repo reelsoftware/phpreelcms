@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Theme\Theme;
 use File;
 use Response;
+use App\Helpers\Resource\AssetHandler;
 
 class AssetController extends Controller
 {
@@ -54,7 +55,12 @@ class AssetController extends Controller
     public function image($imageName)
     {
         $path = Theme::getFilePath("img/$imageName");
+        $contentType = AssetHandler::getImageContentType($path);
 
-        return response()->file(resource_path($path));
+        $headers = [
+            'Content-Type' => $contentType,
+        ];
+
+        return response()->file($path, $headers);
     }
 }
