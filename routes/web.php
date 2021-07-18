@@ -59,13 +59,6 @@ Route::middleware(['install'])->group(function ()
 
     Route::post('/install/payment', [InstallController::class, 'storePayment'])
         ->name('storePayment');
-
-    /**
-     * NOTICE: This MUST NOT be used in production
-     * This route is used only for dev porpouses, it gives you basic seeding
-     */
-    Route::get('/install/dev', [InstallController::class, 'dev'])
-        ->name('installDev');
 });
 
 
