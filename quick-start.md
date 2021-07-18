@@ -23,6 +23,7 @@ Here is a quick summary of what you will have to do:
 - `php artisan key:generate`
 - `php artisan migrate`
 - `php artisan serve`
-- Go to `yourdomain.com/install/dev` to seed the database. This replaces the installer by inserting mock data in the database. Once you open the link these are going to be your admin login details: 
+- `php artisan db:seed --class=DevSeeder
+` This replaces the installer by inserting mock data in the database. Once you seed the database these are going to be your admin login details: 
 - Email `admin@paulbalan.com`
 - Password `123456789`
