@@ -50,39 +50,21 @@ class UserController extends Controller
         $name = $user['name'];
         $email = $user['email'];
         $subscription = $user->subscribed($defaultSubscription);
-        $invoices = $user->invoices();
-        $stripeCustomer = '';
-        $cancelAt = '';
-        $currentPeriodEnd = '';
+
 
         $params['name'] = $name;
         $params['email'] = $email;
         $params['subscription'] = $subscription;
-        $params['invoices'] = $invoices;
         $params['language'] = $user->language;
         $params['translations'] = $translations;
 
-        $stripeCustomer = $user->createOrGetStripeCustomer();
 
-        //When it's going to cancel or null if it's not canceled
-        $cancelAt = $this->cancelAt($stripeCustomer);
-
-        //If cancelAt is null then this is when the subscription is going to renew
-        $currentPeriodEnd = $this->currentPeriodEnd($stripeCustomer);
-
-        $params['cancelAt'] = $cancelAt;
-        $params['currentPeriodEnd'] = $currentPeriodEnd;
         
         return view(env('theme') . '.user.index', $params);
     }
 
-    public function invoice(Request $request, $invoice)
+    public function manageSubscription(Request $request)
     {
-        $settings = Setting::get();
-       
-        return $request->user()->downloadInvoice($invoice, [
-            'vendor' => $settings[1]["value"],
-            'product' => $settings[0]["value"],
-        ]);
+        return $request->user()->redirectToBillingPortal(route('user'));
     }
 }

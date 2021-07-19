@@ -25,7 +25,7 @@ class PaymentContext
      * Execute the payment and return true for successful payments and 
      * false for failed payments
      */
-    public function execute(): bool
+    public function execute()
     {
         return $this->paymentStrategy->pay();
     }

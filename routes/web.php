@@ -37,6 +37,19 @@ use App\Http\Controllers\EpisodeOrderController;
 |
 */
 
+
+Route::get('/billing-portal', function (Request $request) {
+    return $request->user()->redirectToBillingPortal();
+});
+
+
+Route::get('/subscription-checkout', function (Request $request) {
+    return $request->user()
+        ->newSubscription('default', 'price_1JEvKtDmMK7vs0gcERHZevPc')
+        ->checkout();
+});
+
+
 Route::middleware(['install'])->group(function () 
 {
     Route::get('/install', [InstallController::class, 'index'])
@@ -145,10 +158,8 @@ Route::middleware(['setLanguage'])->group(function ()
             ->name('userUpdateLanguage');
 
         //Subscriptions
-        Route::get('/user/invoice/{invoice}', [UserController::class, 'invoice']);
-
-        Route::post('/subscribe/create', [SubscriptionController::class, 'create'])
-        ->name('subscribeCreate');
+        Route::post('/user/subscription', [UserController::class, 'manageSubscription'])
+            ->name('userManageSubscription');
 
         Route::post('/subscribe/store', [SubscriptionController::class, 'store'])
             ->name('subscribeStore');

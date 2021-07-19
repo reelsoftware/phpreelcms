@@ -44,34 +44,6 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
-        $validated = $request->validate( [
-            'plan' => 'required',
-            'price' => 'required',
-            'currency' => 'required',
-            'planName' => 'required',
-        ]);
-
-        $user = Auth::user();
-
-        if(!$user->subscribed('default'))
-            return Theme::view('subscribe.create', [
-                'intent' => $user->createSetupIntent(),
-                'name' => $request->plan,
-                'price' => $request->price,
-                'currency' => $request->currency,
-                'planName' => $request->planName,
-            ]);
-        else
-            return redirect(route('home'));
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -85,11 +57,8 @@ class SubscriptionController extends Controller
 
         $this->paymentContext->setPaymentStrategy(new CardStrategy($request));
 
-        $success = $this->paymentContext->execute();
-
-        return Theme::view('subscribe.result', [
-            'success' => $success
-        ]);
+        $url = $this->paymentContext->execute();
+        return redirect()->away($url);
     }
 
     public function result()

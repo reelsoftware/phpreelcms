@@ -1,6 +1,8 @@
 <?php
 namespace App\Helpers\Subscription; 
 
+use App\Models\Setting;
+
 class PlanHandler
 {
     /**

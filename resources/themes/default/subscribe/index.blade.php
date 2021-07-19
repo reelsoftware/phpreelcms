@@ -61,7 +61,7 @@
 
                     @auth
                         @if($subscription == false)
-                            <form action="{{route('subscribeCreate')}}" method="POST">
+                            <form action="{{route('subscribeStore')}}" method="POST">
                                 @csrf
                                 <!--Check if the bellow function works the same as the next 4 inputs-->
                                 {{ add_required_fields_subscription($plan->price, $plan->stripe_price_id, $plan->name, $plan->currency) }}

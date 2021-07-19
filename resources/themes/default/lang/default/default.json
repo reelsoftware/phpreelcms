@@ -36,15 +36,7 @@
     "Movie": "",
     "Trailer": "",
     "English (Default)": "",
-    "The next payment is schedule for": "",
-    "*If you cancel now the subscription is still going to be active until": "",
-    "The subscription has been canceled. You will continue to have acces until": "",
     "There are not any active subscriptions": "",
-    "Cancel the subscription": "",
-    "Date": "",
-    "Total": "",
-    "Receipt": "",
-    "Download": "",
     "Watching trailer for": "",
     "Watch": "",
     "Watch season trailer": "",
@@ -80,5 +72,6 @@
     "Preferred language": "",
     "Back to series": "",
     "Something went wrong": "",
-    "You are either already subscribed or something just went wrong. Please try again!": ""
+    "You are either already subscribed or something just went wrong. Please try again!": "",
+    "Manage subscription": ""
 }
