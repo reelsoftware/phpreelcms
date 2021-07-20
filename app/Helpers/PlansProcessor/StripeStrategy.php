@@ -27,10 +27,10 @@ class StripeStrategy implements IPlanStrategy
         if($params !== null)
         {
             if(isset($params['request']) && $params['request'] !== null)
-                $this->request = $request;
+                $this->request = $params['request'];
 
             if(isset($params['id']) && $params['id'] !== null)
-                $this->id = $id;
+                $this->id = $params['id'];
         }
     }
 

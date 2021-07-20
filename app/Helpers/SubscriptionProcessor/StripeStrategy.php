@@ -2,7 +2,7 @@
 namespace App\Helpers\SubscriptionProcessor; 
 
 use Illuminate\Http\Request;
-use App\Helpers\PlansProcessor\IPlanStrategy;
+use App\Helpers\SubscriptionProcessor\ISubscriptionStrategy;
 use App\Helpers\Payments\PaymentHelper;
 use App\Models\SubscriptionPlan;
 use App\Models\SubscriptionType;
@@ -15,7 +15,7 @@ use App\Helpers\PaymentProcessor\CardStrategy;
 /**
  * Concrete strategy class used to work with Stripe
  */
-class StripeStrategy implements IPlanStrategy
+class StripeStrategy implements ISubscriptionStrategy
 {
     /**
      * @var Request request object from the controller
@@ -37,10 +37,10 @@ class StripeStrategy implements IPlanStrategy
         if($params !== null)
         {
             if(isset($params['request']) && $params['request'] !== null)
-                $this->request = $request;
+                $this->request = $params['request'];
 
             if(isset($params['id']) && $params['id'] !== null)
-                $this->id = $id;
+                $this->id = $params['id'];
         }
 
         $this->paymentContext = new PaymentContext();
@@ -81,7 +81,7 @@ class StripeStrategy implements IPlanStrategy
      */
     public function store()
     {
-        $this->paymentContext->setPaymentStrategy(new CardStrategy($request));
+        $this->paymentContext->setPaymentStrategy(new CardStrategy($this->request));
 
         $this->paymentContext->execute();
     }
@@ -128,10 +128,10 @@ class StripeStrategy implements IPlanStrategy
 
         //Add plan to database
         $subscriptionPlan = SubscriptionPlan::find($this->id);
-        $subscriptionPlan->name = $request->name;
-        $subscriptionPlan->description = $request->description;
-        $subscriptionPlan->benefits = $request->benefits;
-        $subscriptionPlan->public = $request->public;
+        $subscriptionPlan->name = $this->request->name;
+        $subscriptionPlan->description = $this->request->description;
+        $subscriptionPlan->benefits = $this->request->benefits;
+        $subscriptionPlan->public = $this->request->public;
         $subscriptionPlan->save();
     }
 }

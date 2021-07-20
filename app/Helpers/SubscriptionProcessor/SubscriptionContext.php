@@ -15,7 +15,7 @@ class SubscriptionContext
     /**
      * Replace the strategy at runtime depending on what payment processing company is used
      */
-    public function setPlanStrategy(ISubscriptionStrategy $strategy)
+    public function setSubscriptionStrategy(ISubscriptionStrategy $strategy)
     {
         $this->subscriptionStrategy = $strategy;
     }

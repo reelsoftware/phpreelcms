@@ -20,6 +20,7 @@ class CardStrategy implements IPaymentStrategy
 
     /**
      * Implementation of the pay method from the interface
+     * 
      */
     public function pay()
     {
@@ -27,12 +28,19 @@ class CardStrategy implements IPaymentStrategy
             'plan' => 'required'
         ]);
 
-        $stripeCheckout = $this->request->user()
-            ->newSubscription('default', $this->request->plan)
-            ->checkout([
-                'cancel_url' => route('subscribe'),
-            ]);
-
-        return redirect()->away($stripeCheckout->url);
+        try {
+            $stripeCheckout = $this->request->user()
+                ->newSubscription('default', $this->request->plan)
+                ->checkout([
+                    'cancel_url' => route('subscribe'),
+                ]);
+        } catch (Exception $ex) {
+            return redirect()->route('error', [
+                'code' => $ex->getError()->code,
+                'message' => $ex->getMessage()
+            ])->send();
+        }
+            
+        return redirect()->away($stripeCheckout->url)->send();
     }
 }

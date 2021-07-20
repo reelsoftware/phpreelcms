@@ -10,7 +10,8 @@ use App\Helpers\PaymentProcessor\CardStrategy;
 use App\Helpers\Theme\Theme;
 use App\Helpers\User\UserHandler;
 use App\Helpers\Subscription\PlanHandler;
-use App\Helpers\Subscription\SubscriptionContext;
+use App\Helpers\SubscriptionProcessor\SubscriptionContext;
+use App\Helpers\SubscriptionProcessor\StripeStrategy;
 use Auth;
 
 class SubscriptionController extends Controller

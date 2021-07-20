@@ -25,6 +25,7 @@ use App\Http\Controllers\ThemesController;
 use App\Http\Controllers\AssetController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\EpisodeOrderController;
+use App\Http\Controllers\ErrorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,18 +38,8 @@ use App\Http\Controllers\EpisodeOrderController;
 |
 */
 
-
-Route::get('/billing-portal', function (Request $request) {
-    return $request->user()->redirectToBillingPortal();
-});
-
-
-Route::get('/subscription-checkout', function (Request $request) {
-    return $request->user()
-        ->newSubscription('default', 'price_1JEvKtDmMK7vs0gcERHZevPc')
-        ->checkout();
-});
-
+Route::get('/error/{code}/{message}', [ErrorController::class, 'show'])
+    ->name('error');
 
 Route::middleware(['install'])->group(function () 
 {
