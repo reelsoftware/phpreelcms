@@ -164,7 +164,7 @@ class Theme
     public static function generateChildTheme($theme)
     {
         $path = resource_path('themes/child-' . $theme);
-        $directories = ['auth', 'categories', 'css', 'episodes', 'img', 'js', 'lang', 'layouts', 'movie', 'pagination', 'search', 'series', 'subscribe', 'trailer', 'user'];
+        $directories = ['auth', 'categories', 'css', 'episodes', 'home', 'img', 'js', 'lang', 'layouts', 'movie', 'pagination', 'search', 'series', 'subscribe', 'trailer', 'user'];
 
         //Generate the root child theme directory
         if(!File::isDirectory($path))
@@ -177,11 +177,74 @@ class Theme
     }
 
     /**
+     * Returns an array containing the basic structure of a theme
+     *
+     * @return array
+     */
+    public static function getDefaultThemeDirectories()
+    {
+        return [
+            'auth' => ['forgot-password.blade.php', 'login.blade.php', 'register.blade.php', 'reset-password.blade.php'], 
+            'categories' => ['cast.blade.php', 'genre.blade.php', 'rating.blade.php', 'release.blade.php'], 
+            'css', 
+            'episodes' => ['show.blade.php'], 
+            'home' => ['home.blade.php'],
+            'img', 
+            'js', 
+            'lang' => ['default' => ['default.json']], 
+            'layouts' => ['layout.blade.php'], 
+            'movie' => ['index.blade.php', 'show.blade.php'], 
+            'pagination' => ['simple-pagination.blade.php'], 
+            'search' => ['index.blade.php'], 
+            'series' => ['index.blade.php', 'show.blade.php'], 
+            'subscribe' => ['index.blade.php'], 
+            'trailer' => ['show.blade.php'], 
+            'user' => ['index.blade.php']
+        ];
+    }
+
+    /**
+     * Generates the theme directory, subdirectories and mandatory files
+     * 
+     * @param string $theme name of the theme to be created
+     */
+    public static function generateTheme($theme)
+    {
+        $path = resource_path('themes/' . $theme);
+        $directories = Theme::getDefaultThemeDirectories();
+
+        //Generate the root theme directory
+        if(!File::isDirectory($path))
+            File::makeDirectory($path);
+
+        //Generate the theme directories
+        foreach($directories as $directory)
+            if(!File::isDirectory("$path//$directory"))
+                File::makeDirectory("$path//$directory");
+
+    }
+
+    /**
+     * Returns true if a theme is found, false if not
+     * 
+     * @param string $theme name of the theme to be searched for
+     */
+    public static function findTheme($theme): bool
+    {
+        $path = resource_path('themes/' . $theme);
+
+        if(File::isDirectory($path))
+            return true;
+        else
+            return false;          
+    }
+
+    /**
      * Remove theme from themes folder
      * 
      * @param string $theme name of the theme
      * 
-     * @return bool returns true if succedes, false if not
+     * @return bool returns true if succeeds, false if not
      */
     public static function deleteTheme($theme): bool
     {

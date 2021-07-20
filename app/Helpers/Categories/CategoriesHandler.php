@@ -8,7 +8,7 @@ use App\Models\Series;
 class CategoriesHandler
 {
     /**
-     * Return movies that corespond to a certain value of a certain category
+     * Return movies that correspond to a certain value of a certain category
      *
      * @param string $category in what category to search
      * @param string $param what to search in that specific category
@@ -35,7 +35,7 @@ class CategoriesHandler
     }
 
     /**
-     * Return series that corespond to a certain value of a certain category
+     * Return series that correspond to a certain value of a certain category
      *
      * @param string $category in what category to search
      * @param string $param what to search in that specific category

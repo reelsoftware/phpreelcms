@@ -90,7 +90,7 @@ class ThemesController extends Controller
 
         DotenvEditor::save();
 
-        //Generate child theme if it doens't exist
+        //Generate child theme if it doesn't exist
         Theme::generateChildTheme($request->theme);
 
         return redirect()->route('themeIndex');

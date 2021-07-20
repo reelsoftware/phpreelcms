@@ -23,12 +23,16 @@ class CardStrategy implements IPaymentStrategy
      */
     public function pay()
     {
+        $this->request->validate( [
+            'plan' => 'required'
+        ]);
+
         $stripeCheckout = $this->request->user()
             ->newSubscription('default', $this->request->plan)
             ->checkout([
                 'cancel_url' => route('subscribe'),
             ]);
 
-        return $stripeCheckout->url;
+        return redirect()->away($stripeCheckout->url);
     }
 }

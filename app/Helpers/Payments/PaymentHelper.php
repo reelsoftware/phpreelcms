@@ -1,7 +1,7 @@
 <?php
 namespace App\Helpers\Payments; 
 
-class PaymentHandler
+class PaymentHelper
 {
     /**
      * Return the array of currencies
@@ -27,5 +27,15 @@ class PaymentHandler
             'TRY', 'TTD', 'TWD', 'TZS', 'UAH', 'UGX', 'UYU', 'UZS', 'VND', 
             'VUV', 'WST', 'XAF', 'XCD', 'XOF', 'XPF', 'YER', 'ZAR', 'ZMW'
         ];
+    }
+
+    /**
+     * Return the value in pennies
+     *
+     * @return array
+     */
+    public static function toPennies($value): int
+    {
+        return (int) (string) ((float) preg_replace("/[^0-9.]/", "", $value) * 100);
     }
 }

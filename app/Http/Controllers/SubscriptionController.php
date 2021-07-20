@@ -10,13 +10,14 @@ use App\Helpers\PaymentProcessor\CardStrategy;
 use App\Helpers\Theme\Theme;
 use App\Helpers\User\UserHandler;
 use App\Helpers\Subscription\PlanHandler;
+use App\Helpers\Subscription\SubscriptionContext;
 use Auth;
 
 class SubscriptionController extends Controller
 {
     public function __construct()
     {
-        $this->paymentContext = new PaymentContext();   
+        $this->subscriptionContext = new SubscriptionContext(); 
     } 
 
     /**
@@ -26,21 +27,10 @@ class SubscriptionController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $benefits = [];
-        
-        $subscription = UserHandler::checkSubscription();
+        $this->subscriptionContext->setSubscriptionStrategy(new StripeStrategy());
+        $view = $this->subscriptionContext->index();
 
-        $plans = PlanHandler::getPublicPlans();
-
-        foreach($plans as $plan)
-            $benefits[] = explode(',', $plan->benefits);
-
-        return Theme::view('subscribe.index', [
-            'plans' => $plans,
-            'benefits' => $benefits,
-            'subscription' => $subscription
-        ]);
+        return Theme::view($view['name'], $view['data']);
     }
 
     /**
@@ -51,49 +41,10 @@ class SubscriptionController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate( [
-            'plan' => 'required',
-        ]);
-
-        $this->paymentContext->setPaymentStrategy(new CardStrategy($request));
-
-        $url = $this->paymentContext->execute();
-        return redirect()->away($url);
-    }
-
-    public function result()
-    {
-        return Theme::view('subscribe.result', [
-            'success' => $success
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit()
-    {
-        $user = Auth::user();
-
-        $invoices = $user->invoices();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy()
-    {
-        $user = Auth::user();
-        $defaultSubscription = Setting::where('setting', '=', 'default_subscription')->first()['value'];
-
-        $user->subscription($defaultSubscription)->cancel();
-
-        return redirect(route('user'));
+        $this->subscriptionContext->setSubscriptionStrategy(new StripeStrategy([
+            'request' => $request
+        ]));
+        
+        $this->subscriptionContext->store();
     }
 }
