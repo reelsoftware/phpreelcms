@@ -55,6 +55,14 @@ class EpisodeBuilder implements IContentBuilder
         $seconds = Helper::timeToSeconds($this->request->length);
         $episode->length = $seconds;
         $episode->public = $this->request->public;
+        $episode->premium = $this->request->availability;
+
+        //If the content is not free it means that we must use auth
+        if($episode->premium != 1)
+            $episode->auth = $this->request->access;
+        else
+            $episode->auth = 1;
+
         $episode->season_id = $this->request->season_id;
         $episode->thumbnail = ResourceHandler::addImage($this->request->thumbnail);
         $episode->video = ResourceHandler::addVideo($this->request->video, $this->request->platformVideo);
@@ -91,7 +99,14 @@ class EpisodeBuilder implements IContentBuilder
         $seconds = Helper::timeToSeconds($this->request->length);
         $episode->length = $seconds;
         $episode->public = $this->request->public;
+        $episode->premium = $this->request->availability;
 
+        //If the content is not free it means that we must use auth
+        if($episode->premium != 1)
+            $episode->auth = $this->request->access;
+        else
+            $episode->auth = 1;
+        
         //If you update the season of a episode then set the order as the last episode of the season
         if($episode->season_id != $request->season_id)
         {

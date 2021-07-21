@@ -164,6 +164,36 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="availability">Availability</label><br>
+            
+                                <select name="availability" class="custom-select" onchange="updateAccess()" id="availability">
+                                    <option value="0" @if (old('availability') == 0 || $content['availability'] == 0) selected @endif>Subscription</option>
+                                    <option value="1" @if (old('availability') == 1 || $content['availability'] == 0) selected @endif>Free</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container" id="access" style="display:none">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="access">Access</label><br>
+            
+                                <select name="access" class="custom-select">
+                                    <option value="0" @if (old('access') == 0 || $content['access'] == 0) selected @endif>Available without authentication</option>
+                                    <option value="1" @if (old('access') == 1 || $content['access'] == 0) selected @endif selected>Requires authentication to view the content</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
              
                 <div class="container">
                     <div class="row">

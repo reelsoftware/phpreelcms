@@ -164,7 +164,7 @@ class Theme
     public static function generateChildTheme($theme)
     {
         $path = resource_path('themes/child-' . $theme);
-        $directories = ['auth', 'categories', 'css', 'episodes', 'home', 'img', 'js', 'lang', 'layouts', 'movie', 'pagination', 'search', 'series', 'subscribe', 'trailer', 'user'];
+        $directories = array_keys(Theme::getDefaultThemeDirectories());
 
         //Generate the root child theme directory
         if(!File::isDirectory($path))
@@ -186,11 +186,12 @@ class Theme
         return [
             'auth' => ['forgot-password.blade.php', 'login.blade.php', 'register.blade.php', 'reset-password.blade.php'], 
             'categories' => ['cast.blade.php', 'genre.blade.php', 'rating.blade.php', 'release.blade.php'], 
-            'css', 
+            'css' => [], 
             'episodes' => ['show.blade.php'], 
             'home' => ['home.blade.php'],
-            'img', 
-            'js', 
+            'error' => ['error.blade.php'],
+            'img' => [], 
+            'js' => [], 
             'lang' => ['default' => ['default.json']], 
             'layouts' => ['layout.blade.php'], 
             'movie' => ['index.blade.php', 'show.blade.php'], 
@@ -204,6 +205,67 @@ class Theme
     }
 
     /**
+     * Creates the files and directories from the directories array
+     * 
+     * @param string $directories array of the directories
+     * @param string $path to where the files or directories are going to be created
+     */
+    public static function createFiles($directories, $path)
+    {
+        foreach($directories as $key => $value)
+        {
+            if(gettype($value) == 'array')
+            {
+                $tempPath = $path . '/' . $key;
+
+                if(!File::isDirectory($tempPath))
+                    File::makeDirectory($tempPath);
+
+                Theme::createFiles($value, $tempPath);
+            }   
+            else if(!File::exists($path . '/' . $value))
+                File::put($path . '/' . $value, '');
+        }
+    }
+
+    /**
+     * Generates the config file for a new theme
+     * 
+     * @param string $theme name of the theme to be created
+     */
+    public static function generateConfig($theme, $themeName, $description, $author, $themeUrl, $version, $license, $licenseUrl)
+    {
+        $path = resource_path("themes/$theme/config.json");
+        $config = [
+            "Theme name" => $themeName,
+            "Description" => $description,
+            "Author" => $author,
+            "Theme URL" => $themeUrl,
+            "Version" => $version,
+            "License" => $license,
+            "License URL" => $licenseUrl
+        ];
+
+        $json = json_encode($config, JSON_PRETTY_PRINT);
+        
+        if(!File::exists($path))
+            File::put($path, $json);
+    }
+
+    /**
+     * Generates the default cover image
+     * 
+     * @param string $theme name of the theme
+     */
+    public static function generateDefaultCover($theme)
+    {
+        $path = resource_path("themes/$theme");
+
+        if(File::isDirectory($path))
+            File::copy(resource_path('themeCover/cover.jpg'), "$path/cover.jpg");
+    }
+
+    /**
      * Generates the theme directory, subdirectories and mandatory files
      * 
      * @param string $theme name of the theme to be created
@@ -213,15 +275,12 @@ class Theme
         $path = resource_path('themes/' . $theme);
         $directories = Theme::getDefaultThemeDirectories();
 
-        //Generate the root theme directory
+        //Create the theme directory if it doesn't exist
         if(!File::isDirectory($path))
             File::makeDirectory($path);
 
-        //Generate the theme directories
-        foreach($directories as $directory)
-            if(!File::isDirectory("$path//$directory"))
-                File::makeDirectory("$path//$directory");
-
+        //Create the directories, subdirectories and files
+        Theme::createFiles($directories, $path);
     }
 
     /**

@@ -3,7 +3,7 @@
 @section('meta_description', '')
 
 @section('title')
-    {{__('Thank you')}} - 
+    Error code {{ $code }} - 
 @endsection
 
 @section('content')

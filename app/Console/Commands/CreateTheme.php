@@ -12,7 +12,7 @@ class CreateTheme extends Command
      *
      * @var string
      */
-    protected $signature = 'theme:make {name}';
+    protected $signature = 'theme:make {themeDirectoryName}';
 
     /**
      * The console command description.
@@ -38,16 +38,28 @@ class CreateTheme extends Command
      */
     public function handle()
     {
-        $name = $this->argument('name');
+        $themeDirectoryName = $this->argument('themeDirectoryName');
 
         //Check if the theme name is already taken
-        if(Theme::findTheme($name))
+        if(Theme::findTheme($themeDirectoryName))
         {
             $this->error('Name has already been taken, please try a different name');
             return;
         }
 
+        //Get information about the newly created theme
+        $themeName = $this->ask('Theme name');
+        $description = $this->ask('Description');
+        $author = $this->ask('Author');
+        $themeUrl = $this->ask('Theme URL');
+        $version = $this->ask('Version');
+        $license = $this->ask('License');
+        $licenseUrl = $this->ask('License URL');
 
+        Theme::generateTheme($themeDirectoryName);
+        Theme::generateConfig($themeDirectoryName, $themeName, $description, $author, $themeUrl, $version, $license, $licenseUrl);
+        Theme::generateDefaultCover($themeDirectoryName);
 
+        $this->info("Theme $themeDirectoryName was created succesfully! You can find it here: resources/themes/$themeDirectoryName");
     }
 }
