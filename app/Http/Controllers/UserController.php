@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Setting;
 use App\Models\Translation;
 use App\Http\Traits\SubscriptionDetailsTrait;
+use App\Helpers\Theme\Theme;
 use Auth;
 
 class UserController extends Controller
@@ -51,16 +52,13 @@ class UserController extends Controller
         $email = $user['email'];
         $subscription = $user->subscribed($defaultSubscription);
 
-
         $params['name'] = $name;
         $params['email'] = $email;
         $params['subscription'] = $subscription;
         $params['language'] = $user->language;
         $params['translations'] = $translations;
-
-
         
-        return view(env('theme') . '.user.index', $params);
+        return Theme::view('user.index', $params);
     }
 
     public function manageSubscription(Request $request)

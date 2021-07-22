@@ -19,5 +19,4 @@ class UploadHandler
 
         return $fileName;
     }
-
 }

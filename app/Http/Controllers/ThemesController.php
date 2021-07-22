@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Jackiedo\DotenvEditor\Facades\DotenvEditor;
 use App\Helpers\Theme\Theme;
 
-
 class ThemesController extends Controller
 {
     /**
@@ -54,7 +53,7 @@ class ThemesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    	//
     }
 
     /**

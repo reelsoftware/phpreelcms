@@ -6,8 +6,9 @@ class FileUpload {
 	 * @param {String} inputFieldId id of the input field where the user will upload the file
 	 * @param {String} url API endpoint used to store the file
 	 * @param {Number} chunkSize size of a single chunk (bytes)
+	 * @param {Function} uploadCallback callback function after the file is uploaded succesfully, must take 2 arguments (fileId, fileName)
 	 */
-	constructor(inputFieldId, url, chunkSize) {
+	constructor(inputFieldId, url, chunkSize, uploadCallback) {
 		this.chunkCounter = 0;
 		this.videoId = "";
 		this.playerUrl = "";
@@ -20,6 +21,7 @@ class FileUpload {
 		this.url = url;
 		this.chunkSize = chunkSize;
 		this.inputField.addEventListener('change', this.fileUpload.bind(this));
+		this.uploadCallback = uploadCallback;
 	}
 
 	fileUpload() {
@@ -68,6 +70,7 @@ class FileUpload {
 
 		httpRequest.onload = function () {
 			let resp = JSON.parse(httpRequest.response)
+			
 			self.videoId = resp.videoId;
 			
 			//Create a new chunk, offset the start pointer with the chunkSize to get the next chunk
@@ -82,19 +85,7 @@ class FileUpload {
 			else
 			{
 				//File is fully uploaded then update the view
-				document.getElementById("progressBar").style.width = "0%";
-
-				if(document.getElementById("uploadedFiles") != null)
-					document.getElementById("uploadedFiles").innerHTML += '<p class="card-text">' + self.fileName + '</p>';
-
-				if(document.getElementById("thumbnail") != null)
-					document.getElementById("thumbnail").innerHTML += '<option value="' + self.videoId + '">' + self.fileName + '</option>';
-
-				if(document.getElementById("video") != null)
-					document.getElementById("video").innerHTML += '<option value="' + self.videoId + '">' + self.fileName + '</option>';
-
-				if(document.getElementById("trailer") != null)
-					document.getElementById("trailer").innerHTML += '<option value="' + self.videoId + '">' + self.fileName + '</option>';
+				self.uploadCallback(self.videoId, self.fileName);
 			}				
 		};
 

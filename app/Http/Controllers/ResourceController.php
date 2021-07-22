@@ -10,7 +10,6 @@ use App\Helpers\FileUpload\StorageMethods\S3Strategy;
 use App\Helpers\Resource\StreamResource;
 use Storage;
 
-
 class ResourceController extends Controller
 {
     //Return image files
@@ -42,6 +41,5 @@ class ResourceController extends Controller
 
         //Send the JSON response to the next call
     	return response()->json($response);
-        
     }
 }

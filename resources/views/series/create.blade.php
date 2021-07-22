@@ -159,6 +159,23 @@
     <script src="{{ URL::asset('js/upload.js') }}"></script>
 
     <script>
-        let fileUpload = new FileUpload("resourceFile", "{{route('resourceStoreApi')}}", {{env('CHUNK_SIZE')}} * 1000000);
+
+        function resourceCallback(fileId, fileName) {
+            document.getElementById("progressBar").style.width = "0%";
+
+            if(document.getElementById("uploadedFiles") != null)
+                document.getElementById("uploadedFiles").innerHTML += '<p class="card-text">' + fileName + '</p>';
+
+            if(document.getElementById("thumbnail") != null)
+                document.getElementById("thumbnail").innerHTML += '<option value="' + fileId + '">' + fileName + '</option>';
+
+            if(document.getElementById("video") != null)
+                document.getElementById("video").innerHTML += '<option value="' + fileId + '">' + fileName + '</option>';
+
+            if(document.getElementById("trailer") != null)
+                document.getElementById("trailer").innerHTML += '<option value="' + fileId + '">' + fileName + '</option>';
+        }
+
+        let fileUpload = new FileUpload("resourceFile", "{{route('resourceStoreApi')}}", {{env('CHUNK_SIZE')}} * 1000000, resourceCallback);
     </script>
 @endsection
