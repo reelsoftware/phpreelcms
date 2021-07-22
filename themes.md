@@ -252,6 +252,53 @@ Takes two arguments:
 @scriptJs("https://cdn.plyr.io/3.6.4/plyr.js", external)
 ```
 
+# Available view variables
+Every view inside your theme has access to certain values by default. These values are passed to the view via the controller to provide basic functionality to your views. Down bellow you are going to find all the available variables. More information about phpReel components are available in this documentation.
+
+## How to use variables?
+After you check what variables are available for a particular view you can get their content like this:
+```php
+{{ $variableName }}
+```
+
+## Extend beyond view variables
+Although phpReel provides access out of the box to basic variables you can extend access to other variables by using phpReel components. Different components will give you access to different pieces of data to give you as much flexibility as possible while developing themes.
+
+## user.index
+- `$name` (string) Name of the current logged in user
+- `$email` (string) Email of the current logged in user
+- `$subscription` (bool) Returns true if the user has an active subscription
+- `$language` (string) Language set as default for the logged in user
+- `$translations` (array) List of all the available translations
+
+## trailer.show
+- `$item` Collection of all the details of a particular trailer
+- `$item->title` (string) Title of the trailer
+- `$item->description` (string) Description of the trailer
+
+- `$item->video_name` (string) Name of the video file
+- `$item->video_storage` (string) Name of the storage medium where the video is stored
+
+```php
+{{ get_video_url($item->video_name, $item->video_storage) }}
+```
+
+- `$item->id` (int) Id of the trailer
+
+- `$item->series_title` (string) Title of the series to which the trailer is linked
+- `$item->series_id` (int) Id of the series to which the trailer is linked
+
+- `$item->season_title` (string) Title of the season which is linked to the series
+- `$item->season_id` (int) Id of the season which is linked to the series
+
+```php
+@if($item->series_title != null && $item->season_title != null)
+    <a class="ne-movie-details" href="{{route('seriesShow', ['id' => $item->series_id])}}">{{$item->series_title}} - {{$item->season_title}}</a> 
+@elseif($item->title != null)
+    <a class="ne-movie-details" href="{{route('movieShow', ['id' => $item->id])}}">{{$item->title}}</a> 
+@endif
+```
+
 # Translation
 phpReel integrates a translation feature that lets you translate your application to any language you might want, using a simple UI right from your dashboard. This feature is great but considering you are developing a new theme that might contain different keywords that have to be translated you have to take one extra step and that is creating your default language file.
 
