@@ -350,6 +350,10 @@ Route::middleware(['setLanguage'])->group(function ()
 
         Route::post('dashboard/themes/destroy', [ThemesController::class, 'destroy'])
             ->name('themeDestroy');
+
+        Route::post('dashboard/themes/store', [ThemesController::class, 'store'])
+            ->name('themeStore');
+
     });
 });
 

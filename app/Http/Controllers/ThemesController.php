@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Jackiedo\DotenvEditor\Facades\DotenvEditor;
 use App\Helpers\Theme\Theme;
+use Illuminate\Support\Facades\Log;
+use File;
+use Zip;
 
 class ThemesController extends Controller
 {
@@ -53,7 +56,23 @@ class ThemesController extends Controller
      */
     public function store(Request $request)
     {
-    	//
+        $request->validate([
+            'fileId' => 'required',
+        ]);
+
+        $themeZipPath = resource_path("themes/$request->fileId");
+
+        //Move the zip archive from resources to themes
+    	File::move(storage_path("app/resources/$request->fileId"), $themeZipPath);
+
+        if(Zip::check($themeZipPath))
+        {
+            $zip = Zip::open($themeZipPath);
+            $zip->extract(resource_path("themes"));
+            $zip->close();
+        }
+      
+        File::delete($themeZipPath);
     }
 
     /**

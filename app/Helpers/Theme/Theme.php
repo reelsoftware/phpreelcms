@@ -141,7 +141,10 @@ class Theme
      */
     public static function getConfig(string $theme)
     {
-        return json_decode(implode("", file(resource_path('themes/'. $theme . '/config.json'))), true);
+        $configPath = resource_path('themes/'. $theme . '/config.json');
+
+        if(File::exists($configPath))
+            return json_decode(implode("", file($configPath)), true);
     }
 
     /**

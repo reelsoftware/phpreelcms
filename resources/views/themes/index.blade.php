@@ -8,10 +8,13 @@
     Themes
     <span class="badge badge-pill badge-default">{{ count($themes) }}</span>
 
-    <button type="button" class="btn btn-primary mx-1 btn-sm">Add theme</button>
+    <label for="resourceFile">
+        <span for="resourceFile" type="file" class="btn btn-primary mx-1 btn-sm">Add theme</span>
+    </label>
 
-    <input type="file" class="custom-file-input" id="resourceFile">
+    <input style="display: none" type="file" class="custom-file-input" id="resourceFile">
 
+    <small><i>*must be a .zip file</i></small>
     <div class="progress mt-3 mb-1">
         <div id="progressBar" class="progress-bar" role="progressbar"></div>
     </div> 
@@ -51,4 +54,27 @@
         @endforeach
     </div>
 </div>
+@endsection
+
+@section('script')
+    <script src="{{ URL::asset('js/upload.js') }}"></script>
+
+    <script>
+        new FileUpload("resourceFile", "{{route('resourceStoreApi', ['storage' => 'local'])}}", {{env('CHUNK_SIZE')}} * 1000000, function(fileId, fileName) {
+            const httpRequest = new XMLHttpRequest();	
+            httpRequest.open("POST", "{{ route('themeStore') }}", true);
+            
+            httpRequest.setRequestHeader("X-CSRF-TOKEN", document.querySelector('meta[name="csrf-token"]').content);
+
+            httpRequest.onload = function () {
+                document.getElementById("progressBar").style.width = "0%";
+                location.reload();
+		    };
+
+            const form = new FormData();	
+            form.append('fileId', fileId);
+
+            httpRequest.send(form);
+        });
+    </script>
 @endsection
