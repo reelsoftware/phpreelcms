@@ -8,6 +8,7 @@ use App\Helpers\FileUpload\StorageMethods\StorageContext;
 use App\Helpers\FileUpload\StorageMethods\LocalStrategy;
 use App\Helpers\FileUpload\StorageMethods\S3Strategy;
 use App\Helpers\Resource\StreamResource;
+use Illuminate\Support\Facades\Log;
 use Storage;
 
 class ResourceController extends Controller
@@ -24,16 +25,26 @@ class ResourceController extends Controller
         return StreamResource::streamFile($storage, $fileName);
     }
 
-    //Store resource
-    public function storeAPI(Request $request)
+    /**
+     * Store a particular resource
+     *
+     * @var string $storage optional parameter to specify the storage medium to be used, if not specified it will use the default storage from the env
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function storeAPI(Request $request, $storage = null)
     {
-    	$storage = config('app.storage_disk');
+        if($storage == null)
+    	    $storageMedium = config('app.storage_disk');
+        else
+            $storageMedium = $storage;
+        
     	$storageContext = new StorageContext();
 
         //Update the strategy based on storage
-    	if($storage == 'local')
+    	if($storageMedium == 'local')
     		$storageContext->setStorageStrategy(new LocalStrategy());
-        else if($storage == 's3')
+        else if($storageMedium == 's3')
     		$storageContext->setStorageStrategy(new S3Strategy());
 
         //Get the JSON response from previous call

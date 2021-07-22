@@ -9,13 +9,16 @@ class UploadHandler
 {
     /**
      * Store the first chunk of the resource
+     * 
      * @param Request $file request file from the upload form
+     * @param String $storage medium used for the file
+     * 
      * @return string name of the stored file
      */
-    public static function storeResource($file)
+    public static function storeResource($file, $storage)
     {
         $fileName = time() . Str::random(26) . '.' . $file->extension();
-        Storage::disk(config('app.storage_disk'))->put($fileName, file_get_contents($file));
+        Storage::disk($storage)->put($fileName, file_get_contents($file));
 
         return $fileName;
     }

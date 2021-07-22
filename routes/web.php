@@ -176,7 +176,7 @@ Route::middleware(['setLanguage'])->group(function ()
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         //Upload API
-        Route::post('dashboard/api/store', [ResourceController::class, 'storeAPI'])
+        Route::post('dashboard/api/store/{storage?}', [ResourceController::class, 'storeAPI'])
             ->name('resourceStoreApi');
 
         //Movie

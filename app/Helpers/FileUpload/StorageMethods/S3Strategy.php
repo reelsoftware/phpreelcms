@@ -56,7 +56,7 @@ class S3Strategy implements IStorageStrategy
         //If it's the first chunk then create a new file
         if($request->videoId == '')
         {
-            $this->fileName = UploadHandler::storeResource($request->file('file'));
+            $this->fileName = UploadHandler::storeResource($request->file('file'), 's3');
             $this->path .= '//resources/' . $this->fileName;
         }
         else  
