@@ -275,7 +275,6 @@ Although phpReel provides access out of the box to basic variables you can exten
 - `$item` Collection of all the details of a particular trailer
 - `$item->title` (string) Title of the trailer
 - `$item->description` (string) Description of the trailer
-
 - `$item->video_name` (string) Name of the video file
 - `$item->video_storage` (string) Name of the storage medium where the video is stored
 
@@ -284,10 +283,8 @@ Although phpReel provides access out of the box to basic variables you can exten
 ```
 
 - `$item->id` (int) Id of the trailer
-
 - `$item->series_title` (string) Title of the series to which the trailer is linked
 - `$item->series_id` (int) Id of the series to which the trailer is linked
-
 - `$item->season_title` (string) Title of the season which is linked to the series
 - `$item->season_id` (int) Id of the season which is linked to the series
 
