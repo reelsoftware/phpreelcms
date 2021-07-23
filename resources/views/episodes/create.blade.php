@@ -58,7 +58,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="resourceFile" onchange="updateFileLabel('resourceFile')">
+                                        <input type="file" class="custom-file-input" id="resourceFile">
                                         <label class="custom-file-label" for="resourceFile">Upload files</label>
                                     </div>
                                 </div>
@@ -206,13 +206,23 @@
 @endsection
 
 @section('script')
-    <script src="{{ URL::asset('js/switchVideoOption.js') }}"></script>
+    <script src="{{ URL::asset('js/upload.js') }}"></script>
 
     <script>
-        const url = "{{route('resourceStoreApi')}}";
-        //chunk size in bytes (1MB)
-        const chunkSize = {{env('CHUNK_SIZE')}} * 1000000; 
-    </script>
+        new FileUpload("resourceFile", "{{ route('resourceStoreApi') }}", {{ env('CHUNK_SIZE') }} * 1000000, function (fileId, fileName) {
+            document.getElementById("progressBar").style.width = "0%";
 
-    <script src="{{ URL::asset('js/upload.js') }}"></script>
+            if(document.getElementById("uploadedFiles") != null)
+                document.getElementById("uploadedFiles").innerHTML += '<p class="card-text">' + fileName + '</p>';
+
+            if(document.getElementById("thumbnail") != null)
+                document.getElementById("thumbnail").innerHTML += '<option value="' + fileId + '">' + fileName + '</option>';
+
+            if(document.getElementById("video") != null)
+                document.getElementById("video").innerHTML += '<option value="' + fileId + '">' + fileName + '</option>';
+
+            if(document.getElementById("trailer") != null)
+                document.getElementById("trailer").innerHTML += '<option value="' + fileId + '">' + fileName + '</option>';
+        });
+    </script>
 @endsection
