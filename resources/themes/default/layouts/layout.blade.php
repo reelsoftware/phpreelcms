@@ -19,46 +19,46 @@
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark">
 		<div class="container">
-		  <a class="navbar-brand" href="{{ route('home') }}">{{ config('app.name') }}</a>
+		  <a class="navbar-brand" href="{{ get_home_url() }}">{{ config('app.name') }}</a>
 		  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		  </button>
 		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				<li class="nav-item">
-					<a class="ne-nav-link nav-link active" href="{{ route('home') }}">{{__('Home')}}</a>
+					<a class="ne-nav-link nav-link active" href="{{ get_home_url() }}">{{__('Home')}}</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="ne-nav-link nav-link active" href="{{ route('movies') }}">{{__('Movies')}}</a>
+					<a class="ne-nav-link nav-link active" href="{{ get_all_movies_url() }}">{{__('Movies')}}</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="ne-nav-link nav-link active" href="{{ route('series') }}">{{__('Series')}}</a>
+					<a class="ne-nav-link nav-link active" href="{{ get_all_series_url() }}">{{__('Series')}}</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="ne-nav-link nav-link active" href="{{ route('subscribe') }}">{{__('Subscribe')}}</a>
+					<a class="ne-nav-link nav-link active" href="{{ get_subscription_list_url() }}">{{__('Subscribe')}}</a>
 				</li>
 			  
 			</ul>
 
 			 <!-- Right Side Of Navbar -->
 			 <ul class="navbar-nav ml-auto">
-				<form class="form-inline my-2 my-lg-0" method="post" action="{{route('searchPost')}}">
+				<form class="form-inline my-2 my-lg-0" method="post" action="{{ get_search_post_url() }}">
 					@csrf
-					<input class="form-control mr-sm-2 nav-search-bar" type="search" placeholder="{{__('Search')}}" aria-label="Search" name='query' >
+					<input class="form-control mr-sm-2 nav-search-bar" type="search" placeholder="{{__('Search')}}" aria-label="Search" name='query'>
 				</form>
 
 				<!-- Authentication Links -->
 				@guest
 					<li class="nav-item">
-						<a class="nav-link" href="{{ route('login') }}">{{ __('Log in') }}</a>
+						<a class="nav-link" href="{{ get_login_url() }}">{{ __('Log in') }}</a>
 					</li>
 
 					@if (Route::has('register'))
 						<li class="nav-item">
-							<a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+							<a class="nav-link" href="{{ get_register_url() }}">{{ __('Register') }}</a>
 						</li>
 					@endif
 				@else

@@ -34,14 +34,6 @@ if (!function_exists('get_rating_category_url'))
     }
 }
 
-if (!function_exists('get_trailer_url')) 
-{
-    function get_trailer_url($trailerId)
-    {
-        return route('trailerMovieShow', ['id' => $trailerId]);
-    }
-}
-
 if (!function_exists('get_js_url')) 
 {
     function get_js_url($scriptName)
@@ -150,3 +142,165 @@ if (!function_exists('get_excerpt'))
     }
 }
 
+/**
+ * Returns URL to the subscription list page
+ * 
+ */
+if (!function_exists('get_subscription_list_url')) 
+{
+    function get_subscription_list_url()
+    {
+        echo route('subscribe');
+    }
+}
+
+/**
+ * Returns URL to a search result based on a given query
+ * 
+ * @param string $query to search for
+ */
+if (!function_exists('get_search_result_url')) 
+{
+    function get_search_result_url($query)
+    {
+        echo route('search', ['query' => $query]);
+    }
+}
+
+/**
+ * Returns URL, POST method, to query the database
+ * To call the URL it needs a form parameter called query, that must be a string, max:255
+ * 
+ */
+if (!function_exists('get_search_post_url')) 
+{
+    function get_search_post_url()
+    {
+        echo route('searchPost');
+    }
+}
+
+/**
+ * Returns URL to the all movies page
+ * 
+ */
+if (!function_exists('get_all_movies_url')) 
+{
+    function get_all_movies_url()
+    {
+        echo route('movies');
+    }
+}
+
+/**
+ * Returns URL to the all movies page
+ * 
+ */
+if (!function_exists('get_all_series_url')) 
+{
+    function get_all_series_url()
+    {
+        echo route('series');
+    }
+}
+
+/**
+ * Returns URL to the a particular movie based on an id
+ * 
+ * @param int $id of the movie to search for
+ */
+if (!function_exists('get_movie_url')) 
+{
+    function get_movie_url($id)
+    {
+        echo route('movieShow', ['id' => $id]);
+    }
+}
+
+/**
+ * Returns URL to the a particular movie trailer based on an id
+ * 
+ * @param int $id of the movie trailer to search for
+ */
+if (!function_exists('get_movie_trailer_url')) 
+{
+    function get_movie_trailer_url($id)
+    {
+        echo route('trailerMovieShow', ['id' => $id]);
+    }
+}
+
+/**
+ * Returns URL to the a particular series based on an id
+ *
+ * @param int $id of the series to search for 
+ */
+if (!function_exists('get_series_url')) 
+{
+    function get_series_url($id)
+    {
+        echo route('seriesShow', ['id' => $id]);
+    }
+}
+
+/**
+ * Returns URL to the a particular season trailer based on an id
+ *
+ * @param int $id of the season trailer to search for 
+ */
+if (!function_exists('get_season_trailer_url')) 
+{
+    function get_season_trailer_url($id)
+    {
+        echo route('trailerSeasonShow', ['id' => $id]);
+    }
+}
+
+/**
+ * Returns URL to the a particular episode based on an id
+ *
+ * @param int $id of the episode to search for 
+ */
+if (!function_exists('get_episode_url')) 
+{
+    function get_episode_url($id)
+    {
+        echo route('episodeShow', ['id' => $id]);
+    }
+}
+
+/**
+ * Returns URL to the home
+ *
+ */
+if (!function_exists('get_home_url')) 
+{
+    function get_home_url()
+    {
+        echo route('home');
+    }
+}
+
+/**
+ * Returns URL to the login page
+ *
+ */
+if (!function_exists('get_login_url')) 
+{
+    function get_login_url()
+    {
+        echo route('login');
+    }
+}
+
+/**
+ * Returns URL to the register page
+ *
+ */
+if (!function_exists('get_register_url')) 
+{
+    function get_register_url()
+    {
+        echo route('register');
+    }
+}

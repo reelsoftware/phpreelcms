@@ -38,7 +38,7 @@
         <div class="col">
             <h1 class="ne-single-lesson-title pt-1">
                 {{$item->title}}
-                <a href="{{ get_trailer_url($item->id) }}" class="trailer"><i>{{__('Watch movie trailer')}}</i></a>
+                <a href="{{ get_movie_trailer_url($item->id) }}" class="trailer"><i>{{__('Watch movie trailer')}}</i></a>
             </h1>
             <p class="ne-single-lesson-description">{{$item->description}}</p>
         </div>
