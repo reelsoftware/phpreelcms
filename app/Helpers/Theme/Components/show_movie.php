@@ -304,3 +304,44 @@ if (!function_exists('get_register_url'))
         echo route('register');
     }
 }
+
+
+/**
+ * Returns URL to the register page
+ *
+ * @param string $layoutFile name of the layout file (from the layouts directory) to be used as layout
+ */
+if (!function_exists('get_theme_layout')) 
+{
+    function get_theme_layout($layoutFile)
+    {
+        return Config::get('app.theme') . '.layouts.' . $layoutFile;
+    }
+}
+
+/**
+ * Returns URL to the register page
+ *
+ * @param string $layoutFile name of the layout file (from the layouts directory) to be used as layout
+ */
+if (!function_exists('get_app_name')) 
+{
+    function get_app_name()
+    {
+        return Config::get('app.name');
+    }
+}
+
+/**
+ * Returns URL to the register page
+ *
+ * @param int $timestamp represents the length in seconds of a particular piece o content
+ */
+if (!function_exists('get_time')) 
+{
+    function get_time($timestamp)
+    {
+        return gmdate("H:i:s", $timestamp);
+    }
+}
+

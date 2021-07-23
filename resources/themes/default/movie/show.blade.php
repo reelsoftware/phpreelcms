@@ -1,8 +1,8 @@
-@extends('layouts.layout')
+@extends(get_theme_layout("layout"))
 
 @section('meta_description', $item->description)
 
-@section('title', "$item->title - ")
+@section('title', "$item->title - " . get_app_name())
 
 @section('style')
     <link rel="stylesheet" href="https://cdn.plyr.io/3.6.4/plyr.css">

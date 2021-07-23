@@ -14,7 +14,7 @@
 	
   	@yield('style')
 	
-    <title>@yield('title'){{Config::get('app.name')}}</title>
+    <title>@yield('title')</title>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark">
@@ -74,9 +74,7 @@
 							</li>
 
 							<li>
-								<a class="dropdown-item ne-dropdown-item" href="{{ route('logout') }}"
-								onclick="event.preventDefault();
-												document.getElementById('logout-form').submit();">
+								<a class="dropdown-item ne-dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
 								{{ __('Logout') }}
 								</a>
 							</li>

@@ -61,7 +61,7 @@
 
     <div class="row">
         <div class="offset-md-1 col-md-11 ne-footer-item my-2">
-            © {{date("Y")}} {{ config('app.name') }}
+            © {{date("Y")}} {{ get_app_name() }}
         </div>
     </div>
 </div>

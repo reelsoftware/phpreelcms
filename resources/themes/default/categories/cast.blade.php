@@ -12,8 +12,8 @@
         <div class="col-sm-12 col-md-6 col-lg-4">
             <div class="card ne-card">
                 <div class="ne-image-container">
-                    <a href="@itemUrl($item, $item->id)">
-                        <img src="@imageUrl($item->image_name, $item->image_storage) " class="card-img">
+                    <a href="{{ get_item_url($item) }}">
+                        <img src="{{ get_image_url($item->image_name, $item->image_storage) }}" class="card-img">
                     </a>
 
                     <div class="ne-image-container-bottom-right">
@@ -28,7 +28,7 @@
                     <a href="@itemUrl($item, $item->id)" class="ne-btn">{{__('Watch')}}</a>
                     
                     @if($subscribed == false)
-                        <a href="{{route('subscribe')}}" class="ne-btn ne-movie-premium">{{__('subscribe')}}</a>
+                        <a href="{{ get_subscription_list_url() }}" class="ne-btn ne-movie-premium">{{__('subscribe')}}</a>
                     @endif
 
                 </div>

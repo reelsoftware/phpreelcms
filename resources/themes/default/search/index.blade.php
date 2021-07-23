@@ -41,7 +41,7 @@
                     @endIsSeries 
                     
                     @if($subscribed == false)
-                        <a href="{{route('subscribe')}}" class="ne-btn ne-movie-premium">{{__('Subscribe')}}</a>
+                        <a href="{{ get_subscription_list_url() }}" class="ne-btn ne-movie-premium">{{__('Subscribe')}}</a>
                     @endif
 
                 </div>
@@ -69,16 +69,16 @@
 <div class="container-fluid ne-footer">
     <div class="row">
         <div class="offset-md-1 col-md-5">
-            <a class="ne-footer-item" href="{{ route('home') }}">{{__('Home')}}</a><br>
-            <a class="ne-footer-item" href="{{ route('movies') }}">{{__('Movies')}}</a><br>
-            <a class="ne-footer-item" href="{{ route('series') }}">{{__('Series')}}</a><br>
-            <a class="ne-footer-item" href="{{ route('subscribe') }}">{{__('Subscribe')}}</a><br>
+            <a class="ne-footer-item" href="{{ get_home_url() }}">{{__('Home')}}</a><br>
+            <a class="ne-footer-item" href="{{ get_all_movies_url() }}">{{__('Movies')}}</a><br>
+            <a class="ne-footer-item" href="{{ get_all_series_url() }}">{{__('Series')}}</a><br>
+            <a class="ne-footer-item" href="{{ get_subscription_list_url() }}">{{__('Subscribe')}}</a><br>
         </div>
     </div>
 
     <div class="row">
         <div class="offset-md-1 col-md-11 ne-footer-item my-2">
-            © {{date("Y")}} {{ config('app.name') }}
+            © {{date("Y")}} {{ get_app_name() }}
         </div>
     </div>
 </div>

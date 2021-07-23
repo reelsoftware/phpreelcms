@@ -62,7 +62,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="length">Length</label>
-                        <input type="text" name="length" class="form-control" id="length" required value="{{ old('length') ? gmdate("H:i", old('length')) : gmdate("H:i",$content['length']) }}" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" placeholder="e.g 01:10">
+                        <input type="text" name="length" class="form-control" id="length" required value="{{ old('length') ? get_time(old('length')) : get_time($content['length']) }}" required pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]" placeholder="e.g 01:20:59">
                         @error('length')
                             <div class="alert alert-danger py-2 my-2">{{ $message }}</div>
                         @enderror
@@ -96,7 +96,32 @@
             </div>
         </div>
 
-        @uploadForm()
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="resourceFile">
+                                <label class="custom-file-label" for="resourceFile">Upload files</label>
+                            </div>
+                        </div>
+                            
+                        <div class="progress">
+                            <div id="progressBar" class="progress-bar" role="progressbar"></div>
+                        </div>   
+
+                        <div class="card-body">
+                            <h5 class="card-title">Uploaded files</h5>
+
+                            <div id="uploadedFiles">
+                                <p class="card-text"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <div class="container mt-1">
             <div class="row">
@@ -252,14 +277,23 @@
 @endsection
 
 @section('script')
-    <script src="{{ URL::asset('js/switchVideoOption.js') }}"></script>
-
-    <script>
-        const url = "{{route('resourceStoreApi')}}";
-        //chunk size in bytes (1MB)
-        const chunkSize = {{env('CHUNK_SIZE')}} * 1000000; 
-    </script>
-    
     <script src="{{ URL::asset('js/upload.js') }}"></script>
 
+    <script>
+        new FileUpload("resourceFile", "{{ route('resourceStoreApi') }}", {{ env('CHUNK_SIZE') }} * 1000000, function (fileId, fileName) {
+            document.getElementById("progressBar").style.width = "0%";
+
+            if(document.getElementById("uploadedFiles") != null)
+                document.getElementById("uploadedFiles").innerHTML += '<p class="card-text">' + fileName + '</p>';
+
+            if(document.getElementById("thumbnail") != null)
+                document.getElementById("thumbnail").innerHTML += '<option value="' + fileId + '">' + fileName + '</option>';
+
+            if(document.getElementById("video") != null)
+                document.getElementById("video").innerHTML += '<option value="' + fileId + '">' + fileName + '</option>';
+
+            if(document.getElementById("trailer") != null)
+                document.getElementById("trailer").innerHTML += '<option value="' + fileId + '">' + fileName + '</option>';
+        });
+    </script>
 @endsection
