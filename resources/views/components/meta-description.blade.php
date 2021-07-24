@@ -1,0 +1,1 @@
+@section('meta_description', $value)

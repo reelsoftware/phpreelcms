@@ -210,7 +210,6 @@ return [
     */
 
     'aliases' => [
-
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
@@ -250,7 +249,10 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'FFMpeg' => ProtoneMedia\LaravelFFMpeg\Support\FFMpeg::class,
         'Zip' => ZanySoft\Zip\ZipFacade::class,
-
+        'Theme' => App\Helpers\Theme\Theme::class,
+        'Categories' => App\Helpers\Theme\Categories::class,
+        'Asset' => App\Helpers\Theme\Asset::class,
+        'UrlRoutes' => App\Helpers\Theme\UrlRoutes::class,
     ],
 
 ];

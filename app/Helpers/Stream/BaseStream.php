@@ -102,11 +102,6 @@ abstract class BaseStream
      */
     protected function setHeadersAndStream()
     {
-        if (!$this->disk->exists($this->filePath)) {
-            report(new Exception('S3 File Not Found in S3FileStream - ' . $this->adapterName . ' - ' . $this->disk->path($this->filePath)));
-            return response('File Not Found', 404);
-        }
-
         $this->start   = 0;
         $this->size    = $this->disk->size($this->filePath);
         $this->end     = $this->size - 1;
@@ -121,10 +116,6 @@ abstract class BaseStream
             'Content-Disposition' => 'inline; filename=' . basename($this->filePath) . '.' . Arr::last(explode('.', $this->filePath)),
             'Content-Length'      => $this->length,
         ];
-
-
-        //dd(request()->server());
-
         
         //Handle ranges here
         if (!is_null(request()->server('HTTP_RANGE'))) 
@@ -161,15 +152,13 @@ abstract class BaseStream
                 ]);
             }
 
-            $this->start                           = intval($cStart);
-            $this->end                             = intval($cEnd);
+            $this->start = intval($cStart);
+            $this->end = intval($cEnd);
 
-
-
-            $this->length                          = min($this->end - $this->start + 1, $this->size);
+            $this->length = min($this->end - $this->start + 1, $this->size);
             $this->returnHeaders['Content-Length'] = $this->length;
-            $this->returnHeaders['Content-Range']  = 'bytes ' . $this->start . '-' . $this->end . '/' . $this->size;
-            $this->isRange                         = true;
+            $this->returnHeaders['Content-Range'] = 'bytes ' . $this->start . '-' . $this->end . '/' . $this->size;
+            $this->isRange = true;
         }
 
         return $this->stream();
