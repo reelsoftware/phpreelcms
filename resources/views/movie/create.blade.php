@@ -58,7 +58,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <x-upload-form type="create"/>
+                            <x-upload-form/>
                         </div>
                     </div>
                 </div>
@@ -66,14 +66,18 @@
                 <div class="container mt-1">
                     <div class="row">
                         <div class="col-md-6">
-                            <x-thumbnail-form type="create"/>
+                            <x-thumbnail-form/>
                         </div>
                     </div>
                 </div>
 
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
+                            <x-video-platform-form type="create"/>
+                        </div>
+
+                        <div class="col-md-6" id="videoFields">
                             <x-video-form type="create"/>
                         </div>
                     </div>
@@ -81,7 +85,11 @@
 
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
+                            <x-trailer-platform-form type="create"/>
+                        </div>
+
+                        <div class="col-md-6" id="videoFields">
                             <x-trailer-form type="create"/>
                         </div>
                     </div>

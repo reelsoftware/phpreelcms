@@ -7,22 +7,14 @@ use Illuminate\View\Component;
 class UploadForm extends Component
 {
     /**
-     * Can be either create or edit depending on the page that renders the component
-     * 
-     * @var string $type
-     */
-    public $type;
-
-    /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($type)
+    public function __construct()
     {
-        $this->type = $type;
+        //
     }
-
 
     /**
      * Get the view / contents that represent the component.
@@ -31,6 +23,6 @@ class UploadForm extends Component
      */
     public function render()
     {
-        return view("components.$this->type.upload-form");
+        return view("components.upload-form");
     }
 }

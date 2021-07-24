@@ -14,13 +14,21 @@ class RatingForm extends Component
     public $type;
 
     /**
+     * For edit purposes there might be the need to pass content to the component, if left empty it's ignored
+     * 
+     * @vars $content
+     */
+    public $content;
+
+    /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($type)
+    public function __construct($type, $content=null)
     {
         $this->type = $type;
+        $this->content = $content;
     }
 
     /**
@@ -30,6 +38,8 @@ class RatingForm extends Component
      */
     public function render()
     {
-        return view("components.$this->type.rating-form");
+        return view("components.$this->type.rating-form", [
+            'content' => $this->content,
+        ]);
     }
 }

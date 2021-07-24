@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class CastForm extends Component
+class TrailerPlatformForm extends Component
 {
     /**
      * Can be either create or edit depending on the page that renders the component
@@ -30,6 +30,7 @@ class CastForm extends Component
         $this->type = $type;
         $this->content = $content;
     }
+
     /**
      * Get the view / contents that represent the component.
      *
@@ -37,7 +38,7 @@ class CastForm extends Component
      */
     public function render()
     {
-        return view("components.$this->type.cast-form", [
+        return view("components.$this->type.trailer-platform-form", [
             'content' => $this->content,
         ]);
     }
