@@ -17,11 +17,11 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">
-                            <x-title-form/>
+                            <x-title-form type="create"/>
                         </div>
 
                         <div class="col-lg-12">
-                            <x-description-form/>           
+                            <x-description-form type="create"/>           
                         </div>
                     </div>
                 </div>
@@ -29,15 +29,15 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-4">
-                            <x-year-form/>           
+                            <x-year-form type="create"/>           
                         </div>
 
                         <div class="col-md-4">
-                            <x-rating-form/>           
+                            <x-rating-form type="create"/>           
                         </div>
 
                         <div class="col-md-4">
-                            <x-length-form/>           
+                            <x-length-form type="create"/>           
                         </div>
                     </div>
                 </div>
@@ -46,11 +46,11 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6">
-                            <x-cast-form/>           
+                            <x-cast-form type="create"/>           
                         </div>
 
                         <div class="col-lg-6">
-                            <x-genre-form/>           
+                            <x-genre-form type="create"/>           
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <x-upload-form/>
+                            <x-upload-form type="create"/>
                         </div>
                     </div>
                 </div>
@@ -66,31 +66,23 @@
                 <div class="container mt-1">
                     <div class="row">
                         <div class="col-md-6">
-                            <x-thumbnail-form/>
+                            <x-thumbnail-form type="create"/>
                         </div>
                     </div>
                 </div>
 
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-6">
-                            <x-video-form/>
+                        <div class="col-md-12">
+                            <x-video-form type="create"/>
                         </div>
                     </div>
                 </div>
 
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-6">
-                            <x-trailer-form/>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <x-visibility-form/>
+                        <div class="col-md-12">
+                            <x-trailer-form type="create"/>
                         </div>
                     </div>
                 </div>
@@ -98,7 +90,15 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">
-                            <x-availability-form/>
+                            <x-visibility-form type="create"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <x-availability-form type="create"/>
                         </div>
                     </div>
                 </div>
@@ -106,7 +106,7 @@
                 <div class="container" id="access" style="display:none">
                     <div class="row">
                         <div class="col-lg-12">
-                            <x-access-form/>
+                            <x-access-form type="create"/>
                         </div>
                     </div>
                 </div>
@@ -126,6 +126,7 @@
 @endsection
 
 @section('script')
+    <script src="{{ URL::asset('js/switchVideoOption.js') }}"></script>
     <script src="{{ URL::asset('js/upload.js') }}"></script>
 
     <script>

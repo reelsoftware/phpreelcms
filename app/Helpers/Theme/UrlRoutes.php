@@ -7,7 +7,7 @@ class UrlRoutes
      * Returns URL to the subscription list page
      * 
      */
-    public static function subscriptionsList()
+    public static function subscribe()
     {
         return route('subscribe');
     }
@@ -118,7 +118,6 @@ class UrlRoutes
     {
         return route('login');
     }
-
 
     /**
      * Returns URL to the register page

@@ -1,4 +1,3 @@
-@extends('layouts.frontend')
 
 @if($content != null)
 @section('meta_description', $content[0]['season']->series_description)

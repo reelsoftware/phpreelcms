@@ -1,7 +1,11 @@
-@extends('default.layouts.layout')
+@extends(AppConfig::themeLayout("layout"))
+
+@section('title')
+    {{ AppConfig::name() }}
+@endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{ get_css_url('slider.css') }}">
+    <link rel="stylesheet" href="{{ Asset::css('slider.css') }}">
 @endsection
 
 @section('content')

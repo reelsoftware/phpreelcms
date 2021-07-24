@@ -1,7 +1,7 @@
-@extends('layouts.frontend')
+@extends(AppConfig::themeLayout("layout"))
 
 @section('title')
-    {{__('Release year')}} {{$year}} - 
+    {{__('Release year')}} {{$year}} - {{ AppConfig::name() }}
 @endsection
 
 @section('content')
@@ -12,23 +12,23 @@
         <div class="col-sm-12 col-md-6 col-lg-4">
             <div class="card ne-card">
                 <div class="ne-image-container">
-                    <a href="@itemUrl($item, $item->id)">
-                        <img src="@imageUrl($item->image_name, $item->image_storage) " class="card-img">
+                    <a href="{{ Asset::item($item) }}">
+                        <img src="{{ Asset::image($item->image_name, $item->image_storage) }}" class="card-img">
                     </a>
 
                     <div class="ne-image-container-bottom-right">
-                        <span class="ne-movie-length">{{gmdate("H:i:s", $item->length)}}</span><br>
+                        <span class="ne-movie-length">{{ Utilities::timeHMS($item->length) }}</span><br>
                     </div>
                 </div>      
                 
                 <div class="card-body">
-                    <a href="@itemUrl($item, $item->id)" class="card-title ne-title">{{$item->title}}</a>
+                    <a href="{{ Asset::item($item) }}" class="card-title ne-title">{{$item->title}}</a>
 
-                    <p class="card-text ne-short-description">{{mb_strimwidth($item->description, 0, 120, "...")}}</p>
-                    <a href="@itemUrl($item, $item->id)" class="ne-btn">{{__('Watch')}}</a>
+                    <p class="card-text ne-short-description">{{ Utilities::excerpt($item->description, 120, "...")}}</p>
+                    <a href="{{ Asset::item($item) }}" class="ne-btn">{{__('Watch')}}</a>
                     
                     @if($subscribed == false)
-                        <a href="{{route('subscribe')}}" class="ne-btn ne-movie-premium">{{__('subscribe')}}</a>
+                        <a href="{{ UrlRoutes::subscribe() }}" class="ne-btn ne-movie-premium">{{__('subscribe')}}</a>
                     @endif
 
                 </div>

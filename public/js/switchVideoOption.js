@@ -6,12 +6,12 @@
 function switchVideoOption(platformId, fieldId, edit=false) 
 {
     let platform = document.getElementById(platformId).value;
-
+    
     //Define handlers for form fields
     let filedHandler = document.getElementById(fieldId).childNodes[3].childNodes[3];
     let fieldIdHandler = document.getElementById(fieldId).childNodes[1].childNodes[4];
 
-    if(platform == 'html5') 
+    if(platform == 'local' || platform == 's3') 
     {
         document.getElementById(fieldId).childNodes[3].style.display = 'block';
         if(edit == false)

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Helpers\Content\IContentBuilder; 
 use App\Helpers\Content\ValidationManager; 
 use App\Helpers\Resource\ResourceHandler;
-use App\Models\Season;
+use App\Models\Seasons;
 use App\Helpers\Helper;
 
 class SeasonBuilder implements IContentBuilder

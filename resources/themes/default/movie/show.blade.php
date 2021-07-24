@@ -1,10 +1,12 @@
-@extends(get_theme_layout("layout"))
+@extends(AppConfig::themeLayout("layout"))
 
+@section('meta')
+    <meta name="description" content="{{ $item->description }}">
+@endsection
 
-<x-meta-description :value="$item->description"/>
-
-@section('title', "$item->title - " . get_app_name())
-
+@section('title')
+    {{ $item->title }} - {{ AppConfig::name() }}
+@endsection
 
 @section('style')
     <link rel="stylesheet" href="https://cdn.plyr.io/3.6.4/plyr.css">

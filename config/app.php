@@ -253,6 +253,8 @@ return [
         'Categories' => App\Helpers\Theme\Categories::class,
         'Asset' => App\Helpers\Theme\Asset::class,
         'UrlRoutes' => App\Helpers\Theme\UrlRoutes::class,
+        'AppConfig' => App\Helpers\Theme\AppConfig::class,
+        'Utilities' => App\Helpers\Theme\Utilities::class,
     ],
 
 ];

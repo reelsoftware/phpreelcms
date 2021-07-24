@@ -7,13 +7,20 @@ use Illuminate\View\Component;
 class LengthForm extends Component
 {
     /**
+     * Can be either create or edit depending on the page that renders the component
+     * 
+     * @var string $type
+     */
+    public $type;
+
+    /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($type)
     {
-        //
+        $this->type = $type;
     }
 
     /**
@@ -23,6 +30,7 @@ class LengthForm extends Component
      */
     public function render()
     {
-        return view('components.length-form');
+        return view("components.$this->type.length-form");
+
     }
 }

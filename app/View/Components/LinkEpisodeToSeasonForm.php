@@ -4,8 +4,14 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class GenreForm extends Component
+class LinkEpisodeToSeasonForm extends Component
 {
+    /**
+     * Variable containing seasons information
+     *
+     */
+    public $seasons;
+
     /**
      * Can be either create or edit depending on the page that renders the component
      * 
@@ -18,8 +24,9 @@ class GenreForm extends Component
      *
      * @return void
      */
-    public function __construct($type)
+    public function __construct($seasons, $type)
     {
+        $this->seasons = $seasons;
         $this->type = $type;
     }
 
@@ -30,6 +37,8 @@ class GenreForm extends Component
      */
     public function render()
     {
-        return view("components.$this->type.genre-form");
+        return view("components.$this->type.link-episode-to-season-form", [
+            'seasons' => $this->seasons
+        ]);
     }
 }

@@ -34,6 +34,8 @@ class ValidationManager
             'platformTrailer' => 'required',
             'access' => 'required',
             'availability' => 'required',
+            'series_id' => 'required',
+            'season_id' => 'required'
         ];
 
         if (isset($validationData[$field]))

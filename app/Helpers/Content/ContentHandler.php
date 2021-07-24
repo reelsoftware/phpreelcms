@@ -3,6 +3,7 @@ namespace App\Helpers\Content;
 
 use App\Models\Movie;
 use App\Models\Series;
+use App\Models\Episode;
 
 class ContentHandler
 {

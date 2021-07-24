@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class GenreForm extends Component
+class VideoPlatformForm extends Component
 {
     /**
      * Can be either create or edit depending on the page that renders the component
@@ -30,6 +30,6 @@ class GenreForm extends Component
      */
     public function render()
     {
-        return view("components.$this->type.genre-form");
+        return view("components.$this->type.video-platform-form");
     }
 }

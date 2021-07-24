@@ -1,6 +1,8 @@
 <?php
 namespace App\Helpers\Theme; 
 
+use Config;
+
 class AppConfig
 {
     /**

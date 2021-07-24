@@ -4,12 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-	<meta name="description" content="@yield('meta_description')">
+	@yield('meta')
 
-
-    <link rel="stylesheet" href="{{ get_css_url('app.css') }}">
-    <link rel="stylesheet" href="{{ get_css_url('slider.css') }}">
-    <link rel="stylesheet" href="{{ get_css_url('style.css') }}">
+    <link rel="stylesheet" href="{{ Asset::css('app.css') }}">
+    <link rel="stylesheet" href="{{ Asset::css('slider.css') }}">
+    <link rel="stylesheet" href="{{ Asset::css('style.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
 	
   	@yield('style')
@@ -19,33 +18,33 @@
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark">
 		<div class="container">
-		  <a class="navbar-brand" href="{{ get_home_url() }}">{{ config('app.name') }}</a>
+		  <a class="navbar-brand" href="{{ UrlRoutes::home() }}">{{ AppConfig::name() }}</a>
 		  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		  </button>
 		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				<li class="nav-item">
-					<a class="ne-nav-link nav-link active" href="{{ get_home_url() }}">{{__('Home')}}</a>
+					<a class="ne-nav-link nav-link active" href="{{ UrlRoutes::home() }}">{{__('Home')}}</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="ne-nav-link nav-link active" href="{{ get_all_movies_url() }}">{{__('Movies')}}</a>
+					<a class="ne-nav-link nav-link active" href="{{ UrlRoutes::allMovies() }}">{{__('Movies')}}</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="ne-nav-link nav-link active" href="{{ get_all_series_url() }}">{{__('Series')}}</a>
+					<a class="ne-nav-link nav-link active" href="{{ UrlRoutes::allSeries() }}">{{__('Series')}}</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="ne-nav-link nav-link active" href="{{ get_subscription_list_url() }}">{{__('Subscribe')}}</a>
+					<a class="ne-nav-link nav-link active" href="{{ UrlRoutes::subscribe() }}">{{__('Subscribe')}}</a>
 				</li>
 			  
 			</ul>
 
 			 <!-- Right Side Of Navbar -->
 			 <ul class="navbar-nav ml-auto">
-				<form class="form-inline my-2 my-lg-0" method="post" action="{{ get_search_post_url() }}">
+				<form class="form-inline my-2 my-lg-0" method="post" action="{{ UrlRoutes::searchPost() }}">
 					@csrf
 					<input class="form-control mr-sm-2 nav-search-bar" type="search" placeholder="{{__('Search')}}" aria-label="Search" name='query'>
 				</form>
@@ -53,12 +52,12 @@
 				<!-- Authentication Links -->
 				@guest
 					<li class="nav-item">
-						<a class="nav-link" href="{{ get_login_url() }}">{{ __('Log in') }}</a>
+						<a class="nav-link" href="{{ UrlRoutes::login() }}">{{ __('Log in') }}</a>
 					</li>
 
 					@if (Route::has('register'))
 						<li class="nav-item">
-							<a class="nav-link" href="{{ get_register_url() }}">{{ __('Register') }}</a>
+							<a class="nav-link" href="{{ UrlRoutes::register() }}">{{ __('Register') }}</a>
 						</li>
 					@endif
 				@else
@@ -92,8 +91,8 @@
 
     @yield('content')
 
-    <script src="{{ get_js_url("jquery-3.6.0.min.js") }}"></script>
-    <script src="{{ get_js_url("bootstrap.bundle.min.js") }}"></script>
+    <script src="{{ Asset::js("jquery-3.6.0.min.js") }}"></script>
+    <script src="{{ Asset::js("bootstrap.bundle.min.js") }}"></script>
 
     @yield('script')
 </body>
