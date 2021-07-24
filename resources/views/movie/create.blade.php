@@ -66,7 +66,7 @@
                 <div class="container mt-1">
                     <div class="row">
                         <div class="col-md-6">
-                            <x-thumbnail-form/>
+                            <x-thumbnail-form type="create"/>
                         </div>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
                             <x-trailer-platform-form type="create"/>
                         </div>
 
-                        <div class="col-md-6" id="videoFields">
+                        <div class="col-md-6" id="trailerFields">
                             <x-trailer-form type="create"/>
                         </div>
                     </div>
@@ -121,7 +121,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">
-                            <x-submit-form/>
+                            <x-submit-form button-name="Add movie"/>
                         </div>
                     </div>
                 </div>

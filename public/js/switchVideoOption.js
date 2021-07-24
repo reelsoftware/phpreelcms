@@ -2,7 +2,7 @@
 
 //platformId = where should the resource be saved
 //fieldId = what type of resource you are working with (trailer, video)
-//edit = true if the page from wich we call the script is an edit page
+//edit = true if the page from wish we call the script is an edit page
 function switchVideoOption(platformId, fieldId, edit=false) 
 {
     let platform = document.getElementById(platformId).value;

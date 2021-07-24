@@ -83,7 +83,7 @@ class EpisodeBuilder implements IContentBuilder
     }
 
     /**
-     * Update the epsiode
+     * Update the episode
      * 
      * @param int $id id of the episode to be updated
      * 
@@ -91,8 +91,6 @@ class EpisodeBuilder implements IContentBuilder
      */
     public function update($id): IContentBuilder
     {
-        $seconds = $this->timeToSeconds($request->length);
-
         $episode = Episode::find($id);
         $episode->title = $this->request->title;
         $episode->description = $this->request->description;
@@ -108,10 +106,10 @@ class EpisodeBuilder implements IContentBuilder
             $episode->auth = 1;
         
         //If you update the season of a episode then set the order as the last episode of the season
-        if($episode->season_id != $request->season_id)
+        if($episode->season_id != $this->request->season_id)
         {
             //Get the last value order for episodes
-            $lastOrder = Episode::where("season_id", "=", $request->season_id)
+            $lastOrder = Episode::where("season_id", "=", $this->request->season_id)
                             ->orderBy('order', 'DESC')
                             ->limit(1)
                             ->first('order');

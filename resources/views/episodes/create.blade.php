@@ -93,7 +93,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">
-                            <x-submit-form/>
+                            <x-submit-form button-name="Add episode"/>
                         </div>
                     </div>
                 </div>

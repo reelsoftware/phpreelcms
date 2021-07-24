@@ -30,6 +30,7 @@ class TrailerForm extends Component
         $this->type = $type;
         $this->content = $content;
     }
+
     /**
      * Get the view / contents that represent the component.
      *
@@ -38,7 +39,7 @@ class TrailerForm extends Component
     public function render()
     {
         return view("components.$this->type.trailer-form", [
-            'content' => $this->content,
+            'trailer' => $this->content,
         ]);
     }
 }

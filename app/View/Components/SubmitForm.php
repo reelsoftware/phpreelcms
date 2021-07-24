@@ -7,13 +7,20 @@ use Illuminate\View\Component;
 class SubmitForm extends Component
 {
     /**
+     * Name of the submit button
+     * 
+     * @var string $name
+     */
+    public $buttonName;
+
+    /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($buttonName)
     {
-        //
+        $this->buttonName = $buttonName;
     }
 
     /**
@@ -23,6 +30,8 @@ class SubmitForm extends Component
      */
     public function render()
     {
-        return view('components.submit-form');
+        return view('components.submit-form', [
+            'buttonName' => $this->buttonName
+        ]);
     }
 }

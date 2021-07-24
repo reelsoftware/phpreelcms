@@ -100,7 +100,6 @@
             <div class="row">
                 <div class="col-lg-12">
                     <x-visibility-form type="edit" :content="$content"/>           
-                    
                 </div>
             </div>
         </div>
@@ -109,7 +108,6 @@
             <div class="row">
                 <div class="col-lg-12">
                     <x-availability-form type="edit" :content="$content"/>           
-                    
                 </div>
             </div>
         </div>
@@ -118,7 +116,6 @@
             <div class="row">
                 <div class="col-lg-12">
                     <x-access-form type="edit" :content="$content"/>           
-                    
                 </div>
             </div>
         </div>
@@ -126,7 +123,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <x-submit-form/>           
+                    <x-submit-form button-name="Edit movie"/>           
                 </div>
             </div>
         </div>

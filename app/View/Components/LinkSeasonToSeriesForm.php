@@ -4,14 +4,8 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class LinkEpisodeToSeasonForm extends Component
+class LinkSeasonToSeriesForm extends Component
 {
-    /**
-     * Variable containing seasons information
-     *
-     */
-    public $seasons;
-
     /**
      * Can be either create or edit depending on the page that renders the component
      * 
@@ -27,15 +21,21 @@ class LinkEpisodeToSeasonForm extends Component
     public $content;
 
     /**
+     * Variable containing series information
+     *
+     */
+    public $series;
+
+    /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($seasons, $type, $content = null)
+    public function __construct($type, $content=null, $series)
     {
-        $this->seasons = $seasons;
         $this->type = $type;
         $this->content = $content;
+        $this->series = $series;
     }
 
     /**
@@ -45,8 +45,8 @@ class LinkEpisodeToSeasonForm extends Component
      */
     public function render()
     {
-        return view("components.$this->type.link-episode-to-season-form", [
-            'seasons' => $this->seasons,
+        return view("components.$this->type.link-season-to-series-form", [
+            'series' => $this->series,
             'content' => $this->content
         ]);
     }

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Auth;
 use App\Models\Series;
 use App\Models\Episode;
+use App\Models\Video;
 use App\Helpers\Content\ContentHandler;
 use App\Helpers\User\UserHandler;
 use App\Helpers\Theme\Theme;
@@ -109,8 +110,11 @@ class SeriesController extends Controller
         else
             dd('Wrong id');
 
+        $trailer = Video::where('id', '=', $series['trailer'])->first(['name', 'storage']);
+        
         return view('series.edit', [
             'content' => $content,
+            'trailer' => $trailer,
             'id' => $id,
         ]);
     }

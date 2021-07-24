@@ -101,7 +101,7 @@ class SeasonBuilder implements IContentBuilder
         if($season->series_id != $this->request->series_id)
         {
             //Get the last value order for episodes
-            $lastOrder = Seasons::where("series_id", "=", $request->series_id)
+            $lastOrder = Seasons::where("series_id", "=", $this->request->series_id)
                             ->orderBy('order', 'DESC')
                             ->limit(1)
                             ->first('order');
