@@ -130,25 +130,27 @@ Returns an excerpt from a given input text.
 {{ Utilities::excerpt($longStringOfText, 200, "...") }}
 ```
 
-## get_pagination($content, $paginationFileName)
+## Utilities::pagination($content, $paginationFileName)
 Renders the specified pagination file.
 
 - `$content` Required, content to be paginated
 - `$paginationFileName` Required, name of the view file, situated in the pagination folder of the theme that holds the design and functionality information for the paginator
 
 ```php
-{{ get_pagination($content, "basicPagination") }}
+{{ Utilities::pagination($content, "basicPagination") }}
 ```
 
-## get_js_url("script.js")
+# Asset
+
+## Asset::js("script.js")
 Returns the path to a Javascript resource stored inside the js folder of your theme. It takes only one string argument which is a path to the js file. If that file is inside a directory you can include that file too.
 
 ```php
 //File is situated in js/script.js
-get_js_url("script.js")
+Asset::js("script.js")
 
 //File is situated in js/demo/script.js
-get_js_url("demo/script.js")
+Asset::js("demo/script.js")
 ```
 
 ## @html5Source(videoName, videoStorage)
@@ -240,20 +242,6 @@ Takes one argument:
 @endhtml5()
 ```
 
-## @scriptJs(scriptName, scriptScope)
-Return a javascript file indetified by a name and a scope.
-
-Takes two arguments:
-- `scriptName` Name of the javascript file (E.g. jsFile.js).
-- `scriptScope` Scope is the location of the javascript file. It takes one of the two values: local (stored in the theme folder inside the js folder) or external (via url, cdn)
-
-```php
-<!--Local script example, player.js is stored in the js folder-->
-@scriptJs('player.js', local)
-
-<!--External script example, javascript file is stored using a CDN-->
-@scriptJs("https://cdn.plyr.io/3.6.4/plyr.js", external)
-```
 
 # Available view variables
 Every view inside your theme has access to certain values by default. These values are passed to the view via the controller to provide basic functionality to your views. Down bellow you are going to find all the available variables. More information about phpReel components are available in this documentation.
