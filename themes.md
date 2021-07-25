@@ -3,6 +3,8 @@ phpReel introduces the concept of themes as a way of creating your custom design
 
 The theme is nothing more than a collection of folders and files that together will change the way your application will render to the end-user. To ease your development process, phpReel created components. These are similar to a function that you can call to bring content from phpReel to your HTML5 template. You will learn more about components later in this documentation. 
 
+Keep in mind that phpReel is a Laravel application at it's core. This means that in order to change the way your application looks and feels you don't have to actually follow every step presented here. This guide gives you information about the tools that can be used but it's up to you, the developer, to decide where and if to use them.
+
 # File structure
 In order to create a phpReel theme you must comply to the theme standard defined by us. Don't worry, it's pretty simple. You just have to create a couple of directories and files as described below. 
 ```
@@ -67,9 +69,9 @@ At the core of any theme there is a layout. This file includes general informati
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<meta name="description" content="@yield('meta_description')">
+	@yield('meta')
 
-	<link rel="stylesheet" href="{{ get_css_url('style.css') }}">
+	<link rel="stylesheet" href="{{ Asset::css('style.css') }}">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
 
 	@yield('style')
@@ -79,8 +81,8 @@ At the core of any theme there is a layout. This file includes general informati
 <body>
 	@yield('content')
 
-	<script src="{{ get_js_url("jquery-3.6.0.min.js") }}"></script>
-	<script src="{{ get_js_url("bootstrap.bundle.min.js") }}"></script>
+	<script src="{{ Asset::js("jquery-3.6.0.min.js") }}"></script>
+	<script src="{{ Asset::js("bootstrap.bundle.min.js") }}"></script>
 
 	@yield('script')
 </body>
@@ -88,6 +90,7 @@ At the core of any theme there is a layout. This file includes general informati
 ```
 A layout is a normal ".blade.php" file, thus you have access to any Blade, Laravel or phpReel components that you would normally use. Detailed description on these components is provided later in this documentation.
 
+The first thing to note from the layout about is the @yield('') directive. This acts as a placeholder for different content. For example, if you access the home page of your application, Blade will automatically replace @yield('content') with the content of that particular page. Thus you can separate different pages of your application while at the same time keeping the same layout across the whole app.
 
 # Components
 As we previously stated, components are basic functions that help you link phpReel to your HTML5 template (stuff like embedding a video, linking CSS or js files, and so on). In this section we will discuss in detail everything about these components, what is their purpose, and how you can use them to create your themes.
@@ -106,17 +109,17 @@ This components are provided directly by the Blade template engine or they are r
 !> **Note** The Blade directives always start with @
 
 ## phpReel components
-Are created by phpReel to provide functionality beyond what Blade has to offer. They are basic PHP functions that are meant to provide access to the core of phpReel.
+Are created by phpReel to provide functionality beyond what Blade has to offer. They are basic PHP static methods that are meant to provide access to the core of phpReel.
 ```php
-{{ component_name(param1, param2, ...) }}
+{{ Class::componentName(param1, param2, ...) }}
 ```
+In order to use them, you have to first specify the class that contains them (more information about the available classes is provided in this documentation). After we specify the class, we then use the [scope resolution operator](https://www.php.net/manual/en/language.oop5.paamayim-nekudotayim.php) (double colon ::) to call a particular static methods which is a fancy way of saying select a certain function from that particular class. At the end we can specify the required or optional parameter.
 
-They are always snake case and they can take any number of parameters or none at all depending on the specific component you are trying to call.
+!> **Note** In order to make them work, we must enclose them between two curly braces {{ lass::componentGoesHere(param1, param2, ...) }}. This tells Blade that the component is just a simple PHP code and it should render the view accordingly.
 
-!> **Note** In order to make them work, we must enclose them between two curly braces {{ component_call_goes_here() }}. This tells Blade that the component is just a simple PHP function and it should render the view accordingly.
+# Utilities
 
-
-## get_excerpt($text, $length, $trimMarker)
+## Utilities::excerpt($text, $length, $trimMarker)
 Returns an excerpt from a given input text.
 
 - `$text` Required, text to be excerpted 
@@ -124,7 +127,7 @@ Returns an excerpt from a given input text.
 - `$trimMarker` Required, string to be added after the chunk of text (e.g. if the trimMarker is ... then the returned string will end with ...)
 
 ```php
-{{ get_excerpt($longStringOfText, 200, "...") }}
+{{ Utilities::excerpt($longStringOfText, 200, "...") }}
 ```
 
 ## get_pagination($content, $paginationFileName)
