@@ -1,4 +1,4 @@
-![logo](_media/logo.png)
+![logo](https://raw.githubusercontent.com/phpreel/phpreel/gh-pages/_media/logo.png)
 
 # phpReel <small>0.1.0</small>
 
