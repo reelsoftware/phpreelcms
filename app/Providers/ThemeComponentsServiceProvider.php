@@ -14,11 +14,7 @@ class ThemeComponentsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $filenames = glob(app_path('Helpers/Theme/Components/*.php'));
-
-        if ($filenames !== false && is_iterable($filenames)) 
-            foreach ($filenames as $filename) 
-                require_once $filename;
+        //
     }
 
     /**

@@ -5,7 +5,6 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <p class="ne-h1 text-center">{{__('Log in')}}</p>
-            
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 

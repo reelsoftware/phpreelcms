@@ -188,7 +188,9 @@ class EpisodeController extends Controller
         $genre = explode(", ", $currentEpisode['genre']);
 
         return view('episodes.show', [
-            'episodes' => $episodes,
+            'previousItem' => $prevEpisode,
+            'nextItem' => $nextEpisode,
+            'item' => $currentEpisode,
             'cast' => $cast, 
             'genre' => $genre,
         ]);

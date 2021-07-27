@@ -10,24 +10,23 @@
 <div class="container ne-margin-top-under-nav">
     <div class="ne-h1">{{__('Latest series')}}</div>
     <div class="row">
-        @foreach ($series as $movie)
-            
+        @foreach ($content as $item)
                 <div class="col-sm-12 col-md-6 col-lg-4">
                     <div class="card ne-card">
                         <div class="ne-image-container">
-                            <a href="{{route('seriesShow', ['id' => $movie->series_id])}}">
-                                <img src="{{route('fileResource', ['fileName' => $movie->image_name, 'storage' => $movie->image_storage])}}" class="card-img">
+                            <a href="{{ UrlRoutes::series($item->series_id) }}">
+                                <img src="{{ Asset::image($item->image_name, $item->image_storage) }}" class="card-img">
                             </a>
                         </div>      
                         
                         <div class="card-body">
-                            <a href="{{route('seriesShow', ['id' => $movie->series_id])}}" class="card-title ne-title">{{$movie->series_title}}</a>
+                            <a href="{{ UrlRoutes::series($item->series_id) }}" class="card-title ne-title">{{ $item->series_title }}</a>
 
-                            <p class="card-text ne-short-description">{{ get_excerpt($movie->series_description, 120, "...") }}</p>
-                            <a href="{{route('seriesShow', ['id' => $movie->series_id])}}" class="ne-btn">{{__('Watch')}}</a>
+                            <p class="card-text ne-short-description">{{ Utilities::excerpt($item->series_description, 120, "...") }}</p>
+                            <a href="{{ UrlRoutes::series($item->series_id) }}" class="ne-btn">{{ __('Watch') }}</a>
                             
                             @if($subscribed == false)
-                                <a href="{{route('subscribe')}}" class="ne-btn ne-movie-premium">{{__('Subscribe')}}</a>
+                                <a href="{{ UrlRoutes::subscribe() }}" class="ne-btn ne-movie-premium">{{ __('Subscribe') }}</a>
                             @endif
 
                         </div>
@@ -48,7 +47,7 @@
 
     <div class="row">
         <div class="col text-center">
-            {{ $series->links() }}
+            {{ Utilities::pagination($content, 'simple-pagination') }}
         </div>
     </div>
 </div>
@@ -56,16 +55,27 @@
 <div class="container-fluid ne-footer">
     <div class="row">
         <div class="offset-md-1 col-md-5">
-            <a class="ne-footer-item" href="{{ route('home') }}">{{__('Home')}}</a><br>
-            <a class="ne-footer-item" href="{{ route('movies') }}">{{__('Movies')}}</a><br>
-            <a class="ne-footer-item" href="{{ route('series') }}">{{__('Series')}}</a><br>
-            <a class="ne-footer-item" href="{{ route('subscribe') }}">{{__('Subscribe')}}</a><br>
+            <a class="ne-footer-item" href="{{ UrlRoutes::home() }}">
+                {{ __('Home') }}
+            </a><br>
+
+            <a class="ne-footer-item" href="{{ UrlRoutes::allMovies() }}">
+                {{ __('Movies') }}
+            </a><br>
+
+            <a class="ne-footer-item" href="{{ UrlRoutes::allSeries() }}">
+                {{ __('Series') }}
+            </a><br>
+
+            <a class="ne-footer-item" href="{{ UrlRoutes::subscribe() }}">
+                {{ __('Subscribe') }}
+            </a><br>
         </div>
     </div>
 
     <div class="row">
         <div class="offset-md-1 col-md-11 ne-footer-item my-2">
-            © {{date("Y")}} {{ config('app.name') }}
+            © {{ Utilities::currentYear() }} {{ AppConfig::name() }}
         </div>
     </div>
 </div>

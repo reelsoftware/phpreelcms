@@ -37,7 +37,7 @@ class SeriesController extends Controller
         $subscribed = UserHandler::checkSubscription();
 
         return Theme::view('series.index', [
-            'series' => $series, 
+            'content' => $series, 
             'subscribed' => $subscribed,
         ]);
     }

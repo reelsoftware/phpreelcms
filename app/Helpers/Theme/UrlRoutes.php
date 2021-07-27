@@ -100,7 +100,6 @@ class UrlRoutes
         return route('episodeShow', ['id' => $id]);
     }
 
-
     /**
      * Returns URL to the home
      *

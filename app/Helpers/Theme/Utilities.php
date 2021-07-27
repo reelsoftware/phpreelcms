@@ -57,4 +57,14 @@ class Utilities
     {
         return (float)$price/100;
     }
+
+    /**
+     * Returns the current year
+     *
+     * @return string
+     */
+    public static function currentYear(): string
+    {
+        return (string)date("Y");
+    }
 }
