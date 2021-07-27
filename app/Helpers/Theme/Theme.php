@@ -71,7 +71,7 @@ class Theme
      * @param array $data data to be passed to the view
      * 
      */
-    public static function view(string $view, array $data)
+    public static function view(string $view, array $data = [])
     {
         //If the child theme file exists then render that file else render the theme file
         if(Theme::existsChildView($view))

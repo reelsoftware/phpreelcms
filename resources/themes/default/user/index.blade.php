@@ -1,7 +1,7 @@
-@extends('layouts.frontend')
+@extends(AppConfig::themeLayout("layout"))
 
 @section('title')
-    {{__('User')}} - 
+    {{ __('User') }} - {{ AppConfig::name() }}
 @endsection
 
 @section('content')

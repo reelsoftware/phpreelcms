@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
+use App\Helpers\Theme\Theme;
 
 class NewPasswordController extends Controller
 {
@@ -18,7 +19,7 @@ class NewPasswordController extends Controller
      */
     public function create(Request $request)
     {
-        return view('auth.reset-password', ['request' => $request]);
+        return Theme::view('auth.reset-password', ['request' => $request]);
     }
 
     /**

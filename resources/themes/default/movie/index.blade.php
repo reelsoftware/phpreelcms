@@ -1,9 +1,5 @@
 @extends(AppConfig::themeLayout("layout"))
 
-@section('meta')
-    <meta name="description" content="{{ $item->description }}">
-@endsection
-
 @section('title')
     {{__('Movies')}} - {{ AppConfig::name() }}
 @endsection

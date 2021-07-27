@@ -1,14 +1,12 @@
-@extends('layouts.frontend')
-
-@section('meta_description', '')
+@extends(AppConfig::themeLayout("layout"))
 
 @section('title')
-    {{__('Series')}} - 
+    {{__('Series')}} - {{ AppConfig::name() }}
 @endsection
 
 @section('content')
 <div class="container ne-margin-top-under-nav">
-    <div class="ne-h1">{{__('Latest series')}}</div>
+    <div class="ne-h1">{{ __('Latest series') }}</div>
     <div class="row">
         @foreach ($content as $item)
                 <div class="col-sm-12 col-md-6 col-lg-4">

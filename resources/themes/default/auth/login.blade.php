@@ -1,4 +1,8 @@
-@extends('layouts.frontend')
+@extends(AppConfig::themeLayout("layout"))
+
+@section('title')
+    {{__('Login')}} - {{ AppConfig::name() }}
+@endsection
 
 @section('content')
 <div class="container ne-margin-top-under-nav">
