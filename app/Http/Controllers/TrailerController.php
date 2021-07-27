@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Movie;
 use App\Models\Seasons;
-use App\Handler\Content\ContentHandler;
-use App\Handler\Theme\Theme;
-
+use App\Helpers\Content\ContentHandler;
+use App\Helpers\Theme\Theme;
 
 class TrailerController extends Controller
 {

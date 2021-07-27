@@ -1,9 +1,7 @@
-@extends('layouts.frontend')
-
-@section('meta_description', '')
+@extends(AppConfig::themeLayout("layout"))
 
 @section('title')
-    {{__('Search')}} - 
+    {{__('Search')}} - {{ AppConfig::name() }}
 @endsection
 
 @section('content')

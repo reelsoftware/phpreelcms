@@ -75,6 +75,7 @@
 										{{ __('Register') }}
 									</a>
 								</li>
+							@endif
 							@else
 								<li class="nav-item dropdown">
 									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -99,7 +100,6 @@
 										</form>
 									</ul>
 								</li>
-							@endif
 						@endguest
 					</ul>
 				</div>
