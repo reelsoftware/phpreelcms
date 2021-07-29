@@ -321,6 +321,19 @@ class ContentHandler
     /**
      * Return the values stored in the free and auth fields
      *
+     * @param int $id movie id
+     */
+    public static function getAccessAvailabilitySeries(int $id): array
+    {
+        $series = Series::where('id', '=', $id)
+            ->first(['premium', 'auth']);
+
+        return $series->toArray();
+    }
+
+    /**
+     * Return the values stored in the free and auth fields
+     *
      * @param $series
      * 
      * @return array

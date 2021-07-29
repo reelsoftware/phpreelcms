@@ -82,7 +82,7 @@ class StripeStrategy implements ISubscriptionStrategy
     public function store()
     {
         $this->paymentContext->setPaymentStrategy(new CardStrategy($this->request));
-
+        
         $this->paymentContext->execute();
     }
 

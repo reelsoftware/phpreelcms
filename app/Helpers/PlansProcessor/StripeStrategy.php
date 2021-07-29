@@ -88,7 +88,7 @@ class StripeStrategy implements IPlanStrategy
             'public' => 'required|boolean',
             'billingInterval' => 'required|max:10',
         ]);
-
+        
         $pennies = PaymentHelper::toPennies($request->price);
         $subscription = SubscriptionType::where('name', '=', 'default')
             ->first(['product_id', 'id']);

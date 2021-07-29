@@ -1,4 +1,8 @@
-@extends('layouts.frontend')
+@extends(AppConfig::themeLayout("layout"))
+
+@section('title')
+    Forgot password - {{ AppConfig::name() }}
+@endsection
 
 @section('content')
 <div class="container ne-margin-top-under-nav">
@@ -11,7 +15,7 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('password.email') }}">
+            <form method="POST" action="{{ UrlRoutes::resetPasswordPost() }}">
                 @csrf
                 <div class="form-group row">
                     <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Email address') }}</label>

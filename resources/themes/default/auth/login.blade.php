@@ -9,7 +9,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <p class="ne-h1 text-center">{{__('Log in')}}</p>
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ UrlRoutes::loginPost() }}">
                         @csrf
 
                         <div class="form-group row">
@@ -52,8 +52,6 @@
                             </div>
                         </div>
 
-                        
-
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn ne-btn">
@@ -71,7 +69,7 @@
 
                     <div class="form-group row" style="padding-top:15px">
                         <div class="col-md-6 offset-md-4">
-                            <p class="ne-short-description">{{__("Don't have an account?")}} <a href="{{route('register')}}"> {{__("Register")}}</a></p>
+                            <p class="ne-short-description">{{__("Don't have an account?")}} <a href="{{ UrlRoutes::register() }}"> {{__("Register")}}</a></p>
                         </div>
                     </div>
                 </div>

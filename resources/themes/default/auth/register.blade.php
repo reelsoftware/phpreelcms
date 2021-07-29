@@ -1,4 +1,8 @@
-@extends('layouts.frontend')
+@extends(AppConfig::themeLayout("layout"))
+
+@section('title')
+    {{__('Register')}} - {{ AppConfig::name() }}
+@endsection
 
 @section('content')
 
@@ -6,7 +10,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <p class="ne-h1 text-center">{{__('Create a new account')}}</p>
-            <form method="POST" action="{{ route('register') }}">
+            <form method="POST" action="{{ UrlRoutes::registerPost() }}">
                 @csrf
 
                 <div class="form-group row">

@@ -30,7 +30,7 @@
                     <h5 class="card-title ne-title">{{ __('Preferred language') }}</h5>
                     <div class="row">
                         <div class="col-sm-6">
-                            <form action="{{ route('userUpdateLanguage') }}" method="POST">
+                            <form action="{{ UrlRoutes::userUpdateLanguagePost() }}" method="POST">
                                 @csrf
                                 <select class="custom-select" name="language">
                                     <option value="0" {{ $language == null ? 'selected' : '' }}>
@@ -56,7 +56,7 @@
                     </h5>
 
                     @if($subscription == NULL)
-                        <form action="{{ route('userManageSubscription') }}" method="POST">
+                        <form action="{{ UrlRoutes::userManageSubscriptionPost() }}" method="POST">
                             @csrf
                             <input type="submit" class="btn ne-btn" value="{{ __('Manage subscription') }}">
                         </form>

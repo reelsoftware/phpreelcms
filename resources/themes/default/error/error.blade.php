@@ -1,11 +1,7 @@
 @extends(AppConfig::themeLayout("layout"))
 
-@section('meta')
-    <meta name="description" content="{{ $item->description }}">
-@endsection
-
 @section('title')
-    {{ Error code {{ $code }} }} - {{ AppConfig::name() }}
+    Error code {{ $code }} - {{ AppConfig::name() }}
 @endsection
 
 @section('content')

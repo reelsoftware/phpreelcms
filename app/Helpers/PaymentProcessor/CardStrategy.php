@@ -34,6 +34,11 @@ class CardStrategy implements IPaymentStrategy
                 ->checkout([
                     'cancel_url' => route('subscribe'),
                 ]);
+        } catch (\Stripe\Exception\InvalidRequestException $ex) {
+            return redirect()->route('error', [
+                'code' => "400",
+                'message' => $ex->getMessage()
+            ])->send();
         } catch (Exception $ex) {
             return redirect()->route('error', [
                 'code' => $ex->getError()->code,

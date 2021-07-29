@@ -64,7 +64,7 @@
 
                         @auth
                             @if($subscription == false)
-                                <form action="{{route('subscribeStore')}}" method="POST">
+                                <form action="{{ UrlRoutes::subscribeStorePost() }}" method="POST">
                                     @csrf
                                     <input type="hidden" value="{{ $plan->stripe_price_id }}" name="plan">
 

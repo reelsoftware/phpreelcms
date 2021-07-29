@@ -84,18 +84,18 @@
 
 									<ul class="dropdown-menu ne-dropdown" aria-labelledby="navbarDropdown">
 										<li>
-											<a class="dropdown-item ne-dropdown-item" href="{{route('user')}}">
+											<a class="dropdown-item ne-dropdown-item" href="{{ UrlRoutes::user() }}">
 												{{ __('Settings') }}
 											</a>
 										</li>
 
 										<li>
-											<a class="dropdown-item ne-dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+											<a class="dropdown-item ne-dropdown-item" href="{{ UrlRoutes::logoutPost() }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
 												{{ __('Logout') }}
 											</a>
 										</li>
 
-										<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+										<form id="logout-form" action="{{ UrlRoutes::logoutPost() }}" method="POST" style="display: none;">
 											@csrf
 										</form>
 									</ul>
