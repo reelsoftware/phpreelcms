@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Install\MigrationExecutor; 
 use Illuminate\Http\Request;
 use App\Models\Setting;
 use Jackiedo\DotenvEditor\Facades\DotenvEditor;
-use App\Http\Traits\MigrateDatabaseTrait;
 use App\Models\SubscriptionType;
 
 class SettingsController extends Controller
 {
-    use MigrateDatabaseTrait;
-
     public function storage()
     {
         $storageDisk = DotenvEditor::getValue('STORAGE_DISK');
@@ -85,7 +83,7 @@ class SettingsController extends Controller
     public function versionUpdate()
     {
         //Update for every new added version
-        $lastVersion = '1.0';
+        $lastVersion = '0.2.0';
 
         //Get current app version
         $appVersion = DotenvEditor::getValue('APP_VERSION');
@@ -102,7 +100,7 @@ class SettingsController extends Controller
         } 
 
         //Migrate the table to the database
-        $this->migrateDatabase();
+        MigrationExecutor::migrateDatabase();
 
         return redirect(route('settingsVersion'));
     }

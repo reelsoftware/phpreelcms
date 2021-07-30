@@ -2,6 +2,7 @@
 namespace App\Helpers\Install; 
 
 use DB;
+use Schema;
 
 class MigrationExecutor
 {
@@ -231,11 +232,20 @@ class MigrationExecutor
         )");
 
         //v0.2.0 
-        DB::statement("ALTER TABLE movies ADD premium BOOLEAN NOT NULL DEFAULT 1");
-        DB::statement("ALTER TABLE movies ADD auth BOOLEAN NOT NULL DEFAULT 1");
-        DB::statement("ALTER TABLE episodes ADD premium BOOLEAN NOT NULL DEFAULT 1");
-        DB::statement("ALTER TABLE episodes ADD auth BOOLEAN NOT NULL DEFAULT 1");
-        DB::statement("ALTER TABLE videos ADD auth BOOLEAN NOT NULL DEFAULT 1");
+        if(!Schema::hasColumn('movies', 'premium'))
+            DB::statement("ALTER TABLE movies ADD premium BOOLEAN NOT NULL DEFAULT 1");
+
+        if(!Schema::hasColumn('movies', 'auth'))
+            DB::statement("ALTER TABLE movies ADD auth BOOLEAN NOT NULL DEFAULT 1");
+        
+        if(!Schema::hasColumn('episodes', 'premium'))
+            DB::statement("ALTER TABLE episodes ADD premium BOOLEAN NOT NULL DEFAULT 1");
+
+        if(!Schema::hasColumn('episodes', 'auth'))
+            DB::statement("ALTER TABLE episodes ADD auth BOOLEAN NOT NULL DEFAULT 1");
+        
+        if(!Schema::hasColumn('videos', 'auth')) 
+            DB::statement("ALTER TABLE videos ADD auth BOOLEAN NOT NULL DEFAULT 1");
         
     }
 }

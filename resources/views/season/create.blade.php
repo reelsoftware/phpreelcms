@@ -65,7 +65,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">
-                            <x-link-season-to-series-form type="create" :content="$series"/>
+                            <x-link-season-to-series-form type="create" :series="$series"/>
                         </div>
                     </div>
                 </div>
