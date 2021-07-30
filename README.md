@@ -1,4 +1,4 @@
-<p align="center"><a href="https://developer.phpreel.org/" target="_blank"><img src="https://developer.phpreel.org/img/logo.png" width="400"></a></p>
+<p align="center"><a href="https://developer.phpreel.org/" target="_blank"><img src="https://developer.phpreel.org/img/logo.png" width="250"></a></p>
 
 # phpReel
 phpReel is a free, MIT open-source subscription-based video streaming service that lets you create your platform for distributing video content in the form of movies or series.
