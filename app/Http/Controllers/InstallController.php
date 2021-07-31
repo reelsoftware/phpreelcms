@@ -30,7 +30,7 @@ class InstallController extends Controller
     public function config()
     {
         $envFields = $this->envHandler->getEnvFields();
-
+        
         return view('install.config', [
             'envFields' => $envFields,
         ]);

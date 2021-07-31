@@ -56,7 +56,7 @@ class EnvHandler
     public function setEnvFields()
     {
         //Env fields as array
-        $envContent = explode("\n", file_get_contents($this->envFile));
+        $envContent = explode("\n", str_replace("\r", "", file_get_contents($this->envFile)));
 
         $assocArrayValue = [];
         $assocArrayKey = null;
