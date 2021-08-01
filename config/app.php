@@ -195,7 +195,7 @@ return [
         App\Providers\DashboardComponentsServiceProvider::class,
 
         ProtoneMedia\LaravelFFMpeg\Support\ServiceProvider::class,
-
+        
     ],
 
     /*

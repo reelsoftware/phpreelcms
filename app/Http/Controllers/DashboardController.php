@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use App\Models\User;
 use Carbon\Carbon;
+use App\Helpers\Menu\MenuBuilder;
 
 class DashboardController extends Controller
 {
@@ -15,6 +16,27 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        $menu = new MenuBuilder();
+        $result = $menu
+            ->add("Home", route('home'), 2)
+            ->add("M", [
+                "Test" => "abc",
+                "Submenu" => [
+                    "Menu" => "test"
+                ],
+            ], 1);
+
+        $result->add("Home2", route('home'))->addAfter("Home3", route('home'), "Home");
+
+        $result->append("M", [
+            "ElemNou" => "el", 
+            "Hahaha" => [
+                "Abccccc" => 'xxxx'
+            ]
+        ]);
+
+
+        dd($result->generate());
         //Count all users
         $usersCount = DB::table('users')->count();
 
