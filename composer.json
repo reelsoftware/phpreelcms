@@ -15,6 +15,7 @@
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "league/flysystem-aws-s3-v3": "~1.0",
+        "nwidart/laravel-menus": "^7.0",
         "pbmedia/laravel-ffmpeg": "^7.5",
         "zanysoft/laravel-zip": "^1.0"
     },

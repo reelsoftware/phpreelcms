@@ -110,6 +110,11 @@
 @endsection
 
 @section('content')
+
+
+{!! Menu::render('dashboard-navbar') !!}
+
+
 <!-- Projects table -->
 <div class="table-responsive">
   <table class="table align-items-center table-flush">

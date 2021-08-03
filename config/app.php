@@ -195,7 +195,7 @@ return [
         App\Providers\DashboardComponentsServiceProvider::class,
 
         ProtoneMedia\LaravelFFMpeg\Support\ServiceProvider::class,
-        
+        Nwidart\Menus\MenusServiceProvider::class,
     ],
 
     /*
@@ -255,6 +255,7 @@ return [
         'UrlRoutes' => App\Helpers\Theme\UrlRoutes::class,
         'AppConfig' => App\Helpers\Theme\AppConfig::class,
         'Utilities' => App\Helpers\Theme\Utilities::class,
+        'Menu' => Nwidart\Menus\Facades\Menu::class,
     ],
 
 ];

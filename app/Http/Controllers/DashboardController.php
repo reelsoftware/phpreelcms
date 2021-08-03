@@ -6,6 +6,7 @@ use DB;
 use App\Models\User;
 use Carbon\Carbon;
 use App\Helpers\Menu\MenuBuilder;
+use Menu;
 
 class DashboardController extends Controller
 {
@@ -16,6 +17,32 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        Menu::create('navbar', function($menu) {
+            $menu->url('/', 'Home')->order(1);
+            $menu->route('/', 'About', ['user' => '1'], ['icon' => 'fa fa-user'])->order(0);
+            $menu->dropdown('Account', function ($sub) {
+                $sub->url('profile', 'Visit My Profile');
+                $sub->dropdown('Settings', function ($sub) {
+                    $sub->url('settings/password', 'Password');
+                    $sub->url('settings/design', 'Design');
+                });
+                $sub->url('logout', 'Logout');
+            })->order(2);
+        });
+
+        $menuCollection = Menu::sort('navbar');
+
+        //dd($menuCollection);
+
+        dd($menuCollection);
+
+        return view('test', [
+            'test' => Menu::convert('navbar')
+        ]);
+
+
+
+
         $menu = new MenuBuilder();
         $result = $menu
             ->add("Home", route('home'), 2)
