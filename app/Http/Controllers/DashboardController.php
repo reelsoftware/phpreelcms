@@ -6,7 +6,7 @@ use DB;
 use App\Models\User;
 use Carbon\Carbon;
 use App\Helpers\Menu\MenuBuilder;
-use Menu;
+use MenuCreator;
 
 class DashboardController extends Controller
 {

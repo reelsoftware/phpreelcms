@@ -45,15 +45,7 @@
 			  </ul>
 
 				<!-- Movies -->
-				{!! Menu::render('movies', 'admin') !!}
-				{!! Menu::render('series', 'admin') !!}
-				{!! Menu::render('seasons', 'admin') !!}
-				{!! Menu::render('episodes', 'admin') !!}
-				{!! Menu::render('subscriptionPlan', 'admin') !!}
-				{!! Menu::render('themes', 'admin') !!}
-				{!! Menu::render('translation', 'admin') !!}
-				{!! Menu::render('users', 'admin') !!}
-				{!! Menu::render('settings', 'admin') !!}
+				{!! Menu::render('dashboard-nav', 'admin') !!}
 
 			</div>
 		  </div>

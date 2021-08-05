@@ -256,6 +256,7 @@ return [
         'AppConfig' => App\Helpers\Theme\AppConfig::class,
         'Utilities' => App\Helpers\Theme\Utilities::class,
         'Menu' => Nwidart\Menus\Facades\Menu::class,
+        'MenuEditor' => Nwidart\Menus\Facades\Menu::class,
     ],
 
 ];

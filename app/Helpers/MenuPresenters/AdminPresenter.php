@@ -73,15 +73,15 @@ class AdminPresenter extends Presenter
      */
     public function getMenuWithDropDownWrapper($item)
     {
-        return '<li class="dropdown' . $this->getActiveStateOnChild($item, ' active') . '">
-		          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					' . $item->getIcon() . ' ' . $item->title . '
-			      	<b class="caret"></b>
-			      </a>
-			      <ul class="dropdown-menu">
+        return '<h6 class="navbar-heading pt-0 pb-0 pr-0 text-muted">
+                    <span class="docs-normal">' . $item->title . '</span>
+                </h6>
+                
+                <ul class="navbar-nav mb-md-3 ml-1">
+
 			      	' . $this->getChildMenuItems($item) . '
-			      </ul>
-		      	</li>'
+			      
+		      	</ul>'
         . PHP_EOL;
     }
 
