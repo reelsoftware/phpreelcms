@@ -6,7 +6,7 @@
 
 @section('pageTitle')
     Modules
-    <span class="badge badge-pill badge-default">{{ count($modules) }}</span>
+    <span class="badge badge-pill badge-default">{{ Module::count(); }}</span>
 
     <label for="resourceFile">
         <span for="resourceFile" type="file" class="btn btn-primary mx-1 btn-sm">Add module</span>
@@ -24,33 +24,40 @@
 <div class="container-fluid">
     <div class="row">
          @foreach($modules as $theme)
-            <div class="col-sm-6 col-lg-4">
-                <div class="card" >
-                    <img class="card-img-top" src="{{ $theme['cover'] }}" alt="Card image cap">
+            @isset($theme['config'])
+                <div class="col-sm-6 col-lg-4">
+                    <div class="card" >
+                        <img class="card-img-top" src="{{ $theme['cover'] }}" alt="Card image cap">
 
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $theme['config']['Module name'] }}</h5>
-                        <p class="card-text">{{ $theme['config']['Description'] }}</p>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $theme['config']['Module name'] }}</h5>
+                            <p class="card-text">{{ $theme['config']['Description'] }}</p>
 
-                        @if($theme['directoryName'] == config('app.theme'))
-                            <span class="badge badge-pill badge-success badge-lg" style="font-size:12px">Active</span>
-                        @else
-                            <form action="{{ route('themeUpdate') }}" method="POST" id="formUpdate{{ $loop->index }}">
-                                {{ csrf_field() }}
-                                <input type="hidden" name="theme" value="{{ $theme['directoryName'] }}">
-                            </form>
+                            @if(Module::collections()->has($theme['directoryName']))
+                                <form action="{{ route('moduleUpdate') }}" method="POST" id="formUpdate{{ $loop->index }}">
+                                    {{ csrf_field() }}
+                                    <input type="hidden" name="theme" value="{{ $theme['directoryName'] }}">
+                                </form>
 
-                            <form action="{{ route('themeDestroy') }}" method="POST" id="formDestroy{{ $loop->index }}">
-                                {{ csrf_field() }}
-                                <input type="hidden" name="theme" value="{{ $theme['directoryName'] }}">
-                            </form>
+                                <button type="submit" class="btn btn-warning" value="Set as active" form="formUpdate{{ $loop->index }}">Disable</button>
+                            @else
+                                <form action="{{ route('moduleUpdate') }}" method="POST" id="formUpdate{{ $loop->index }}">
+                                    {{ csrf_field() }}
+                                    <input type="hidden" name="theme" value="{{ $theme['directoryName'] }}">
+                                </form>
 
-                            <button type="submit" class="btn btn-info" value="Set as active" form="formUpdate{{ $loop->index }}">Set as active</button>
-                            <button type="submit" class="btn btn-danger" value="Remove" form="formDestroy{{ $loop->index }}">Remove</button>
-                        @endif
+                                <form action="{{ route('moduleDestroy') }}" method="POST" id="formDestroy{{ $loop->index }}">
+                                    {{ csrf_field() }}
+                                    <input type="hidden" name="theme" value="{{ $theme['directoryName'] }}">
+                                </form>
+
+                                <button type="submit" class="btn btn-info" value="Set as active" form="formUpdate{{ $loop->index }}">Enable</button>
+                                <button type="submit" class="btn btn-danger" value="Remove" form="formDestroy{{ $loop->index }}">Remove</button>
+                            @endif
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endisset
         @endforeach
     </div>
 </div>
@@ -62,7 +69,7 @@
     <script>
         new FileUpload("resourceFile", "{{route('resourceStoreApi', ['storage' => 'local'])}}", {{env('CHUNK_SIZE')}} * 1000000, function(fileId, fileName) {
             const httpRequest = new XMLHttpRequest();	
-            httpRequest.open("POST", "{{ route('themeStore') }}", true);
+            httpRequest.open("POST", "{{ route('moduleStore') }}", true);
             
             httpRequest.setRequestHeader("X-CSRF-TOKEN", document.querySelector('meta[name="csrf-token"]').content);
 

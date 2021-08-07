@@ -8,6 +8,7 @@ use App\Helpers\Module\ModuleHandler;
 use Illuminate\Support\Facades\Log;
 use File;
 use Zip;
+use Module;
 
 class ModulesController extends Controller
 {
@@ -18,7 +19,6 @@ class ModulesController extends Controller
      */
     public function index()
     {
-
         //Get all the plugins available in themes folder
         $modules = ModuleHandler::getModulesDetails(ModuleHandler::getModules());
         
@@ -65,7 +65,7 @@ class ModulesController extends Controller
 
         //Move the zip archive from resources to themes
     	File::move(storage_path("app/resources/$request->fileId"), $moduleZipPath);
-
+   
         if(Zip::check($moduleZipPath))
         {
             $zip = Zip::open($moduleZipPath);
@@ -96,29 +96,27 @@ class ModulesController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Works as a toggle, enable or disable a particular module
      *
      * @param  \Illuminate\Http\Request  $request
      */
     public function update(Request $request)
     {
-        //Update .env file
-        DotenvEditor::setKeys([
-            'THEME' => $request->theme,
-        ]);
+        $module = Module::find($request->theme);
 
-        DotenvEditor::save();
+        if(Module::collections()->has($request->theme))
+            $module->disable();
+        else
+            $module->enable();
 
-        //Generate child theme if it doesn't exist
-        Theme::generateChildTheme($request->theme);
-
-        return redirect()->route('themeIndex');
+        return redirect()->route('moduleIndex');
     }
 
     public function destroy(Request $request)
     {
-        Theme::deleteTheme($request->theme);
+        $module = Module::find($request->theme);
+        $module->delete();
       
-        return redirect()->route('themeIndex');
+        return redirect()->route('moduleIndex');
     }
 }

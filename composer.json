@@ -18,7 +18,7 @@
         "nwidart/laravel-menus": "^7.0",
         "nwidart/laravel-modules": "^8.2",
         "pbmedia/laravel-ffmpeg": "^7.5",
-        "zanysoft/laravel-zip": "^1.0"
+        "zanysoft/laravel-zip": "master"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

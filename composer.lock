@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "91045874cc6741e539c2c877ecb556fa",
+    "content-hash": "c0f1e753325d936e894e5fa9df4e2303",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -6730,16 +6730,16 @@
         },
         {
             "name": "zanysoft/laravel-zip",
-            "version": "1.0.3",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zanysoft/laravel-zip.git",
-                "reference": "466663746c92154c48a2d490efc6724f9f6e9652"
+                "reference": "06a67c3068e5d1d8eabf8b34940e33af402d2ea7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zanysoft/laravel-zip/zipball/466663746c92154c48a2d490efc6724f9f6e9652",
-                "reference": "466663746c92154c48a2d490efc6724f9f6e9652",
+                "url": "https://api.github.com/repos/zanysoft/laravel-zip/zipball/06a67c3068e5d1d8eabf8b34940e33af402d2ea7",
+                "reference": "06a67c3068e5d1d8eabf8b34940e33af402d2ea7",
                 "shasum": ""
             },
             "require": {
@@ -6749,6 +6749,7 @@
                 "phpunit/phpunit": "^4.0|^5.0",
                 "scrutinizer/ocular": "^1.0"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -6776,9 +6777,14 @@
                     "homepage": "http://www.zanysoft.co"
                 }
             ],
-            "description": "ZipArchive toolbox",
+            "description": "laravel-zip is the world's leading zip utility for file compression and backup.",
             "homepage": "http://www.zanysoft.co",
             "keywords": [
+                "backup",
+                "extract",
+                "laravel",
+                "laravel-zip",
+                "laravel5",
                 "merge",
                 "multiple",
                 "unzip",
@@ -6787,9 +6793,9 @@
             ],
             "support": {
                 "issues": "https://github.com/zanysoft/laravel-zip/issues",
-                "source": "https://github.com/zanysoft/laravel-zip/tree/1.0.3"
+                "source": "https://github.com/zanysoft/laravel-zip/tree/master"
             },
-            "time": "2017-10-10T03:22:41+00:00"
+            "time": "2018-07-18T07:29:37+00:00"
         }
     ],
     "packages-dev": [

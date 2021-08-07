@@ -44,7 +44,11 @@ class CheckAdmin
             });
 
             $menu->dropdown('Themes', function ($sub) {
-                $sub->route('themeIndex', 'Show all', [], ['icon' => 'ni ni-image']);
+                $sub->route('themeIndex', 'Show all', [], ['icon' => 'ni ni-ruler-pencil']);
+            });
+
+            $menu->dropdown('Modules', function ($sub) {
+                $sub->route('moduleIndex', 'Show all', [], ['icon' => 'ni ni-box-2']);
             });
 
             $menu->dropdown('Translation', function ($sub) {
