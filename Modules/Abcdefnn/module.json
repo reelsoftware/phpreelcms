@@ -1,0 +1,13 @@
+{
+    "name": "Abcdefnn",
+    "alias": "abcdefnn",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Abcdefnn\\Providers\\AbcdefnnServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

@@ -17,53 +17,6 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        Menu::create('navbar', function($menu) {
-            $menu->url('/', 'Home')->order(1);
-            $menu->route('/', 'About', ['user' => '1'], ['icon' => 'fa fa-user'])->order(0);
-            $menu->dropdown('Account', function ($sub) {
-                $sub->url('profile', 'Visit My Profile');
-                $sub->dropdown('Settings', function ($sub) {
-                    $sub->url('settings/password', 'Password');
-                    $sub->url('settings/design', 'Design');
-                });
-                $sub->url('logout', 'Logout');
-            })->order(2);
-        });
-
-        $menuCollection = Menu::sort('navbar');
-
-        //dd($menuCollection);
-
-        dd($menuCollection);
-
-        return view('test', [
-            'test' => Menu::convert('navbar')
-        ]);
-
-
-
-
-        $menu = new MenuBuilder();
-        $result = $menu
-            ->add("Home", route('home'), 2)
-            ->add("M", [
-                "Test" => "abc",
-                "Submenu" => [
-                    "Menu" => "test"
-                ],
-            ], 1);
-
-        $result->add("Home2", route('home'))->addAfter("Home3", route('home'), "Home");
-
-        $result->append("M", [
-            "ElemNou" => "el", 
-            "Hahaha" => [
-                "Abccccc" => 'xxxx'
-            ]
-        ]);
-
-
-        dd($result->generate());
         //Count all users
         $usersCount = DB::table('users')->count();
 

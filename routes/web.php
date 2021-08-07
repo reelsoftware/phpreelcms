@@ -26,6 +26,7 @@ use App\Http\Controllers\AssetController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\EpisodeOrderController;
 use App\Http\Controllers\ErrorController;
+use App\Http\Controllers\ModulesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -351,6 +352,22 @@ Route::middleware(['setLanguage'])->group(function ()
 
         Route::post('dashboard/themes/store', [ThemesController::class, 'store'])
             ->name('themeStore');
+
+        //Modules
+        Route::get('dashboard/modules', [ModulesController::class, 'index'])
+            ->name('moduleIndex');
+
+        Route::get('/dashboard/modules/cover/{module}', [ModulesController::class, 'cover'])
+            ->name('moduleCover');
+
+        Route::post('dashboard/modules', [ModulesController::class, 'update'])
+            ->name('moduleUpdate');
+
+        Route::post('dashboard/modules/destroy', [ModulesController::class, 'destroy'])
+            ->name('moduleDestroy');
+
+        Route::post('dashboard/modules/store', [ModulesController::class, 'store'])
+            ->name('moduleStore');
 
     });
 });
