@@ -7,7 +7,7 @@ use File;
 class Theme
 {
     /**
-     * Return true if there is a child view and false if there is not a child view
+     * Returns true if a child view exists and false if there is not a child view
      *
      * @param string $view path to the view to be checked
      * 
@@ -28,7 +28,7 @@ class Theme
     }
 
     /**
-     * Checks if there is a child theme defined, if not thn it returns the active theme, else it's child theme
+     * Checks if there is a child theme defined, if not then it returns the active theme, else it's child theme
      * 
      */
     public static function getActiveTheme(): string
@@ -40,7 +40,7 @@ class Theme
     }
 
     /**
-     * Return the file path of a file either from the theme or child theme 
+     * Returns the file path of a file either from the theme or child theme 
      * This should be used for anything that is not a view
      *
      * @param string $path path to the file to be checked (starting from theme root)
@@ -64,7 +64,7 @@ class Theme
     }
 
     /**
-     * Return a specific view
+     * Returns a specific view
      * If there is a child theme set then return that file, else return the theme file
      *
      * @param string $view path to the view to be rendered
@@ -87,7 +87,7 @@ class Theme
     }
 
     /**
-     * Return all the available themes and child themes
+     * Returns all the available themes and child themes
      * 
      */
     public static function getThemes()
@@ -96,7 +96,7 @@ class Theme
     }
 
     /**
-     * Return all the available base themes (not child themes)
+     * Returns all the available base themes (not child themes)
      * 
      */
     public static function getBaseThemes(): array
@@ -210,7 +210,7 @@ class Theme
     /**
      * Creates the files and directories from the directories array
      * 
-     * @param string $directories array of the directories
+     * @param array $directories array of the directories
      * @param string $path to where the files or directories are going to be created
      */
     public static function createFiles($directories, $path)

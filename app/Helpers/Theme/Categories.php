@@ -4,7 +4,7 @@ namespace App\Helpers\Theme;
 class Categories
 {
     /**
-     * Return URL of all the content released in that particular year
+     * Returns the URL of the category that contains all the content released in that particular year
      *
      * @param int $year
      * 
@@ -15,7 +15,7 @@ class Categories
     }
 
     /**
-     * Return URL of all the content released under that particular genre
+     * Returns the URL of the category that contains all the content released under that particular genre
      *
      * @param string $genre
      * 
@@ -26,7 +26,7 @@ class Categories
     }
 
     /**
-     * Return URL of all the content released under that particular actor
+     * Returns the URL of the category that contains all the content released under that particular actor.
      *
      * @param string $actor
      * 
@@ -37,7 +37,7 @@ class Categories
     }
 
     /**
-     * Return URL of all the content released under that particular rating
+     * Returns the URL of the category that contains all the content released under that particular rating
      *
      * @param string $rating
      * 

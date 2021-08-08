@@ -1,5 +1,5 @@
 <?php
-namespace App\Helpers\IPlanStrategy;
+namespace App\Helpers\PlansProcessor; 
 
 /**
  * The Context defines the interface for plans

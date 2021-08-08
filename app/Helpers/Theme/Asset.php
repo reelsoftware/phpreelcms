@@ -68,9 +68,9 @@ class Asset
     }
 
     /**
-     * Return URL of a particular video file
+     * Return URL of a particular video file that is associated with a content type (movie, series)
      *
-     * @param $item name of a movie or series
+     * @param $item movie or series object
      * 
      */
     public static function item($item)

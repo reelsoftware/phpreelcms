@@ -133,7 +133,7 @@ class UrlRoutes
     }
 
     /**
-     * POST: Reset the password of a user
+     * POST: Login a user
      * 
      * @param string _token with every post request with Laravel you must add a hidden input with the value of csrf_token() or just use @csrf Blade directive
      * @param string email address to which the account is registered
@@ -202,7 +202,7 @@ class UrlRoutes
     }
 
     /**
-     * POST: Redirect user to stripe checkout
+     * POST: Redirect user to stripe subscription manager
      * 
      * @param string _token with every post request with Laravel you must add a hidden input with the value of csrf_token() or just use @csrf Blade directive
      * 
@@ -213,7 +213,7 @@ class UrlRoutes
     }
 
     /**
-     * POST: Redirect user to stripe checkout
+     * POST: Redirect user to Stripe checkout to create a new subscription
      * 
      * @param string _token with every post request with Laravel you must add a hidden input with the value of csrf_token() or just use @csrf Blade directive
      * @param string plan name stripe that the user wants to subscribe to

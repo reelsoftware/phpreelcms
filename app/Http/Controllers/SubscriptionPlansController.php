@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\SubscriptionPlan;
 use App\Models\SubscriptionType;
 use App\Helpers\Payments\PaymentHelper;
-use App\Helpers\PlanProcessor\PlanStrategy;
-use App\Helpers\PlanProcessor\PlanContext;
+use App\Helpers\PlansProcessor\PlanStrategy;
+use App\Helpers\PlansProcessor\PlanContext;
 
 
 class SubscriptionPlansController extends Controller

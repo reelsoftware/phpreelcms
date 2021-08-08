@@ -6,7 +6,7 @@ use Config;
 class AppConfig
 {
     /**
-     * Returns URL to the register page
+     * Returns the URL to the specified view layout from the layouts directory of the current active theme
      *
      * @param string $layoutFile name of the layout file (from the layouts directory) to be used as layout
      */
@@ -16,7 +16,7 @@ class AppConfig
     }
 
     /**
-     * Returns the app name from the env file
+     * Returns the app name from the .env file
      *
      */
     public static function name()
