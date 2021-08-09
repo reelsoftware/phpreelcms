@@ -40,9 +40,11 @@
                 </div>
 
                 <div id="s3">
+                    <p><small>These fields are always empty. The Amazon S3 keys are considered very sensitive information, thus this form will only let you update your keys and not view them.</small></p>
+
                     <div class="form-group">
                         <label for="awsAccessKeyId">AWS access key ID</label>
-                        <input type="text" name="awsAccessKeyId" class="form-control" id="awsAccessKeyId" value="{{ old('awsAccessKeyId') ? old('awsAccessKeyId') : $awsAccessKeyId }}">
+                        <input type="text" name="awsAccessKeyId" class="form-control" id="awsAccessKeyId">
                         @error('awsAccessKeyId')
                             <div class="alert alert-danger py-2 my-2">{{ $message }}</div>
                         @enderror
@@ -50,7 +52,7 @@
 
                     <div class="form-group">
                         <label for="awsSecretAccessKey">AWS secret access key</label>
-                        <input type="text" name="awsSecretAccessKey" class="form-control" id="awsSecretAccessKey" value="{{ old('awsSecretAccessKey') ? old('awsSecretAccessKey') : $awsSecretAccessKey }}">
+                        <input type="text" name="awsSecretAccessKey" class="form-control" id="awsSecretAccessKey">
                         @error('awsSecretAccessKey')
                             <div class="alert alert-danger py-2 my-2">{{ $message }}</div>
                         @enderror
@@ -60,31 +62,30 @@
                         <label for="awsDefaultRegion">AWS default region</label>
                               
                         <select name="awsDefaultRegion" class="custom-select" id="awsDefaultRegion">
-                            <option value="us-east-2" @if (old('awsDefaultRegion') == 'us-east-2' || $awsDefaultRegion == 'us-east-2') selected @endif>US East (Ohio)</option>
-                            <option value="us-east-1" @if (old('awsDefaultRegion') == 'us-east-1' || $awsDefaultRegion == 'us-east-1') selected @endif>US East (N. Virginia)</option>
-                            <option value="us-west-1" @if (old('awsDefaultRegion') == 'us-west-1' || $awsDefaultRegion == 'us-west-1') selected @endif>US West (N. California)</option>
-                            <option value="us-west-2" @if (old('awsDefaultRegion') == 'us-west-2' || $awsDefaultRegion == 'us-west-2') selected @endif>US West (Oregon)</option>
-                            <option value="af-south-1" @if (old('awsDefaultRegion') == 'af-south-1' || $awsDefaultRegion == 'af-south-1') selected @endif>Africa (Cape Town)</option>
-                            <option value="ap-east-1" @if (old('awsDefaultRegion') == 'ap-east-1' || $awsDefaultRegion == 'ap-east-1') selected @endif>Asia Pacific (Hong Kong)</option>
-                            <option value="ap-south-1" @if (old('awsDefaultRegion') == 'ap-south-1' || $awsDefaultRegion == 'ap-south-1') selected @endif>Asia Pacific (Mumbai)</option>
-                            <option value="ap-northeast-3" @if (old('awsDefaultRegion') == 'ap-northeast-3' || $awsDefaultRegion == 'ap-northeast-3') selected @endif>Asia Pacific (Osaka)</option>
-                            <option value="ap-northeast-2" @if (old('awsDefaultRegion') == 'ap-northeast-2' || $awsDefaultRegion == 'ap-northeast-2') selected @endif>Asia Pacific (Seoul)</option>
-                            <option value="ap-southeast-1" @if (old('awsDefaultRegion') == 'ap-southeast-1' || $awsDefaultRegion == 'ap-southeast-1') selected @endif>Asia Pacific (Singapore)</option>
-                            <option value="ap-southeast-2" @if (old('awsDefaultRegion') == 'ap-southeast-2' || $awsDefaultRegion == 'ap-southeast-2') selected @endif>Asia Pacific (Sydney)</option>
-                            <option value="ap-northeast-1" @if (old('awsDefaultRegion') == 'ap-northeast-1' || $awsDefaultRegion == 'ap-northeast-1') selected @endif>Asia Pacific (Tokyo)</option>
-                            <option value="ca-central-1" @if (old('awsDefaultRegion') == 'ca-central-1' || $awsDefaultRegion == 'ca-central-1') selected @endif>Canada (Central)</option>
-                            <option value="cn-north-1" @if (old('awsDefaultRegion') == 'cn-north-1' || $awsDefaultRegion == 'cn-north-1') selected @endif>China (Beijing)</option>
-                            <option value="cn-northwest-1" @if (old('awsDefaultRegion') == 'cn-northwest-1' || $awsDefaultRegion == 'cn-northwest-1') selected @endif>China (Ningxia)</option>
-                            <option value="eu-central-1" @if (old('awsDefaultRegion') == 'eu-central-1' || $awsDefaultRegion == 'eu-central-1') selected @endif>Europe (Frankfurt)</option>
-                            <option value="eu-west-1" @if (old('awsDefaultRegion') == 'eu-west-1' || $awsDefaultRegion == 'eu-west-1') selected @endif>Europe (Ireland)</option>
-                            <option value="eu-west-2" @if (old('awsDefaultRegion') == 'eu-west-2' || $awsDefaultRegion == 'eu-west-2') selected @endif>Europe (London)</option>
-                            <option value="eu-south-1" @if (old('awsDefaultRegion') == 'eu-south-1' || $awsDefaultRegion == 'eu-south-1') selected @endif>Europe (Milan)</option>
-                            <option value="eu-west-3" @if (old('awsDefaultRegion') == 'eu-west-3' || $awsDefaultRegion == 'eu-west-3') selected @endif>Europe (Paris)</option>
-                            <option value="eu-north-1" @if (old('awsDefaultRegion') == 'eu-north-1' || $awsDefaultRegion == 'eu-north-1') selected @endif>Europe (Stockholm)</option>
-                            <option value="me-south-1" @if (old('awsDefaultRegion') == 'me-south-1' || $awsDefaultRegion == 'me-south-1') selected @endif>Middle East (Bahrain)</option>
-                            <option value="sa-east-1" @if (old('awsDefaultRegion') == 'sa-east-1' || $awsDefaultRegion == 'sa-east-1') selected @endif>South America (São Paulo)</option>
+                            <option value="us-east-2">US East (Ohio)</option>
+                            <option value="us-east-1">US East (N. Virginia)</option>
+                            <option value="us-west-1">US West (N. California)</option>
+                            <option value="us-west-2">US West (Oregon)</option>
+                            <option value="af-south-1">Africa (Cape Town)</option>
+                            <option value="ap-east-1">Asia Pacific (Hong Kong)</option>
+                            <option value="ap-south-1">Asia Pacific (Mumbai)</option>
+                            <option value="ap-northeast-3">Asia Pacific (Osaka)</option>
+                            <option value="ap-northeast-2">Asia Pacific (Seoul)</option>
+                            <option value="ap-southeast-1">Asia Pacific (Singapore)</option>
+                            <option value="ap-southeast-2">Asia Pacific (Sydney)</option>
+                            <option value="ap-northeast-1">Asia Pacific (Tokyo)</option>
+                            <option value="ca-central-1">Canada (Central)</option>
+                            <option value="cn-north-1">China (Beijing)</option>
+                            <option value="cn-northwest-1">China (Ningxia)</option>
+                            <option value="eu-central-1">Europe (Frankfurt)</option>
+                            <option value="eu-west-1">Europe (Ireland)</option>
+                            <option value="eu-west-2">Europe (London)</option>
+                            <option value="eu-south-1">Europe (Milan)</option>
+                            <option value="eu-west-3">Europe (Paris)</option>
+                            <option value="eu-north-1">Europe (Stockholm)</option>
+                            <option value="me-south-1">Middle East (Bahrain)</option>
+                            <option value="sa-east-1">South America (São Paulo)</option>
                         </select>
-                        
                         
                         @error('awsDefaultRegion')
                             <div class="alert alert-danger py-2 my-2">{{ $message }}</div>
@@ -93,7 +94,7 @@
 
                     <div class="form-group">
                         <label for="awsBucket">AWS bucket</label>
-                        <input type="text" name="awsBucket" class="form-control" id="awsBucket" value="{{ old('awsBucket') ? old('awsBucket') : $awsBucket }}">
+                        <input type="text" name="awsBucket" class="form-control" id="awsBucket">
                         @error('awsBucket')
                             <div class="alert alert-danger py-2 my-2">{{ $message }}</div>
                         @enderror
