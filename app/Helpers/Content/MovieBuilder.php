@@ -109,6 +109,8 @@ class MovieBuilder implements IContentBuilder
         $movie->public = $this->request->public;
         $movie->premium = $this->request->availability;
 
+        //dd($this->request->availability);
+
         //If the content is not free it means that we must use auth
         if($movie->premium != 1)
             $movie->auth = $this->request->access;

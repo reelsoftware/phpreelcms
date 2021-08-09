@@ -120,6 +120,12 @@
             </div>
         </div>
 
+        @if (old('availability') == 1 || $content['availability'] == 0)
+            <script>
+                document.getElementById('access').style.display = 'block';
+            </script>
+        @endif
+
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">

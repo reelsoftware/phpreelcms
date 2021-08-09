@@ -46,7 +46,7 @@ function updateAccess()
     let accessField = document.getElementById('access');
     let availabilityField = document.getElementById('availability');
 
-    if(availabilityField.value != "1")
+    if(availabilityField.value == "1")
         accessField.style.display = 'none';
     else
         accessField.style.display = 'block';
