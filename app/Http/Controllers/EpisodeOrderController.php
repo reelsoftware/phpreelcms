@@ -50,7 +50,6 @@ class EpisodeOrderController extends Controller
         {
             array_push($episodesIds, $request['item' . $i]);
         }
-
         //Get all the seasons that are being modified
         $episodes = Episode::whereIn('id', $episodesIds)->orderBy('order', 'ASC')->get();
 

@@ -36,7 +36,7 @@
                     </tr>
                 @endforeach
 
-                <input type="hidden" name="countItems" value="{{count($content)}}">
+                <input type="hidden" name="countEpisodes" value="{{count($content)}}">
             </form>
         </tbody>
     </table>   
