@@ -67,10 +67,21 @@ class MovieBuilder implements IContentBuilder
         else
             $movie->auth = 1;
 
+        //Update the video depending on the chosen platform
+        if($this->request->video == null)
+            $video = $this->request->videoId;
+        else
+            $video = $this->request->video;
+
+        if($this->request->trailer == null)
+            $trailer = $this->request->trailerId;
+        else
+            $trailer = $this->request->trailer; 
+
         //Link the thumbnail from images table to movies table
         $movie->thumbnail = ResourceHandler::addImage($this->request->thumbnail);
-        $movie->video = ResourceHandler::addVideo($this->request->video, $this->request->platformVideo, $this->request->availability);
-        $movie->trailer = ResourceHandler::addVideo($this->request->trailer, $this->request->platformTrailer, 0);
+        $movie->video = ResourceHandler::addVideo($video, $this->request->platformVideo, $this->request->availability);
+        $movie->trailer = ResourceHandler::addVideo($trailer, $this->request->platformTrailer, 0);
 
         $movie->save();
 
