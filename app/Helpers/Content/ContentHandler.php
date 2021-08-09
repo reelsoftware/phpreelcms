@@ -4,6 +4,7 @@ namespace App\Helpers\Content;
 use App\Models\Movie;
 use App\Models\Series;
 use App\Models\Episode;
+use App\Models\Seasons;
 
 class ContentHandler
 {
@@ -192,7 +193,7 @@ class ContentHandler
      */
     public static function getSeasonTrailer(int $id)
     {
-        $season = Seasons::where('seasons.id', '=', $id)
+        $season = Seasons::where([['series.public', '=', '1'], ['seasons.id', '=', $id]])
             ->join('series', 'seasons.series_id', '=', 'series.id')
             ->join('videos', 'videos.id', '=', 'seasons.trailer')
             ->first([

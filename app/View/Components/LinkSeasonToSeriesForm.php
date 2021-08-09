@@ -31,7 +31,7 @@ class LinkSeasonToSeriesForm extends Component
      *
      * @return void
      */
-    public function __construct($type, $content=null, $series)
+    public function __construct($type, $series, $content=null)
     {
         $this->type = $type;
         $this->content = $content;

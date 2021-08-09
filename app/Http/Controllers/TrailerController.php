@@ -12,8 +12,7 @@ class TrailerController extends Controller
 {
     public function showSeason($id)
     {
-        //TO DO Check if the series is public or not
-        $trailer = ContentHandler::getSeriesTrailer($id);
+        $trailer = ContentHandler::getSeasonTrailer($id);
 
         if($trailer == null)
             return abort(404);
