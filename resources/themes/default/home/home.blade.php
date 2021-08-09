@@ -94,7 +94,7 @@
                             @foreach ($series as $s)
                                 <div class="col-sm-12 col-md-6 col-lg-4 slide slider2" id="{{'item' . $loop->index}}">                              
                                     <div class="ne-image-container my-2">
-                                        <a href="{{ UrlRoutes::movie($s->series_id) }}">
+                                        <a href="{{ UrlRoutes::series($s->series_id) }}">
                                             <img src="{{ Asset::image($s->image_name, $s->image_storage) }}" class="card-img">
                                         </a>
                                     </div>      
