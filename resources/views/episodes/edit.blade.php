@@ -113,13 +113,24 @@
 
 @section('script')
     <script src="{{ URL::asset('js/switchVideoOption.js') }}"></script>
+    <script src="{{ URL::asset('js/upload.js') }}"></script>
 
     <script>
-        const url = "{{route('resourceStoreApi')}}";
-        //chunk size in bytes (1MB)
-        const chunkSize = {{env('CHUNK_SIZE')}} * 1000000; 
+        new FileUpload("resourceFile", "{{ route('resourceStoreApi') }}", {{ env('CHUNK_SIZE') }} * 1000000, function (fileId, fileName) {
+            document.getElementById("progressBar").style.width = "0%";
+
+            if(document.getElementById("uploadedFiles") != null)
+                document.getElementById("uploadedFiles").innerHTML += '<p class="card-text">' + fileName + '</p>';
+
+            if(document.getElementById("thumbnail") != null)
+                document.getElementById("thumbnail").innerHTML += '<option value="' + fileId + '">' + fileName + '</option>';
+
+            if(document.getElementById("video") != null)
+                document.getElementById("video").innerHTML += '<option value="' + fileId + '">' + fileName + '</option>';
+
+            if(document.getElementById("trailer") != null)
+                document.getElementById("trailer").innerHTML += '<option value="' + fileId + '">' + fileName + '</option>';
+        });
     </script>
-    
-    <script src="{{ URL::asset('js/upload.js') }}"></script>
 
 @endsection

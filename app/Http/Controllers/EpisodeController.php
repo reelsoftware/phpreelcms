@@ -8,6 +8,7 @@ use App\Models\Seasons;
 use App\Models\Video;
 use Illuminate\Support\Facades\Storage;
 use App\Helpers\Content\EpisodeBuilder;
+use Theme;
 
 class EpisodeController extends Controller
 {
@@ -187,7 +188,7 @@ class EpisodeController extends Controller
         $cast = explode(", ", $currentEpisode['cast']);
         $genre = explode(", ", $currentEpisode['genre']);
 
-        return view('episodes.show', [
+        return Theme::view('episodes.show', [
             'previousItem' => $prevEpisode,
             'nextItem' => $nextEpisode,
             'item' => $currentEpisode,

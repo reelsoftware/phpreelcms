@@ -23,12 +23,12 @@ class CheckAccessAvailability
         $routeName = $request->route()->getName();
         $id = $request->route()->parameter('id');
         $authorization = [];
-
+    
         //Get the validation data
         if($routeName == 'movieShow')
             $authorization = ContentHandler::getAccessAvailabilityMovie($id);
-        else if($routeName == 'seriesShow')
-            $authorization = ContentHandler::getAccessAvailabilitySeries($id);
+        else if($routeName == 'episodeShow')
+            $authorization = ContentHandler::getAccessAvailabilityEpisodes($id);
         else if($routeName == 'fileResource')
             $authorization = ResourceHandler::getAccessAvailabilityVideo($request->route()->parameter('fileName'));
         else

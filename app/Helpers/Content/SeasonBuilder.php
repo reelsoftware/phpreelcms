@@ -55,7 +55,7 @@ class SeasonBuilder implements IContentBuilder
         $season->year = $this->request->year;
         $season->series_id = $this->request->series_id;
         $season->thumbnail = ResourceHandler::addImage($this->request->thumbnail);
-        $season->trailer = ResourceHandler::addVideo($this->request->trailer, $this->request->platformTrailer, 0);
+        $season->trailer = ResourceHandler::addVideo($this->request->trailer, $this->request->platformTrailer, 0, 0);
 
         //Set the order of the season as the last season of the series
         $lastOrder = Seasons::where('series_id', '=', $this->request->series_id)
@@ -92,7 +92,7 @@ class SeasonBuilder implements IContentBuilder
 
         //Update trailer
         if($this->request->trailer != null)
-            ResourceHandler::updateVideo($this->request->trailer, $season->trailer, $this->request->platformTrailer, 0);
+            ResourceHandler::updateVideo($this->request->trailer, $season->trailer, $this->request->platformTrailer, 0, 0);
 
         if($this->request->trailerId != null)
             ResourceHandler::updateVideo($this->request->trailerId, $season->trailer, $this->request->platformTrailer);

@@ -80,8 +80,8 @@ class MovieBuilder implements IContentBuilder
 
         //Link the thumbnail from images table to movies table
         $movie->thumbnail = ResourceHandler::addImage($this->request->thumbnail);
-        $movie->video = ResourceHandler::addVideo($video, $this->request->platformVideo, $this->request->availability);
-        $movie->trailer = ResourceHandler::addVideo($trailer, $this->request->platformTrailer, 0);
+        $movie->video = ResourceHandler::addVideo($video, $this->request->platformVideo, $movie->premium, $movie->auth);
+        $movie->trailer = ResourceHandler::addVideo($trailer, $this->request->platformTrailer, 0, 0);
 
         $movie->save();
 
@@ -121,14 +121,14 @@ class MovieBuilder implements IContentBuilder
 
         //Update video
         if($this->request->video != null)
-            ResourceHandler::updateVideo($this->request->video, $movie->video, $this->request->platformVideo);
+            ResourceHandler::updateVideo($this->request->video, $movie->video, $this->request->platformVideo, $movie->premium, $movie->auth);
 
         if($this->request->videoId != null)
             ResourceHandler::updateVideo($this->request->videoId, $movie->video, $this->request->platformVideo);
 
         //Update trailer
         if($this->request->trailer != null)
-            ResourceHandler::updateVideo($this->request->trailer, $movie->trailer, $this->request->platformTrailer, 0);
+            ResourceHandler::updateVideo($this->request->trailer, $movie->trailer, $this->request->platformTrailer, 0, 0);
 
         if($this->request->trailerId != null)
             ResourceHandler::updateVideo($this->request->trailerId, $movie->trailer, $this->request->platformTrailer);

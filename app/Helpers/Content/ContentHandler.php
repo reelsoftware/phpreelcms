@@ -324,12 +324,12 @@ class ContentHandler
      *
      * @param int $id movie id
      */
-    public static function getAccessAvailabilitySeries(int $id): array
+    public static function getAccessAvailabilityEpisodes(int $id): array
     {
-        $series = Series::where('id', '=', $id)
+        $episodes = Episode::where('id', '=', $id)
             ->first(['premium', 'auth']);
 
-        return $series->toArray();
+        return $episodes->toArray();
     }
 
     /**

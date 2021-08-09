@@ -65,7 +65,7 @@ class EpisodeBuilder implements IContentBuilder
 
         $episode->season_id = $this->request->season_id;
         $episode->thumbnail = ResourceHandler::addImage($this->request->thumbnail);
-        $episode->video = ResourceHandler::addVideo($this->request->video, $this->request->platformVideo);
+        $episode->video = ResourceHandler::addVideo($this->request->video, $this->request->platformVideo, $episode->premium, $episode->auth);
 
         //Set the order of the season as the last season of the series
         $lastOrder = Episode::where('season_id', '=', $this->request->season_id)
@@ -129,7 +129,7 @@ class EpisodeBuilder implements IContentBuilder
 
         //Update video
         if($this->request->video != null)
-            ResourceHandler::updateVideo($this->request->video, $movie->video, $this->request->platformVideo);
+            ResourceHandler::updateVideo($this->request->video, $movie->video, $this->request->platformVideo, $episode->premium, $episode->auth);
 
         if($this->request->videoId != null)
             ResourceHandler::updateVideo($this->request->videoId, $movie->video, $this->request->platformVideo);
