@@ -246,6 +246,9 @@ class MigrationExecutor
         
         if(!Schema::hasColumn('videos', 'auth')) 
             DB::statement("ALTER TABLE videos ADD auth BOOLEAN NOT NULL DEFAULT 1");
+
+        if(!Schema::hasColumn('videos', 'premium')) 
+            DB::statement("ALTER TABLE videos ADD premium BOOLEAN NOT NULL DEFAULT 1");
         
     }
 }

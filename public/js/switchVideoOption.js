@@ -2,16 +2,16 @@
 
 //platformId = where should the resource be saved
 //fieldId = what type of resource you are working with (trailer, video)
-//edit = true if the page from wish we call the script is an edit page
+//edit = true if the page from wich we call the script is an edit page
 function switchVideoOption(platformId, fieldId, edit=false) 
 {
     let platform = document.getElementById(platformId).value;
-    
+
     //Define handlers for form fields
     let filedHandler = document.getElementById(fieldId).childNodes[3].childNodes[3];
     let fieldIdHandler = document.getElementById(fieldId).childNodes[1].childNodes[4];
 
-    if(platform == 'local' || platform == 's3') 
+    if(platform == 'html5') 
     {
         document.getElementById(fieldId).childNodes[3].style.display = 'block';
         if(edit == false)
@@ -43,6 +43,7 @@ function updateFileLabel(id) {
 
 function updateAccess()
 {
+
     let accessField = document.getElementById('access');
     let availabilityField = document.getElementById('availability');
 
@@ -50,5 +51,4 @@ function updateAccess()
         accessField.style.display = 'none';
     else
         accessField.style.display = 'block';
-
 }

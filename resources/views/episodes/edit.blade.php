@@ -92,7 +92,7 @@
                     </div>
                 </div>
 
-                @if (old('availability') == 1 || $content['availability'] == 0)
+                @if ($content['premium'] == 0)
                     <script>
                         document.getElementById('access').style.display = 'block';
                     </script>
