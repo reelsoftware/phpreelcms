@@ -19,7 +19,7 @@ class ResourceHandler
     }
 
     /**
-     * Get all the available external storage mediums (local, s3)
+     * Get all the available external storage mediums (youtube, vimeo)
      * 
      * @return array
      */
@@ -33,7 +33,7 @@ class ResourceHandler
      *
      * @return bool
      */
-    public static function checkPremium($storage, $fileName): bool
+    public static function checkPremium($fileName, $storage): bool
     {
         //Check if the video files is premium
         $file = Video::where([
@@ -93,8 +93,8 @@ class ResourceHandler
     /**
      * Delete a specific resource (video, image)
      *
-     * @param string $fileName name of the
-     * @param string $storage storage medium of the external file (youtube, vimeo)
+     * @param string $fileName name of the file to be deleted
+     * @param string $storage storage medium of the file (s3, local)
      * 
      * @return Illuminate\Support\Facades\Storage
      */
