@@ -75,8 +75,7 @@ class DevInit extends Command
 
         //Add settings
         $settings = [
-            ['setting' => 'default_subscription', 'value' => 'default'],
-            ['setting' => 'company_name', 'value' => 'name']
+            ['setting' => 'default_subscription', 'value' => 'default']
         ];
 
         Setting::insert($settings); 

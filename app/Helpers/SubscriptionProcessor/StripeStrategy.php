@@ -59,7 +59,7 @@ class StripeStrategy implements ISubscriptionStrategy
         $subscription = UserHandler::checkSubscription();
 
         $plans = PlanHandler::getPublicPlans();
-
+        
         foreach($plans as $plan)
             $benefits[] = explode(',', $plan->benefits);
 

@@ -222,7 +222,7 @@ class SettingsController extends Controller
         {
             //Create subscription
             //Add data to Stripe
-            $stripe = new \Stripe\StripeClient(config('app.stripe_secret'));
+            $stripe = new \Stripe\StripeClient($stripe['STRIPE_SECRET']);
             $product = $stripe->products->create([
                 'name' => 'default',
             ]);
@@ -233,6 +233,16 @@ class SettingsController extends Controller
             $subscriptionType->product_id = $product['id'];
             $subscriptionType->public = '1';
             $subscriptionType->save();
+        }
+
+        if(empty(Setting::count()))
+        {
+            //Add settings
+            $settings = [
+                ['setting' => 'default_subscription', 'value' => 'default']
+            ];
+
+            Setting::insert($settings);
         }
 
         return redirect(route('subscriptionPlanCreate'));

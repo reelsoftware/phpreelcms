@@ -42,7 +42,7 @@ class StripeStrategy implements IPlanStrategy
     public function index()
     {
         $subscriptionPlans = SubscriptionPlan::orderByDesc('id')->simplePaginate(10);
-
+        
         $view = [];
 
         $view['name'] = 'subscriptionPlans.index';
@@ -89,7 +89,7 @@ class StripeStrategy implements IPlanStrategy
             'billingInterval' => 'required|max:10',
         ]);
         
-        $pennies = PaymentHelper::toPennies($request->price);
+        $pennies = PaymentHelper::toPennies($this->request->price);
         $subscription = SubscriptionType::where('name', '=', 'default')
             ->first(['product_id', 'id']);
 
@@ -97,22 +97,22 @@ class StripeStrategy implements IPlanStrategy
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
         $price = $stripe->prices->create([
             'unit_amount' => $pennies,
-            'currency' => strtolower($request->currency),
-            'recurring' => ['interval' => $request->billingInterval],
+            'currency' => strtolower($this->request->currency),
+            'recurring' => ['interval' => $this->request->billingInterval],
             'product' => $subscription['product_id'],
         ]);
         
         //Add plan to database
         $subscriptionPlan = new SubscriptionPlan();
-        $subscriptionPlan->name = $request->name;
-        $subscriptionPlan->description = $request->description;
+        $subscriptionPlan->name = $this->request->name;
+        $subscriptionPlan->description = $this->request->description;
         $subscriptionPlan->stripe_price_id = $price['id'];
-        $subscriptionPlan->benefits = $request->benefits;
+        $subscriptionPlan->benefits = $this->request->benefits;
         $subscriptionPlan->price = $pennies;
-        $subscriptionPlan->currency = $request->currency;
+        $subscriptionPlan->currency = $this->request->currency;
         $subscriptionPlan->subscription_type_id = $subscription['id'];
-        $subscriptionPlan->billing_interval = $request->billingInterval;
-        $subscriptionPlan->public = $request->public;
+        $subscriptionPlan->billing_interval = $this->request->billingInterval;
+        $subscriptionPlan->public = $this->request->public;
         $subscriptionPlan->save();
     }
 
@@ -134,7 +134,7 @@ class StripeStrategy implements IPlanStrategy
 
         $view['name'] = 'subscriptionPlans.edit';
         $view['data'] = [
-            'id' => $id,
+            'id' => $this->id,
             'content' => $subscriptionPlan,
             'currencies' => $currencies,
             'subscriptions' => $subscriptions,
@@ -158,10 +158,10 @@ class StripeStrategy implements IPlanStrategy
 
         //Add plan to database
         $subscriptionPlan = SubscriptionPlan::find($this->id);
-        $subscriptionPlan->name = $request->name;
-        $subscriptionPlan->description = $request->description;
-        $subscriptionPlan->benefits = $request->benefits;
-        $subscriptionPlan->public = $request->public;
+        $subscriptionPlan->name = $this->request->name;
+        $subscriptionPlan->description = $this->request->description;
+        $subscriptionPlan->benefits = $this->request->benefits;
+        $subscriptionPlan->public = $this->request->public;
         $subscriptionPlan->save();
     }
 }
