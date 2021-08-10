@@ -49,7 +49,11 @@ class TranslationHandler
      */
     public static function deteleTranslationFile(string $language)
     {
+        //Delete translation file from theme
         File::delete(Theme::getFilePath("lang\\$language.json"));
+
+        //Delete translation file from resources/lang
+        File::delete(resource_path("lang\\$language.json"));
     }
 
     /**
@@ -61,5 +65,8 @@ class TranslationHandler
     public static function saveTranslationFile(string $language, $fileContent)
     {
         File::put(resource_path("themes\\" . Theme::getActiveTheme() . "\lang\\$language.json"), json_encode($fileContent));
+
+        //Copy the language files from theme folder to resources/lang 
+        Theme::syncLang();
     }
 }

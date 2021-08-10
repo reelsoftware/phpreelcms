@@ -79,7 +79,7 @@ class AppServiceProvider extends ServiceProvider
                 $sub->route('settingsApp', 'App', [], ['icon' => 'ni ni-settings-gear-65']);
             });
         });
-
+        
         Paginator::useBootstrap();
         Schema::defaultStringLength(191);
 

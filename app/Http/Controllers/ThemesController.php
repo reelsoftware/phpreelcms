@@ -39,16 +39,6 @@ class ThemesController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -76,25 +66,6 @@ class ThemesController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit()
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -110,6 +81,9 @@ class ThemesController extends Controller
 
         //Generate child theme if it doesn't exist
         Theme::generateChildTheme($request->theme);
+
+        //Copy the language files from theme folder to resources/lang 
+        Theme::syncLang();
 
         return redirect()->route('themeIndex');
     }

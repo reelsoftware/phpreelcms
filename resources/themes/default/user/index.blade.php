@@ -55,7 +55,7 @@
                         {{ __('Subscription details') }}
                     </h5>
 
-                    @if($subscription == NULL)
+                    @if($subscription != NULL)
                         <form action="{{ UrlRoutes::userManageSubscriptionPost() }}" method="POST">
                             @csrf
                             <input type="submit" class="btn ne-btn" value="{{ __('Manage subscription') }}">

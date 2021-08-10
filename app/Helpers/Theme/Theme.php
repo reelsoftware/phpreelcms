@@ -312,4 +312,17 @@ class Theme
     {
         return File::deleteDirectory(resource_path('themes/' . $theme));
     }
+    
+    /**
+     * Synchronization between the lang file of the theme and the resources/lang file of Laravel
+     * In short, it takes the files from the lang file of the theme and copies them to resources/lang
+     *
+     */
+    public static function syncLang()
+    {
+        $langFiles = File::files(Theme::getFilePath("lang"));
+
+        foreach($langFiles as $langFile)
+            File::copy($langFile, resource_path('lang/' . $langFile->getFilename()));
+    }
 }
