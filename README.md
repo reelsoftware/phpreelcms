@@ -1,52 +1,24 @@
 <p align="center"><a href="https://developer.phpreel.org/" target="_blank"><img src="https://developer.phpreel.org/img/logo.png" width="250"></a></p>
 
-# phpReel
-phpReel is a free, MIT open-source subscription-based video streaming service that lets you create your platform for distributing video content in the form of movies or series.
+# About phpReel
+It's an open-source MIT subscription-based video streaming application built on top of the Laravel Framework. In simpler terms I can say that phpReel is an application that let's you upload video content and distribute it to your users free or via a subscription.
 
-## Demo
-[Frontend Demo](https://demo.phpreel.paulbalan.com/)
-[Dashboard Demo](https://demo.phpreel.paulbalan.com/dashboard)
+Some of the great features of phpReel:
+- Subscription feature powered by Stripe
+- Cloud storage with Amazon S3
+- Chunk upload and streaming
+- Easily customizable with modules and themes
+- Dashboard
 
-## Some of the features that make phpReel great.
+# Learn phpReel
+Because I know how important is to have a well documented project, phpReel now provides access to it's own [documentation](https://developer.phpreel.org/). I am constantly working on it, updating it and generally trying to make it better.
 
-### Dashboard
-You, as the administrator of the application, can access the dashboard that lets you modify the platform as you see fit.
+# Contributing
+phpReel is getting bigger and better each day, thus with every new feature, it becomes more and more difficult to manage a product without a team. I really want to grow this project into a full-blown software company but until that day I rely entirely on the help of the community. Here is a list of things you can do to help phpReel grow:
 
-
-### Subscription plans with Stripe
-At the heart of phpReel is the subscription plan, which lets users choose from different plans. You can have as many plans as you wish that are custom-tailored to your needs. The whole subscription process is powered by Stripe which takes care of all the payments.
-
-### Cloud file storage with Amazon S3
-You can store videos and images directly on the Amazon S3 storage and later stream them to your users. You also have the option to store them locally or embed videos from other platforms (Vimeo, YouTube).
-
-### Chunk uploading
-To allow the upload of larger files while at the same time not consuming all the resources of the web server we use chunk uploading, which cuts your files into small chunks and uploads them separately.
-
-### Support for Movies and Series
-You can distribute your content as a standalone video, we call it a "Movie", or as a series of episodes grouped into a season. This will give the end-user a familiar interface to interact with.
-
-### User-friendly installer
-phpReel ships with a simple to use the installer to get set up quickly. Follow the instructions available in the documentation.
-
-### Translation
-You can create as many translation files as you want thus empowering you with the ability to translate your platform to any language right from the comfort of your dashboard.
-
-### Email configuration
-Configure your SMTP email client right from the dashboard. More email clients coming soon!
-
-### User administrator dashboard
-You can update and chef the subscription status of any registered users.
-
-### Roles
-At the moment phpReel has two roles for its users. The default role is "user" which is the basic visitor of your application that can subscribe, watch content, and so on. The other available role is "administrator" which is the role that gives you access to the dashboard page.
-
-## Instalation
-[PDF](https://github.com/phpreel/phpreel/blob/main/phpReel%20documentation.pdf)
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
+- [Fork the project on GitHub](https://github.com/phpreel/phpreel/) and contribute to it by adding new features, fixing bugs, or improving on what's already there (then submit a pull request)
+- Spread the word about the project
+- Just simply use it and open an [issue on GitHub](https://github.com/phpreel/phpreel/issues) if you find any bugs
 
 ## License
 [MIT](https://github.com/phpreel/phpreel/blob/main/LICENSE)
