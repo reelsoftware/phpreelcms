@@ -5,13 +5,14 @@
 //edit = true if the page from wich we call the script is an edit page
 function switchVideoOption(platformId, fieldId, edit=false) 
 {
+    let platformList = ["local", "s3"];
     let platform = document.getElementById(platformId).value;
 
     //Define handlers for form fields
     let filedHandler = document.getElementById(fieldId).childNodes[3].childNodes[3];
     let fieldIdHandler = document.getElementById(fieldId).childNodes[1].childNodes[4];
 
-    if(platform == 'html5') 
+    if(platformList.includes(platform)) 
     {
         document.getElementById(fieldId).childNodes[3].style.display = 'block';
         if(edit == false)
@@ -43,7 +44,6 @@ function updateFileLabel(id) {
 
 function updateAccess()
 {
-
     let accessField = document.getElementById('access');
     let availabilityField = document.getElementById('availability');
 
