@@ -21,6 +21,12 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TrailerController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\TranscodingController;
+use App\Http\Controllers\ThemesController;
+use App\Http\Controllers\AssetController;
+use App\Http\Controllers\TestController;
+use App\Http\Controllers\EpisodeOrderController;
+use App\Http\Controllers\ErrorController;
+use App\Http\Controllers\ModulesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +39,8 @@ use App\Http\Controllers\TranscodingController;
 |
 */
 
+Route::get('/error/{code}/{message}', [ErrorController::class, 'show'])
+    ->name('error');
 
 Route::middleware(['install'])->group(function () 
 {
@@ -42,24 +50,28 @@ Route::middleware(['install'])->group(function ()
     Route::get('/install/requirements', [InstallController::class, 'requirements'])
         ->name('installRequirements');
 
-    Route::get('/install/database', [InstallController::class, 'database'])
-        ->name('installDatabase');
+    Route::get('/install/config', [InstallController::class, 'config'])
+        ->name('installConfig');
 
-    Route::post('/install/database', [InstallController::class, 'storeDatabase'])
-        ->name('storeDatabase');
+    Route::post('/install/config', [InstallController::class, 'storeConfig'])
+        ->name('storeConfig');
 
-    Route::get('/install/user', [InstallController::class, 'user'])
-        ->name('installUser');
+    Route::get('/install/seed', [InstallController::class, 'seed'])
+        ->name('installSeed');
 
-    Route::post('/install/user', [InstallController::class, 'storeUser'])
-        ->name('storeUser');
-
-    Route::get('/install/payment', [InstallController::class, 'payment'])
-        ->name('installPayment');
-
-    Route::post('/install/payment', [InstallController::class, 'storePayment'])
-        ->name('storePayment');
+    Route::post('/install/seed', [InstallController::class, 'storeSeed'])
+        ->name('storeSeed');
 });
+
+//Asset routes
+Route::get('/asset/js/{scriptName}', [AssetController::class, 'javascript'])
+    ->name('jsAsset');
+
+Route::get('/asset/css/{styleName}', [AssetController::class, 'css'])
+    ->name('cssAsset');
+
+Route::get('/asset/image/{imageName}', [AssetController::class, 'image'])
+    ->name('imageAsset');
 
 
 Route::middleware(['setLanguage'])->group(function () 
@@ -70,12 +82,13 @@ Route::middleware(['setLanguage'])->group(function ()
     require __DIR__.'/auth.php';
 
     //Resources
-    Route::get('/resource/video/{storage}/{fileName}', [ResourceController::class, 'file'])->name('fileResource');
+    Route::get('/resource/video/{storage}/{fileName}', [ResourceController::class, 'file'])
+        ->middleware('access.availability')
+        ->name('fileResource');
+
     Route::get('/resource/image/{storage}/{fileName}', [ResourceController::class, 'imageFile'])->name('fileResourceImage');
 
     //Categories
-    Route::get('/categories', [CategoriesController::class, 'index'])->name('categories');
-
     Route::get('/categories/cast/{slug}', [CategoriesController::class, 'showCast'])
         ->name('castShow');
 
@@ -113,6 +126,17 @@ Route::middleware(['setLanguage'])->group(function ()
     Route::get('/trailer/season/{id}', [TrailerController::class, 'showSeason'])
         ->name('trailerSeasonShow');
 
+    //Check if the content is free and if requires auth
+    Route::middleware(['access.availability'])->group(function () 
+    {
+        Route::get('/movie/{id}', [MovieController::class, 'show'])
+            ->name('movieShow');
+
+        //Episodes
+        Route::get('/episode/{id}', [EpisodeController::class, 'show'])
+            ->name('episodeShow');
+    });
+
     Route::middleware(['auth'])->group(function () 
     {
         //Users
@@ -125,23 +149,14 @@ Route::middleware(['setLanguage'])->group(function ()
             ->name('userUpdateLanguage');
 
         //Subscriptions
-        Route::get('/user/invoice/{invoice}', [UserController::class, 'invoice']);
-
-        Route::post('/subscribe/create', [SubscriptionController::class, 'create'])
-        ->name('subscribeCreate');
+        Route::post('/user/subscription', [UserController::class, 'manageSubscription'])
+            ->name('userManageSubscription');
 
         Route::post('/subscribe/store', [SubscriptionController::class, 'store'])
             ->name('subscribeStore');
 
         Route::middleware(['subscribed'])->group(function () 
         {
-            Route::get('/movie/{id}', [MovieController::class, 'show'])
-                ->name('movieShow');
-
-            //Episodes
-            Route::get('/episode/{id}', [EpisodeController::class, 'show'])
-                ->name('episodeShow');
-
             Route::get('/subscribe/edit', [SubscriptionController::class, 'edit'])
                 ->name('subscribeEdit');
 
@@ -151,8 +166,8 @@ Route::middleware(['setLanguage'])->group(function ()
             Route::get('/subscribe/cancel', [SubscriptionController::class, 'destroy'])
                 ->name('subscribeCancel');
 
-            Route::get('/subscribe/thank-you', [SubscriptionController::class, 'thankYou'])
-                ->name('thankYou');
+            Route::get('/subscribe/result', [SubscriptionController::class, 'result'])
+                ->name('subscriptionResult');
         });
 });
     //Admin dashboard routes
@@ -161,7 +176,7 @@ Route::middleware(['setLanguage'])->group(function ()
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         //Upload API
-        Route::post('dashboard/api/store', [ResourceController::class, 'storeAPI'])
+        Route::post('dashboard/api/store/{storage?}', [ResourceController::class, 'storeAPI'])
             ->name('resourceStoreApi');
 
         //Movie
@@ -234,28 +249,32 @@ Route::middleware(['setLanguage'])->group(function ()
         Route::post('dashboard/episode/update/{id}', [EpisodeController::class, 'update'])
             ->name('episodeUpdate');
 
-        Route::get('dashboard/episode/order/{id}', [EpisodeController::class, 'episodesOrderEdit'])
+        Route::get('dashboard/episode/order/{id}', [EpisodeOrderController::class, 'edit'])
             ->name('episodesOrderEdit');
 
-        Route::post('dashboard/episode/order/{id}', [EpisodeController::class, 'episodesOrderUpdate'])
+        Route::post('dashboard/episode/order/{id}', [EpisodeOrderController::class, 'update'])
             ->name('episodesOrderUpdate');
 
-        //Subscription plans   
-        Route::get('dashboard/subscription/plan', [SubscriptionPlansController::class, 'index'])
-            ->name('subscriptionPlan');
+        Route::middleware(['stripe'])->group(function () 
+        {
+            //Subscription plans   
+            Route::get('dashboard/subscription/plan', [SubscriptionPlansController::class, 'index'])
+                ->name('subscriptionPlan');
 
-        Route::get('dashboard/subscription/plan/create', [SubscriptionPlansController::class, 'create'])
-            ->name('subscriptionPlanCreate');
+            Route::get('dashboard/subscription/plan/create', [SubscriptionPlansController::class, 'create'])
+                ->name('subscriptionPlanCreate');
 
-        Route::post('dashboard/subscription/plan/store', [SubscriptionPlansController::class, 'store'])
-            ->name('subscriptionPlanStore');
+            Route::post('dashboard/subscription/plan/store', [SubscriptionPlansController::class, 'store'])
+                ->name('subscriptionPlanStore');
+                       
+            Route::get('dashboard/subscription/plan/edit/{id}', [SubscriptionPlansController::class, 'edit'])
+                ->name('subscriptionPlanEdit');
 
-        
-        Route::get('dashboard/subscription/plan/edit/{id}', [SubscriptionPlansController::class, 'edit'])
-            ->name('subscriptionPlanEdit');
+            Route::post('dashboard/subscription/plan/update/{id}', [SubscriptionPlansController::class, 'update'])
+                ->name('subscriptionPlanUpdate');
+        });
 
-        Route::post('dashboard/subscription/plan/update/{id}', [SubscriptionPlansController::class, 'update'])
-            ->name('subscriptionPlanUpdate');
+        //Settings
 
         //Settings
 
@@ -282,6 +301,12 @@ Route::middleware(['setLanguage'])->group(function ()
 
         Route::post('dashboard/settings/email', [SettingsController::class, 'emailUpdate'])
             ->name('emailUpdate');
+
+        Route::get('dashboard/settings/stripe', [SettingsController::class, 'stripe'])
+            ->name('settingsStripe');
+
+        Route::post('dashboard/settings/stripe', [SettingsController::class, 'stripeUpdate'])
+            ->name('stripeUpdate');
 
         //Translation
         Route::get('dashboard/translation', [TranslationController::class, 'index'])
@@ -314,6 +339,39 @@ Route::middleware(['setLanguage'])->group(function ()
 
         Route::get('dashboard/users/subscription/{id}', [UserDashboardController::class, 'subscriptionDetails'])
             ->name('usersSubscriptionDetails');
+
+        //Themes
+        Route::get('dashboard/themes', [ThemesController::class, 'index'])
+            ->name('themeIndex');
+
+        Route::get('/dashboard/themes/cover/{theme}', [ThemesController::class, 'cover'])
+            ->name('themeCover');
+
+        Route::post('dashboard/themes', [ThemesController::class, 'update'])
+            ->name('themeUpdate');
+
+        Route::post('dashboard/themes/destroy', [ThemesController::class, 'destroy'])
+            ->name('themeDestroy');
+
+        Route::post('dashboard/themes/store', [ThemesController::class, 'store'])
+            ->name('themeStore');
+
+        //Modules
+        Route::get('dashboard/modules', [ModulesController::class, 'index'])
+            ->name('moduleIndex');
+
+        Route::get('/dashboard/modules/cover/{module}', [ModulesController::class, 'cover'])
+            ->name('moduleCover');
+
+        Route::post('dashboard/modules', [ModulesController::class, 'update'])
+            ->name('moduleUpdate');
+
+        Route::post('dashboard/modules/destroy', [ModulesController::class, 'destroy'])
+            ->name('moduleDestroy');
+
+        Route::post('dashboard/modules/store', [ModulesController::class, 'store'])
+            ->name('moduleStore');
+
     });
 });
 

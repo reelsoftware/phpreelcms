@@ -40,6 +40,7 @@
 
                 <div class="form-group">
                     <label for="currency">Currency</label><br>
+                    <p><b>Important!</b> Keep in mind that if a user subscribes using a certain currency it means that in the future he will be able to only subscribe to subscriptions in that particular currency. If the customer will want to subscribe using a different currency then he must create a new account.</p>
 
                     <select name="currency" class="custom-select" id="currency">
                         @foreach ($currencies as $currency)

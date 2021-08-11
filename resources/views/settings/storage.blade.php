@@ -40,9 +40,11 @@
                 </div>
 
                 <div id="s3">
+                    <p><small>These fields are always empty. The Amazon S3 keys are considered very sensitive information, thus this form will only let you update your keys and not view them.</small></p>
+
                     <div class="form-group">
                         <label for="awsAccessKeyId">AWS access key ID</label>
-                        <input type="text" name="awsAccessKeyId" class="form-control" id="awsAccessKeyId" value="{{ old('awsAccessKeyId') ? old('awsAccessKeyId') : $awsAccessKeyId }}">
+                        <input type="text" name="awsAccessKeyId" class="form-control" id="awsAccessKeyId">
                         @error('awsAccessKeyId')
                             <div class="alert alert-danger py-2 my-2">{{ $message }}</div>
                         @enderror
@@ -50,7 +52,7 @@
 
                     <div class="form-group">
                         <label for="awsSecretAccessKey">AWS secret access key</label>
-                        <input type="text" name="awsSecretAccessKey" class="form-control" id="awsSecretAccessKey" value="{{ old('awsSecretAccessKey') ? old('awsSecretAccessKey') : $awsSecretAccessKey }}">
+                        <input type="text" name="awsSecretAccessKey" class="form-control" id="awsSecretAccessKey">
                         @error('awsSecretAccessKey')
                             <div class="alert alert-danger py-2 my-2">{{ $message }}</div>
                         @enderror
@@ -93,7 +95,7 @@
 
                     <div class="form-group">
                         <label for="awsBucket">AWS bucket</label>
-                        <input type="text" name="awsBucket" class="form-control" id="awsBucket" value="{{ old('awsBucket') ? old('awsBucket') : $awsBucket }}">
+                        <input type="text" name="awsBucket" class="form-control" id="awsBucket">
                         @error('awsBucket')
                             <div class="alert alert-danger py-2 my-2">{{ $message }}</div>
                         @enderror

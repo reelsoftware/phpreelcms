@@ -67,6 +67,17 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
+    'theme' => env('THEME', 'default'),
+
+    'stripe_key' => env('STRIPE_KEY', null),
+    'stripe_secret' => env('STRIPE_SECRET', null),
+    'stripe_webhook_secret' => env('STRIPE_WEBHOOK_SECRET', null),
+
+    'aws_access_key_id' => env('AWS_ACCESS_KEY_ID', null),
+    'aws_secret_access_key' => env('AWS_SECRET_ACCESS_KEY', null),
+    'aws_default_region' => env('AWS_DEFAULT_REGION', null),
+    'aws_bucket' => env('AWS_BUCKET', null),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -185,9 +196,11 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\ThemeComponentsServiceProvider::class,
+        App\Providers\DashboardComponentsServiceProvider::class,
 
         ProtoneMedia\LaravelFFMpeg\Support\ServiceProvider::class,
-
+        Nwidart\Menus\MenusServiceProvider::class,
     ],
 
     /*
@@ -202,7 +215,6 @@ return [
     */
 
     'aliases' => [
-
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
@@ -240,8 +252,15 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'FFMpeg' => ProtoneMedia\LaravelFFMpeg\Support\FFMpeg::class
-
+        'FFMpeg' => ProtoneMedia\LaravelFFMpeg\Support\FFMpeg::class,
+        'Zip' => ZanySoft\Zip\ZipFacade::class,
+        'Theme' => App\Helpers\Theme\Theme::class,
+        'Categories' => App\Helpers\Theme\Categories::class,
+        'Asset' => App\Helpers\Theme\Asset::class,
+        'UrlRoutes' => App\Helpers\Theme\UrlRoutes::class,
+        'AppConfig' => App\Helpers\Theme\AppConfig::class,
+        'Utilities' => App\Helpers\Theme\Utilities::class,
+        'Menu' => Nwidart\Menus\Facades\Menu::class,
     ],
 
 ];

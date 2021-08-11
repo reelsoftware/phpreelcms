@@ -15,7 +15,10 @@
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "league/flysystem-aws-s3-v3": "~1.0",
-        "pbmedia/laravel-ffmpeg": "^7.5"
+        "nwidart/laravel-menus": "^7.0",
+        "nwidart/laravel-modules": "^8.2",
+        "pbmedia/laravel-ffmpeg": "^7.5",
+        "zanysoft/laravel-zip": "master"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -29,6 +32,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
+            "Modules\\": "Modules/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }

@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use App\Helpers\Theme\Theme;
 
 class ConfirmablePasswordController extends Controller
 {
@@ -18,7 +19,7 @@ class ConfirmablePasswordController extends Controller
      */
     public function show(Request $request)
     {
-        return view('auth.confirm-password');
+        return Theme::view('auth.confirm-password');
     }
 
     /**

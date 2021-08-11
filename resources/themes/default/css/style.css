@@ -1,0 +1,683 @@
+body
+{
+  	background-color: #1C1C28;
+	font-family: 'Open Sans', sans-serif; 
+}
+
+.ne-h1
+{
+	color:white;  
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	font-size: 30px;
+	margin-bottom: 20px;
+	margin-top:20px;
+}
+
+
+/*Card design*/
+
+.ne-card-bottom
+{
+	background-color: #142a66;
+	width: 100%;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+}
+
+.ne-image-container
+{
+	position: relative;
+}
+
+.ne-image-container-bottom-right
+{
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	background-color: rgba(0, 0, 0, 0.5);
+	color:white;
+	border-radius:50px;
+	padding:5px 10px;
+	font-size:14px;
+}
+
+.ne-card-bottom-text
+{
+	color: rgb(226, 226, 226);
+	margin:16px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 16px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+
+.ne-course-premium
+{
+	font-size:18px;
+	font-weight: bold;
+	padding:15px,15px,15px,15px;
+	margin-left:10px;
+	background: linear-gradient(-45deg, #883820, #c52c67, #0b495f, #20c59e);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	}
+
+.ne-title
+{
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.ne-title:hover
+{
+	text-decoration-color:white;
+	color:white;
+}
+
+
+.ne-short-description
+{
+    color: #ffffff;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+}
+
+.ne-card
+{
+	background-color: #28293D;
+	border-radius:4px;
+	border-color: transparent;
+	margin-bottom:30px;
+	height:94%;
+}
+
+.ne-btn
+{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	color: #ffffff;
+	text-transform: uppercase;
+	display: inline-block;
+	padding-bottom: 5px;
+	position: relative;
+	transition: 0.3s;
+	transition-timing-function: ease;
+	background-color: #404264;
+	padding:5px 15px 5px 15px;
+	border-radius: 3px;
+	font-size:18px;
+}
+
+.ne-btn:hover
+{
+	transition-timing-function: ease;
+	transition: 0.3s;
+	background-color: #3c3f6e;
+	color:white;
+	text-decoration: none;
+}
+
+.ne-course-length
+{
+	color:white;
+	background-color:#1c1c287e;
+	border-radius: 1000px;
+	padding:5px 10px;
+	font-size:14px;
+}
+
+/*Single course*/
+
+.ne-chapter-title a
+{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	color: #242424;
+	font-size:22px;
+	padding-bottom: 2px;
+	color:white;
+}
+
+.ne-lesson-title
+{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: normal;
+	font-size:18px;
+	padding-top:5px;
+	padding-bottom: 5px;
+	color:white;
+}
+
+.ne-lesson-title:hover
+{
+	color:white;
+}
+
+.ne-lesson-length
+{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	font-size:13px;
+	margin-right:10px;
+	margin-left:20px;
+	background-color:#36b545;
+}
+
+.ne-chapter-length
+{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: normal;
+	font-size:16px;
+	margin-right:5px;
+	background-color:transparent;
+	color:#a1a1a1;
+}
+
+
+.ne-chapter-card
+{
+	background-color: #28293D;
+	border-radius:4px;
+	margin-bottom:15px;
+}
+
+.ne-time.ne-course-length
+{
+	background-color:#36b545;
+	font-size:18px;
+	margin-left:20px;
+}
+
+.ne-lesson-premium
+{
+	font-size:14px;
+	font-weight: normal;
+	padding:5px,8px,5px,8px;
+	margin-left:10px;
+	background: linear-gradient(-45deg, #883820, #c52c67, #0b495f, #20c59e);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+}
+
+
+/*Navbar*/
+
+.navbar
+{
+	background-color:#282838;
+}
+
+
+
+.ne-nav-link
+{
+	color:white !important;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: normal;
+	font-size:18px;
+	padding:18px;
+	letter-spacing: 0.5px;
+}
+
+.ne-nav-brand
+{
+	color:white !important;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	font-size:21px;
+	padding-right:10px;
+	padding-bottom: 10px;
+}
+
+.nav-search-bar
+{
+	border-radius: 100px;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: normal;
+	border:none;
+	background-color:#1C1C28;
+	transition:0.3s;
+}
+
+.nav-search-bar:focus
+{
+	background-color: #232338;
+	border:none;
+	color:white;
+}
+
+/*Jumbotron*/
+
+.ne-jumbotron
+{
+	background-color: #616161;
+	padding-top:12.5em;
+	padding-bottom:6em;
+}
+
+.ne-jumbotron-text
+{
+	color:white !important;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	font-size:45px;
+}
+
+.ne-jumbotron-animation
+{
+	background: linear-gradient(-45deg, #883820, #c52c67, #0b495f, #20c59e);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+}
+
+.ne-try-now-btn
+{
+	background-color:#1c1c287e;
+	color:white;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	font-size:18px;
+	padding:20px;
+	padding-left:30px;
+	padding-right:30px;
+	margin-top:20px;
+	text-transform: uppercase;
+}
+
+.ne-try-now-btn:hover
+{
+	cursor: pointer;
+	background-color:#282838;
+	color:white;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+/*Single lesson*/
+
+.ne-single-lesson-title
+{
+	color: white;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	font-size: 24px;
+	padding-bottom: 10px;
+}
+
+.ne-single-lesson-description
+{
+	color: white;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: normal;
+	font-size: 18px;
+}
+
+.ne-breadcrumb
+{
+	margin-top:5px;
+	background:none;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: normal;
+	font-size: 16px;
+	padding-left:0px;
+	margin-bottom: 1px;
+}
+
+.ne-breadcrumb-item a
+{
+	color:#9292b8 !important;
+}
+
+.ne-breadcrumb-item.active
+{
+	color:#c0c0f8;
+}
+
+.ne-previous-next-lesson
+{
+	margin-top:18px;
+	padding-top:10px;
+	padding-bottom: 10px;
+	width: 100%;
+	margin-bottom: -15px;
+}
+
+/*Search*/
+
+.ne-btn-search
+{
+	font-size:16px !important;
+	font-weight: normal !important;
+}
+
+/*Register page*/
+
+.ne-label
+{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: normal;
+	font-size: 17px;
+	color:white;
+}
+
+/*Prices*/
+
+.ne-card-head
+{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: normal;
+	font-size: 14px;
+	color:white;
+	border-bottom: 1px solid #33354d !important;
+}
+
+.ne-page-title
+{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	font-size: 20px;
+	color:white;
+	padding-bottom: 20px;
+	padding-top:15px;
+	
+}
+
+.ne-list-item
+{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: normal;
+	font-size: 17px;
+	color:white;
+	background-color:#28293D !important;
+	border-top: 1px solid #33354d !important;
+}
+
+.ne-card-footer
+{
+	padding-top:20px;
+	padding-bottom:20px;
+	border-top: 1px solid #33354d !important;
+}
+
+.ne-card-pricing
+{
+	margin-top:10px;
+}
+
+/*Subscribe*/
+
+.ne-jumbotron-subscribe
+{
+	background-color: #616161;
+}
+
+.ne-dropdown
+{
+	background-color: #404264;
+}
+
+.ne-dropdown-item:hover
+{
+	background-color:#282838;
+}
+
+.ne-dropdown-item
+{
+	color:white !important;
+}
+
+/*Footer*/
+
+.ne-footer
+{
+	margin-top:25px;
+	padding-top:20px;
+	padding-bottom:20px;
+	background-color:#28293D !important;
+}
+
+.ne-footer-item
+{
+	color:#C9C9CD;
+	font-size:17px;
+}
+
+.ne-footer-item:hover
+{
+	color:#C9C9CD;
+}
+
+
+html, body 
+{
+	height: 100%;
+	font-family: 'Open Sans', sans-serif;
+}
+
+#wrap 
+{
+	min-height: 100%;
+}
+
+#main 
+{
+	overflow:auto;
+	padding-bottom:200px; 
+}
+
+.footer {
+	position: relative;
+	margin-top: -200px;
+	height: 200px;
+	clear:both;
+	padding-top:10px;
+} 
+
+/*Homepage title links*/
+
+.ne-h1-title-link
+{
+	color:white;  
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	font-size: 23px;
+}
+
+.ne-h1-title-link:hover
+{
+	text-decoration-color:white;
+	color:white;
+}
+
+/*Modal*/
+
+.modal-content 
+{
+	background-color: #28293D;
+}
+
+.col-form-label 
+{
+	color:white;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: normal;
+	font-size: 18px;
+}
+
+.modal-title
+{
+	color:white;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.modal-header
+{
+	border:none;
+}
+
+.modal-footer
+{
+	border:none;
+}
+
+.col-form-label
+{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: normal;
+	font-size: 18px;
+}
+
+.table-dark 
+{
+	background-color:#28293D;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.ne-movie-details 
+{
+	color:white;
+	font-size:18px;
+}
+
+.ne-movie-details:hover 
+{
+	color:white;
+}
+
+.navbar-brand 
+{
+  font-weight: bold;
+}
+
+.ne-disabled, .ne-disabled:hover 
+{
+    color:#c2c2c2 !important;
+    background-color: #404264;
+}
+
+.ne-remove-link 
+{
+	color:white;
+}
+
+.ne-remove-link:hover 
+{
+	color: white;
+}
+
+/*Custom pagination search*/
+.page-link 
+{
+	background-color: #404264;
+	color:white;
+	border:none;
+	margin-left:5px;
+	border-radius:3px;
+	transition:0.3s;
+	font-weight: bold;
+}
+
+.page-link:hover 
+{
+	background-color: #3c3f6e;
+	color:white;
+}
+
+.pagination 
+{
+	border:none;
+}
+
+.page-item.active 
+{
+	font-weight: bold;
+	border-radius:3px;
+}
+
+.page-item.active .page-link 
+{
+	background-color: #595eae !important;
+}
+
+.pt-1 
+{
+	padding-top:10px !important;
+}
+
+.categories
+{
+	color:rgb(168, 168, 168);
+}
+
+.trailer
+{
+	color:rgb(168, 168, 168);
+	font-size:16px;
+	font-weight:normal;
+}
+
+.trailer:hover
+{
+	color:rgb(168, 168, 168);
+	font-size:16px;
+	font-weight:normal;
+}
+
+.mr-1
+{
+	margin-right:10px !important;
+}
+
+.mb-3
+{
+	margin-bottom:30px !important;
+}
+
+.mt-3
+{
+	margin-top:30px !important;
+}
+
+.StripeElement 
+{
+	box-sizing: border-box;
+	height: 40px;
+	padding: 10px 12px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	background-color: white;
+	box-shadow: 0 1px 3px 0 #e6ebf1;
+	-webkit-transition: box-shadow 150ms ease;
+	transition: box-shadow 150ms ease;
+}
+
+.StripeElement--focus 
+{
+	box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--invalid 
+{
+	border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill 
+{
+	background-color: #fefde5 !important;
+}

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Movie;
 use App\Models\Series;
-use Auth;
+use App\Helpers\Categories\CategoriesHandler;
+use App\Helpers\User\UserHandler;
+use App\Helpers\Theme\Theme;
 
 class CategoriesController extends Controller
 {
@@ -18,68 +19,29 @@ class CategoriesController extends Controller
     public function showCast($slug)
     {
         //Gets all the movies that have a cast value similar to the given slug
-        $movies = Movie::orderByDesc('id')
-            ->where([['cast', 'like', '%' . $slug . '%'], ['public', '=', '1']])
-            ->join('images', 'images.id', '=', 'movies.thumbnail')
-            ->select(
-                'movies.id as id',
-                'movies.title as title',
-                'movies.description as description',
-                'movies.year as year',
-                'movies.length as length',
-                'movies.cast as cast',
-                'movies.genre as genre',
-                'images.name as image_name',
-                'images.storage as image_storage',
-            )
-            ->get();
+        $movies = CategoriesHandler::getMovieByCategory('cast', $slug);
 
         //Gets all the series that have a cast value similar to the given slug
-        $series = Series::orderByDesc('id')
-            ->where([['cast', 'like', '%' . $slug . '%'], ['public', '=', '1']])
-            ->join('images', 'images.id', '=', 'series.thumbnail')
-            ->select(
-                'series.id as id',
-                'series.title as title',
-                'series.description as description',
-                'series.year as year',
-                'series.cast as cast',
-                'series.genre as genre',
-                'images.name as image_name',
-                'images.storage as image_storage',
-            )
-            ->get();
+        $series = CategoriesHandler::getSeriesByCategory('cast', $slug);
 
         $results = [];
 
         //Add movies to results array
         foreach($movies as $movie)
-        {
             $results[] = $movie;
-        }
 
         //Add series to results array
         foreach($series as $s)
-        {
             $results[] = $s;
-        }
+        
         shuffle($results);
 
         $results = collect($results)->paginate(9);
 
-        $user = Auth::user();
-        if($user != null)
-        {
-            $defaultSubscription = 'default';
-            $subscribed = $user->subscribed($defaultSubscription);
-        }
-        else
-        {
-            $subscribed = false;
-        }
+        $subscribed = UserHandler::checkSubscription();
 
-        return view('categories.cast', [
-            'movies' => $results, 
+        return Theme::view('categories.cast', [
+            'content' => $results, 
             'subscribed' => $subscribed,
             'cast' => $slug,
         ]);
@@ -93,69 +55,30 @@ class CategoriesController extends Controller
      */
     public function showGenre($slug)
     {
-        //Gets all the movies that have a genre value similar to the given slug
-        $movies = Movie::orderByDesc('id')
-            ->where([['genre', 'like', '%' . $slug . '%'], ['public', '=', '1']])
-            ->join('images', 'images.id', '=', 'movies.thumbnail')
-            ->select(
-                'movies.id as id',
-                'movies.title as title',
-                'movies.description as description',
-                'movies.year as year',
-                'movies.length as length',
-                'movies.cast as cast',
-                'movies.genre as genre',
-                'images.name as image_name',
-                'images.storage as image_storage',
-            )
-            ->get();
+        //Gets all the movies that have a genre value similar to the given genre
+        $movies = CategoriesHandler::getMovieByCategory('genre', $slug);
 
-        //Gets all the series that have a cast value similar to the given slug
-        $series = Series::orderByDesc('id')
-            ->where([['genre', 'like', '%' . $slug . '%'], ['public', '=', '1']])
-            ->join('images', 'images.id', '=', 'series.thumbnail')
-            ->select(
-                'series.id as id',
-                'series.title as title',
-                'series.description as description',
-                'series.year as year',
-                'series.cast as cast',
-                'series.genre as genre',
-                'images.name as image_name',
-                'images.storage as image_storage',
-            )
-            ->get();
+        //Gets all the series that have a genre value similar to the given genre
+        $series = CategoriesHandler::getSeriesByCategory('genre', $slug);
 
         $results = [];
 
         //Add movies to results array
         foreach($movies as $movie)
-        {
             $results[] = $movie;
-        }
 
         //Add series to results array
         foreach($series as $s)
-        {
             $results[] = $s;
-        }
+        
         shuffle($results);
 
         $results = collect($results)->paginate(9);
 
-        $user = Auth::user();
-        if($user != null)
-        {
-            $defaultSubscription = 'default';
-            $subscribed = $user->subscribed($defaultSubscription);
-        }
-        else
-        {
-            $subscribed = false;
-        }
+        $subscribed = UserHandler::checkSubscription();
 
-        return view('categories.genre', [
-            'movies' => $results, 
+        return Theme::view('categories.genre', [
+            'content' => $results, 
             'subscribed' => $subscribed,
             'genre' => $slug,
         ]);
@@ -169,69 +92,30 @@ class CategoriesController extends Controller
      */
     public function showRelease($year)
     {
-        //Gets all the movies that have that release year
-        $movies = Movie::orderByDesc('id')
-            ->where([['year', '=', $year], ['public', '=', '1']])
-            ->join('images', 'images.id', '=', 'movies.thumbnail')
-            ->select(
-                'movies.id as id',
-                'movies.title as title',
-                'movies.description as description',
-                'movies.year as year',
-                'movies.length as length',
-                'movies.cast as cast',
-                'movies.genre as genre',
-                'images.name as image_name',
-                'images.storage as image_storage',
-            )
-            ->get();
+        //Gets all the movies that have a year value similar to the given year
+        $movies = CategoriesHandler::getMovieByCategory('year', $year);
 
-        //Gets all the series that have a cast value similar to the given slug
-        $series = Series::orderByDesc('id')
-            ->where([['year', 'like', '%' . $year . '%'], ['public', '=', '1']])
-            ->join('images', 'images.id', '=', 'series.thumbnail')
-            ->select(
-                'series.id as id',
-                'series.title as title',
-                'series.description as description',
-                'series.year as year',
-                'series.cast as cast',
-                'series.genre as genre',
-                'images.name as image_name',
-                'images.storage as image_storage',
-            )
-            ->get();
+        //Gets all the series that have a year value similar to the given year
+        $series = CategoriesHandler::getSeriesByCategory('year', $year);
 
         $results = [];
 
         //Add movies to results array
         foreach($movies as $movie)
-        {
             $results[] = $movie;
-        }
 
         //Add series to results array
         foreach($series as $s)
-        {
             $results[] = $s;
-        }
+        
         shuffle($results);
 
         $results = collect($results)->paginate(9);    
 
-        $user = Auth::user();
-        if($user != null)
-        {
-            $defaultSubscription = 'default';
-            $subscribed = $user->subscribed($defaultSubscription);
-        }
-        else
-        {
-            $subscribed = false;
-        }
+        $subscribed = UserHandler::checkSubscription();
 
-        return view('categories.release', [
-            'movies' => $results, 
+        return Theme::view('categories.release', [
+            'content' => $results, 
             'subscribed' => $subscribed,
             'year' => $year,
         ]);
@@ -245,69 +129,30 @@ class CategoriesController extends Controller
      */
     public function showRating($grade)
     {
-        //Gets all the movies that have that release year
-        $movies = Movie::orderByDesc('id')
-            ->where([['rating', '=', $grade], ['public', '=', '1']])
-            ->join('images', 'images.id', '=', 'movies.thumbnail')
-            ->select(
-                'movies.id as id',
-                'movies.title as title',
-                'movies.description as description',
-                'movies.year as year',
-                'movies.length as length',
-                'movies.cast as cast',
-                'movies.genre as genre',
-                'images.name as image_name',
-                'images.storage as image_storage',
-            )
-            ->get();
+        //Gets all the movies that have a rating value similar to the given grade
+        $movies = CategoriesHandler::getMovieByCategory('rating', $grade);
 
-        //Gets all the series that have a cast value similar to the given slug
-        $series = Series::orderByDesc('id')
-            ->where([['rating', 'like', '%' . $grade . '%'], ['public', '=', '1']])
-            ->join('images', 'images.id', '=', 'series.thumbnail')
-            ->select(
-                'series.id as id',
-                'series.title as title',
-                'series.description as description',
-                'series.year as year',
-                'series.cast as cast',
-                'series.genre as genre',
-                'images.name as image_name',
-                'images.storage as image_storage',
-            )
-            ->get();
+        //Gets all the series that have a rating value similar to the given grade
+        $series = CategoriesHandler::getSeriesByCategory('rating', $grade);
 
         $results = [];
 
         //Add movies to results array
         foreach($movies as $movie)
-        {
             $results[] = $movie;
-        }
 
         //Add series to results array
         foreach($series as $s)
-        {
             $results[] = $s;
-        }
+
         shuffle($results);
 
         $results = collect($results)->paginate(9);
 
-        $user = Auth::user();
-        if($user != null)
-        {
-            $defaultSubscription = 'default';
-            $subscribed = $user->subscribed($defaultSubscription);
-        }
-        else
-        {
-            $subscribed = false;
-        }
+        $subscribed = UserHandler::checkSubscription();
 
-        return view('categories.rating', [
-            'movies' => $results, 
+        return Theme::view('categories.rating', [
+            'content' => $results, 
             'subscribed' => $subscribed,
             'grade' => $grade,
         ]);

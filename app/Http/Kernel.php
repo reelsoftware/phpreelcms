@@ -67,5 +67,7 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\CheckAdmin::class,
         'install' => \App\Http\Middleware\CheckInstall::class,
         'setLanguage' => \App\Http\Middleware\SetPreferredLanguage::class,
+        'stripe' => \App\Http\Middleware\CheckStripe::class,
+        'access.availability' => \App\Http\Middleware\CheckAccessAvailability::class,
     ];
 }

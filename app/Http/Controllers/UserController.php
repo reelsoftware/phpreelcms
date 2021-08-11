@@ -5,13 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Setting;
 use App\Models\Translation;
-use App\Http\Traits\SubscriptionDetailsTrait;
+use App\Helpers\Theme\Theme;
 use Auth;
 
 class UserController extends Controller
 {
-    use SubscriptionDetailsTrait;
-
     public function updateLanguage(Request $request)
     {
         $validated = $request->validate([
@@ -42,47 +40,30 @@ class UserController extends Controller
         $params = array();
 
         $user = Auth::user();
-        $defaultSubscription = Setting::where('setting', '=', 'default_subscription')->first()['value'];
         //Select all the languages from the translations table
         $translations = Translation::get();
 
         $id = $user['id'];
         $name = $user['name'];
         $email = $user['email'];
-        $subscription = $user->subscribed($defaultSubscription);
-        $invoices = $user->invoices();
-        $stripeCustomer = '';
-        $cancelAt = '';
-        $currentPeriodEnd = '';
+        $defaultSubscription = Setting::where('setting', '=', 'default_subscription')->first();
+        
+        if($defaultSubscription != null)
+            $subscription = $user->subscribed($defaultSubscription['value']);
+        else
+            $subscription = null;
 
         $params['name'] = $name;
         $params['email'] = $email;
         $params['subscription'] = $subscription;
-        $params['invoices'] = $invoices;
         $params['language'] = $user->language;
         $params['translations'] = $translations;
-
-        $stripeCustomer = $user->createOrGetStripeCustomer();
-
-        //When it's going to cancel or null if it's not canceled
-        $cancelAt = $this->cancelAt($stripeCustomer);
-
-        //If cancelAt is null then this is when the subscription is going to renew
-        $currentPeriodEnd = $this->currentPeriodEnd($stripeCustomer);
-
-        $params['cancelAt'] = $cancelAt;
-        $params['currentPeriodEnd'] = $currentPeriodEnd;
         
-        return view('user.index', $params);
+        return Theme::view('user.index', $params);
     }
 
-    public function invoice(Request $request, $invoice)
+    public function manageSubscription(Request $request)
     {
-        $settings = Setting::get();
-       
-        return $request->user()->downloadInvoice($invoice, [
-            'vendor' => $settings[1]["value"],
-            'product' => $settings[0]["value"],
-        ]);
+        return $request->user()->redirectToBillingPortal(route('user'));
     }
 }

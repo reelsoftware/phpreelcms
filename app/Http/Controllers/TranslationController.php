@@ -7,6 +7,7 @@ use Illuminate\Validation\Rule;
 use Lang;
 use File;
 use App\Models\Translation;
+use App\Helpers\Translation\TranslationHandler;
 use App;
 
 class TranslationController extends Controller
@@ -18,7 +19,7 @@ class TranslationController extends Controller
      */
     public function index()
     {
-        $translations = Translation::orderByDesc('id')->simplePaginate(10);
+        $translations = TranslationHandler::getTranslationsSimplePaginate(10);
 
         return view('translation.index', [
             'translations' => $translations,
@@ -32,7 +33,7 @@ class TranslationController extends Controller
      */
     public function create()
     {
-        $languageFile = json_decode(File::get(base_path().'/resources/lang/default/default.json'), true);
+        $languageFile = TranslationHandler::getDefaultTranslationFileContent();
         
         return view('translation.create', [
             'languageFile' => $languageFile,
@@ -57,7 +58,7 @@ class TranslationController extends Controller
         $translation->save();
 
         //Get the default language file from resources
-        $languageFile = json_decode(File::get(base_path().'/resources/lang/default/default.json'), true);
+        $languageFile = TranslationHandler::getDefaultTranslationFileContent();
         
         //Add translations from the form to the JSON
         foreach($languageFile as $enKey => $translateValue)
@@ -72,7 +73,7 @@ class TranslationController extends Controller
         }
 
         //Save the translation file as a json file
-        File::put(base_path().'/resources/lang/' . $request->language . '.json', (json_encode($languageFile)));
+        TranslationHandler::saveTranslationFile($request->language, $languageFile);
         
         return redirect(route('translationDashboard'));
     }
@@ -89,10 +90,10 @@ class TranslationController extends Controller
         $translation = Translation::find($id);
 
         //Get the default language file from resources
-        $defaultFile = json_decode(File::get(base_path().'/resources/lang/default/default.json'), true);
+        $defaultFile = TranslationHandler::getDefaultTranslationFileContent();
 
         //Get the json language file from resources
-        $languageFile = json_decode(File::get(base_path().'/resources/lang/' . $translation['language'] . '.json'), true);
+        $languageFile = TranslationHandler::getTranslationFileContent($translation['language']);
 
         return view('translation.edit', [
             'languageFile' => $languageFile,
@@ -122,10 +123,10 @@ class TranslationController extends Controller
         $translation = Translation::find($id);
 
         //Get the json language file from resources
-        $defaultFile = json_decode(File::get(base_path().'/resources/lang/default/default.json'), true);
+        $defaultFile = TranslationHandler::getDefaultTranslationFileContent();
 
         //Delete the old json file
-        File::delete(base_path().'/resources/lang/' . $translation['language'] . '.json');
+        TranslationHandler::deteleTranslationFile($translation['language']);
 
         //Loop counter
         $i = 0;
@@ -145,7 +146,7 @@ class TranslationController extends Controller
         }
 
         //Save the translation file as a json file
-        File::put(base_path().'/resources/lang/' . $request->language . '.json', (json_encode($defaultFile)));
+        TranslationHandler::saveTranslationFile($request->language, $defaultFile);
 
         //Update the translation name from database
         $translation->language = $request->language;
@@ -168,7 +169,7 @@ class TranslationController extends Controller
         if($language != null)
             $language->delete();
 
-        File::delete(base_path().'/resources/lang/' . $language['language'] . '.json');
+        TranslationHandler::deteleTranslationFile($language['language']);
 
         return redirect()->route('translationDashboard');
     }

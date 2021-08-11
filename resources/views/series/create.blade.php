@@ -17,23 +17,11 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="form-group">
-                                <label for="title">Title</label>
-                                <input type="text" name="title" class="form-control" id="title" value="{{ old('title') }}" required maxlength="255">
-                                @error('title')
-                                    <div class="alert alert-danger py-2 my-2">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            <x-title-form type="create"/>
                         </div>
 
                         <div class="col-lg-12">
-                            <div class="form-group">
-                                <label for="description">Description</label>
-                                <textarea class="form-control" id="description" name="description" rows="3" required maxlength="500">{{ old('description') }}</textarea>
-                                @error('description')
-                                    <div class="alert alert-danger py-2 my-2">{{ $message }}</div>
-                                @enderror
-                            </div>            
+                            <x-description-form type="create"/>           
                         </div>
                     </div>
                 </div>
@@ -41,23 +29,11 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="year">Year</label>
-                                <input type="number" name="year" class="form-control" id="year" value="{{ old('year') }}" required min="0">
-                                @error('year')
-                                    <div class="alert alert-danger py-2 my-2">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            <x-year-form type="create"/>           
                         </div>
 
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="rating">Rating</label>
-                                <input type="text" name="rating" class="form-control" id="rating" value="{{ old('rating') }}" required maxlength="25">
-                                @error('rating')
-                                    <div class="alert alert-danger py-2 my-2">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            <x-rating-form type="create"/>           
                         </div>
                     </div>
                 </div>
@@ -65,23 +41,11 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="cast">Cast</label>
-                                <input type="text" name="cast" class="form-control" id="cast" value="{{ old('cast') }}" required maxlength="500">
-                                @error('cast')
-                                    <div class="alert alert-danger py-2 my-2">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            <x-cast-form type="create"/>           
                         </div>
 
                         <div class="col-lg-6">
-                            <div class="form-group">
-                                <label for="genre">Genre</label>
-                                <input type="text" name="genre" class="form-control" id="genre" value="{{ old('genre') }}" required maxlength="500">
-                                @error('genre')
-                                    <div class="alert alert-danger py-2 my-2">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            <x-genre-form type="create"/>           
                         </div>
                     </div>
                 </div>
@@ -89,26 +53,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="resourceFile" onchange="updateFileLabel('resourceFile')">
-                                        <label class="custom-file-label" for="resourceFile">Upload files</label>
-                                    </div>
-                                </div>
-                                    
-                                <div class="progress">
-                                    <div id="progressBar" class="progress-bar" role="progressbar"></div>
-                                </div>   
-
-                                <div class="card-body">
-                                    <h5 class="card-title">Uploaded files</h5>
-
-                                    <div id="uploadedFiles">
-                                        <p class="card-text"></p>
-                                    </div>
-                                </div>
-                            </div>
+                            <x-upload-form/>
                         </div>
                     </div>
                 </div>
@@ -116,28 +61,11 @@
                 <div class="container mt-1">
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="thumbnail">Thumbnail</label>
-            
-                                <select id="thumbnail" name="thumbnail" class="custom-select" required>
-                                    <option></option>
-                                </select>
-            
-                                @error('thumbnail')
-                                    <div class="alert alert-danger py-2 my-2">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            <x-thumbnail-form type="create"/>
                         </div>
 
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="public">Select visibility</label><br>
-            
-                                <select name="public" class="custom-select" id="platform">
-                                    <option value="0" @if (old('public') == 0) selected @endif>Private</option>
-                                    <option value="1" @if (old('public') == 1) selected @endif>Public</option>
-                                </select>
-                            </div>
+                            <x-visibility-form type="create"/>
                         </div>
                     </div>
                 </div>    
@@ -145,7 +73,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">
-                            <input type="submit" class="btn btn-primary my-2" value="Add series">
+                            <x-submit-form button-name="Add series"/>
                         </div>
                     </div>
                 </div>
@@ -156,11 +84,23 @@
 @endsection
 
 @section('script')
-    <script>
-        const url = "{{route('resourceStoreApi')}}";
-        //chunk size in bytes (1MB)
-        const chunkSize = {{env('CHUNK_SIZE')}} * 1000000; 
-    </script>
-
     <script src="{{ URL::asset('js/upload.js') }}"></script>
+
+    <script>
+        new FileUpload("resourceFile", "{{ route('resourceStoreApi') }}", {{ env('CHUNK_SIZE') }} * 1000000, function (fileId, fileName) {
+            document.getElementById("progressBar").style.width = "0%";
+
+            if(document.getElementById("uploadedFiles") != null)
+                document.getElementById("uploadedFiles").innerHTML += '<p class="card-text">' + fileName + '</p>';
+
+            if(document.getElementById("thumbnail") != null)
+                document.getElementById("thumbnail").innerHTML += '<option value="' + fileId + '">' + fileName + '</option>';
+
+            if(document.getElementById("video") != null)
+                document.getElementById("video").innerHTML += '<option value="' + fileId + '">' + fileName + '</option>';
+
+            if(document.getElementById("trailer") != null)
+                document.getElementById("trailer").innerHTML += '<option value="' + fileId + '">' + fileName + '</option>';
+        });
+    </script>
 @endsection
