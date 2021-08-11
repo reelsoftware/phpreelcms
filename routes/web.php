@@ -73,6 +73,7 @@ Route::get('/asset/css/{styleName}', [AssetController::class, 'css'])
 Route::get('/asset/image/{imageName}', [AssetController::class, 'image'])
     ->name('imageAsset');
 
+
 Route::middleware(['setLanguage'])->group(function () 
 {
     Route::get('/', [HomeController::class, 'index'])
@@ -272,6 +273,8 @@ Route::middleware(['setLanguage'])->group(function ()
             Route::post('dashboard/subscription/plan/update/{id}', [SubscriptionPlansController::class, 'update'])
                 ->name('subscriptionPlanUpdate');
         });
+
+        //Settings
 
         //Settings
 
