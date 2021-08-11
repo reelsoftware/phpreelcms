@@ -3,7 +3,7 @@
 @section('title', 'Configure')
 
 @section('content')
-<ul class="nav nav-dots justify-content-center">
+<ul class="nav nav-dots justify-content-center mt-2">
     <li class="nav-item dot done"></li>
     <li class="nav-item dot done"></li>
     <li class="nav-item dot done"></li>
@@ -12,7 +12,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col my-2">
+        <div class="col">
             <form method="POST" action="{{route('storeConfig')}}">
                 @csrf
 

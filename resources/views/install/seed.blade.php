@@ -3,7 +3,7 @@
 @section('title', 'Configure')
 
 @section('content')
-<ul class="nav nav-dots justify-content-center">
+<ul class="nav nav-dots justify-content-center mt-2">
     <li class="nav-item dot done"></li>
     <li class="nav-item dot done"></li>
     <li class="nav-item dot done"></li>
@@ -48,7 +48,7 @@
                     @enderror
                 </div>
                              
-                <button type="submit" class="btn btn-primary">Next step</button>
+                <button type="submit" class="btn btn-primary">Finish</button>
             </form>
         </div>
     </div>

@@ -73,6 +73,11 @@ return [
     'stripe_secret' => env('STRIPE_SECRET', null),
     'stripe_webhook_secret' => env('STRIPE_WEBHOOK_SECRET', null),
 
+    'aws_access_key_id' => env('AWS_ACCESS_KEY_ID', null),
+    'aws_secret_access_key' => env('AWS_SECRET_ACCESS_KEY', null),
+    'aws_default_region' => env('AWS_DEFAULT_REGION', null),
+    'aws_bucket' => env('AWS_BUCKET', null),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

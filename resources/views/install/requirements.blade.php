@@ -3,17 +3,17 @@
 @section('title', 'Database')
 
 @section('content')
-<ul class="nav justify-content-center">
+<ul class="nav justify-content-center mt-3">
     <li class="nav-item dot done"></li>
     <li class="nav-item dot"></li>
     <li class="nav-item dot"></li>
     <li class="nav-item dot"></li>
 </ul>
 
-<div class="container">
+<div class="container my-3">
     <div class="row">
         <div class="col">
-            <p class="my-2">
+            <p>
                 All the boxes should be green. Otherwise, the application might not work properly.            
             </p>
 
