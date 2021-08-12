@@ -14,17 +14,6 @@ class EmailVerificationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_email_verification_screen_can_be_rendered()
-    {
-        $user = User::factory()->create([
-            'email_verified_at' => null,
-        ]);
-
-        $response = $this->actingAs($user)->get('/verify-email');
-
-        $response->assertStatus(200);
-    }
-
     public function test_email_can_be_verified()
     {
         Event::fake();
