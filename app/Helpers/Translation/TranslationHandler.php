@@ -47,7 +47,7 @@ class TranslationHandler
      *
      * @param string $language name of the requested language file
      */
-    public static function deteleTranslationFile(string $language)
+    public static function deleteTranslationFile(string $language)
     {
         //Delete translation file from theme
         File::delete(Theme::getFilePath("lang\\$language.json"));
