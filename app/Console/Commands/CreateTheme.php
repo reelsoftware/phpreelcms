@@ -60,6 +60,6 @@ class CreateTheme extends Command
         Theme::generateConfig($themeDirectoryName, $themeName, $description, $author, $themeUrl, $version, $license, $licenseUrl);
         Theme::generateDefaultCover($themeDirectoryName);
 
-        $this->info("Theme $themeDirectoryName was created succesfully! You can find it here: resources/themes/$themeDirectoryName");
+        $this->info("Theme $themeDirectoryName was created successfully! You can find it here: resources/themes/$themeDirectoryName");
     }
 }
