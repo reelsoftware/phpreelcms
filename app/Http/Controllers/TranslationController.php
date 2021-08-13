@@ -126,7 +126,7 @@ class TranslationController extends Controller
         $defaultFile = TranslationHandler::getDefaultTranslationFileContent();
 
         //Delete the old json file
-        TranslationHandler::deteleTranslationFile($translation['language']);
+        TranslationHandler::deleteTranslationFile($translation['language']);
 
         //Loop counter
         $i = 0;
@@ -169,7 +169,7 @@ class TranslationController extends Controller
         if($language != null)
             $language->delete();
 
-        TranslationHandler::deteleTranslationFile($language['language']);
+        TranslationHandler::deleteTranslationFile($language['language']);
 
         return redirect()->route('translationDashboard');
     }
