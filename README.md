@@ -11,7 +11,7 @@ Some of the great features of phpReel:
 - Dashboard
 
 # Learn phpReel
-Because I know how important is to have a well documented project, phpReel now provides access to it's own [documentation](https://developer.phpreel.org/). I am constantly working on it, updating it and generally trying to make it better.
+Because I know how important is to have a well documented project, phpReel now provides access to its own [documentation](https://developer.phpreel.org/). I am constantly working on it, updating it and generally trying to make it better.
 
 # Contributing
 phpReel is getting bigger and better each day, thus with every new feature, it becomes more and more difficult to manage a product without a team. I really want to grow this project into a full-blown software company but until that day I rely entirely on the help of the community. Here is a list of things you can do to help phpReel grow:

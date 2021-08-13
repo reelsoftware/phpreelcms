@@ -15,7 +15,7 @@
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                <p>This is a simple 3 step instalation process that will cofigure your new installation in minutes. Click the button bellow to start!</p>
+                <p>This is a simple 3 step installation process that will configure your new installation in minutes. Click the button bellow to start!</p>
                 <a href="{{route('installRequirements')}}" class="btn btn-primary">Begin installation</a>
                 </div>
             </div>

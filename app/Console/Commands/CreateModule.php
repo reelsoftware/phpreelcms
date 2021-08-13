@@ -63,6 +63,6 @@ class CreateModule extends Command
         ModuleHandler::generateConfig($moduleInternalName, $moduleName, $description, $author, $moduleUrl, $version, $license, $licenseUrl);
         ModuleHandler::generateDefaultCover($moduleInternalName);
 
-        $this->info("Module $moduleInternalName was created succesfully! You can find it here: Modules/$moduleInternalName");
+        $this->info("Module $moduleInternalName was created successfully! You can find it here: Modules/$moduleInternalName");
     }
 }
