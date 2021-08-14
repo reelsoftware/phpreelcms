@@ -7,6 +7,7 @@ use App\Helpers\Content\IContentBuilder;
 use App\Helpers\Content\ValidationManager; 
 use App\Helpers\Resource\ResourceHandler;
 use App\Models\Movie;
+use App\Models\Video;
 use App\Helpers\Helper;
 
 class MovieBuilder implements IContentBuilder
@@ -115,6 +116,12 @@ class MovieBuilder implements IContentBuilder
         else
             $movie->auth = 1;
         
+        //Update video premium and auth values
+        $video = Video::find($movie->video);
+        $video->premium = $movie->premium;
+        $video->auth = $movie->auth;
+        $video->save();
+
         //Update thumbnail
         if($this->request->thumbnail != null)
             ResourceHandler::updateImage($this->request->thumbnail, $movie->thumbnail, config('app.storage_disk'));

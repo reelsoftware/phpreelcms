@@ -128,7 +128,7 @@ class ResourceHandler
         $video->storage = $storage;
         $video->premium = $premium;
         $video->auth = $auth;
-
+  
         $video->save();
     }
 

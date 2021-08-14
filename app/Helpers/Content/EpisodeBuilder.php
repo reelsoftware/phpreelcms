@@ -63,9 +63,20 @@ class EpisodeBuilder implements IContentBuilder
         else
             $episode->auth = 1;
 
+        //Update video premium and auth values
+        $video = Video::find($episode->video);
+        $video->premium = $episode->premium;
+        $video->auth = $episode->auth;
+        $video->save();
+
+        if($this->request->video != null)
+            $video = $this->request->video;
+        else if($this->request->videoId != null)
+            $video = $this->request->videoId;
+
         $episode->season_id = $this->request->season_id;
         $episode->thumbnail = ResourceHandler::addImage($this->request->thumbnail);
-        $episode->video = ResourceHandler::addVideo($this->request->video, $this->request->platformVideo, $episode->premium, $episode->auth);
+        $episode->video = ResourceHandler::addVideo($video, $this->request->platformVideo, $episode->premium, $episode->auth);
 
         //Set the order of the season as the last season of the series
         $lastOrder = Episode::where('season_id', '=', $this->request->season_id)
@@ -125,14 +136,14 @@ class EpisodeBuilder implements IContentBuilder
         
         //Update thumbnail
         if($this->request->thumbnail != null)
-            ResourceHandler::updateImage($this->request->thumbnail, $movie->thumbnail, config('app.storage_disk'));
+            ResourceHandler::updateImage($this->request->thumbnail, $episode->thumbnail, config('app.storage_disk'));
 
         //Update video
         if($this->request->video != null)
-            ResourceHandler::updateVideo($this->request->video, $movie->video, $this->request->platformVideo, $episode->premium, $episode->auth);
+            ResourceHandler::updateVideo($this->request->video, $episode->video, $this->request->platformVideo, $episode->premium, $episode->auth);
 
         if($this->request->videoId != null)
-            ResourceHandler::updateVideo($this->request->videoId, $movie->video, $this->request->platformVideo);
+            ResourceHandler::updateVideo($this->request->videoId, $episode->video, $this->request->platformVideo);
 
         $episode->save();
         
