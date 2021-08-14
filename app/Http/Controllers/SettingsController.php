@@ -102,7 +102,7 @@ class SettingsController extends Controller
     public function versionUpdate()
     {
         //Update for every new added version
-        $lastVersion = '0.2.0-Beta';
+        $lastVersion = '0.2.1-Beta';
 
         //Get current app version
         $appVersion = DotenvEditor::getValue('APP_VERSION');
