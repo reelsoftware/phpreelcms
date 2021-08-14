@@ -130,14 +130,14 @@ class EpisodeBuilder implements IContentBuilder
         
         //Update thumbnail
         if($this->request->thumbnail != null)
-            ResourceHandler::updateImage($this->request->thumbnail, $movie->thumbnail, config('app.storage_disk'));
+            ResourceHandler::updateImage($this->request->thumbnail, $episode->thumbnail, config('app.storage_disk'));
 
         //Update video
         if($this->request->video != null)
-            ResourceHandler::updateVideo($this->request->video, $movie->video, $this->request->platformVideo, $episode->premium, $episode->auth);
+            ResourceHandler::updateVideo($this->request->video, $episode->video, $this->request->platformVideo, $episode->premium, $episode->auth);
 
         if($this->request->videoId != null)
-            ResourceHandler::updateVideo($this->request->videoId, $movie->video, $this->request->platformVideo);
+            ResourceHandler::updateVideo($this->request->videoId, $episode->video, $this->request->platformVideo);
 
         $episode->save();
         
