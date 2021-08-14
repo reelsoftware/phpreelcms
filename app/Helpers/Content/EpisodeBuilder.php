@@ -63,9 +63,14 @@ class EpisodeBuilder implements IContentBuilder
         else
             $episode->auth = 1;
 
+        if($this->request->video != null)
+            $video = $this->request->video;
+        else if($this->request->videoId != null)
+            $video = $this->request->videoId;
+
         $episode->season_id = $this->request->season_id;
         $episode->thumbnail = ResourceHandler::addImage($this->request->thumbnail);
-        $episode->video = ResourceHandler::addVideo($this->request->video, $this->request->platformVideo, $episode->premium, $episode->auth);
+        $episode->video = ResourceHandler::addVideo($video, $this->request->platformVideo, $episode->premium, $episode->auth);
 
         //Set the order of the season as the last season of the series
         $lastOrder = Episode::where('season_id', '=', $this->request->season_id)

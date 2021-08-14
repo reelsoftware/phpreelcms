@@ -112,8 +112,8 @@ class MovieController extends Controller
                 'video', 
                 'trailer', 
                 'thumbnail', 
-                'premium as availability', 
-                'auth as access'
+                'premium', 
+                'auth'
             ])->first();
 
         if($movie != null)
