@@ -63,6 +63,12 @@ class EpisodeBuilder implements IContentBuilder
         else
             $episode->auth = 1;
 
+        //Update video premium and auth values
+        $video = Video::find($episode->video);
+        $video->premium = $episode->premium;
+        $video->auth = $episode->auth;
+        $video->save();
+
         if($this->request->video != null)
             $video = $this->request->video;
         else if($this->request->videoId != null)
