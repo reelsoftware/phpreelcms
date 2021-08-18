@@ -12,6 +12,8 @@ use App\Models\User;
 
 class MovieTest extends TestCase
 {
+    use RefreshDatabase;
+    
     public function test_free_no_auth_movie_no_logged_in_user()
     {
         $movie = Movie::factory()->create([
