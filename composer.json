@@ -1,8 +1,7 @@
 {
-    "name": "laravel/laravel",
+    "name": "phpreel/phpreel",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "phpReel is a free, MIT open-source, subscription-based video streaming application that lets you create your platform for distributing content.",
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
@@ -53,7 +52,12 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-            "@php artisan key:generate --ansi"
+            "@php artisan key:generate --ansi",
+            "@php artisan dev:database",
+            "@php artisan migrate",
+            "@php artisan dev:stripe",
+            "@php artisan dev:init",
+            "@php artisan serve"
         ]
     },
     "extra": {
