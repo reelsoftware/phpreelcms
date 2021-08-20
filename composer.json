@@ -52,12 +52,7 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-            "@php artisan key:generate --ansi",
-            "@php artisan dev:database",
-            "@php artisan migrate",
-            "@php artisan dev:stripe",
-            "@php artisan dev:init",
-            "@php artisan serve"
+            "@php artisan key:generate --ansi"
         ]
     },
     "extra": {
