@@ -129,6 +129,7 @@ Route::middleware(['setLanguage'])->group(function ()
     //Check if the content is free and if requires auth
     Route::middleware(['access.availability'])->group(function () 
     {
+        //Movies
         Route::get('/movie/{id}', [MovieController::class, 'show'])
             ->name('movieShow');
 

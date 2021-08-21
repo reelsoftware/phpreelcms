@@ -10,6 +10,9 @@ Some of the great features of phpReel:
 - Easily customizable with modules and themes
 - Dashboard
 
+# Get started with phpReel
+I am constantly working on improving every aspect of the CMS, including the way you first get started with it. Check out the [guide on how to get started as a developer](https://developer.phpreel.org/getting-started/quick-start-developer).
+
 # Learn phpReel
 Because I know how important is to have a well documented project, phpReel now provides access to its own [documentation](https://developer.phpreel.org/). I am constantly working on it, updating it and generally trying to make it better.
 
