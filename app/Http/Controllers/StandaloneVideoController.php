@@ -54,7 +54,12 @@ class StandaloneVideoController extends Controller
      */
     public function show($id)
     {
-        //
+        $video = StandaloneVideo::find($id)->videoFile();
+        
+        return view('video.show', [
+            'name' => $video->name,
+            'storage' => $video->storage
+        ]);
     }
 
     /**

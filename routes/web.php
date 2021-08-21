@@ -127,14 +127,14 @@ Route::middleware(['setLanguage'])->group(function ()
     Route::get('/trailer/season/{id}', [TrailerController::class, 'showSeason'])
         ->name('trailerSeasonShow');
 
+    //Standalone videos
+    Route::get('/video/{id}', [StandaloneVideoController::class, 'show'])
+        ->name('videoShow');
+
     //Check if the content is free and if requires auth
     Route::middleware(['access.availability'])->group(function () 
     {
         //Movies
-        Route::get('/movie/{id}', [MovieController::class, 'show'])
-            ->name('movieShow');
-
-        //Standalone videos
         Route::get('/movie/{id}', [MovieController::class, 'show'])
             ->name('movieShow');
 
