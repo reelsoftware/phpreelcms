@@ -38,10 +38,21 @@ class UserController extends Controller
     public function index()
     {
         $params = array();
-
         $user = Auth::user();
+        $currentLanguage = config('app.language');
+
         //Select all the languages from the translations table
         $translations = Translation::get();
+
+        //Remove the current language from the collection
+        foreach($translations as $key => $translation) 
+        {
+            if(str_replace(' ', '_', $translation->language) == $currentLanguage)
+            {
+                $translations->forget($key);
+                break;
+            }
+        }
 
         $id = $user['id'];
         $name = $user['name'];

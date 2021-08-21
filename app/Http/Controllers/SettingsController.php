@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Setting;
 use Jackiedo\DotenvEditor\Facades\DotenvEditor;
 use App\Models\SubscriptionType;
+use App\Models\Translation;
 
 class SettingsController extends Controller
 {
@@ -128,9 +129,19 @@ class SettingsController extends Controller
     public function app()
     {
         $appName = DotenvEditor::getValue('APP_NAME');
+        $currentLanguage = DotenvEditor::getValue('APP_LANGUAGE');
+        $translations = Translation::get();
+
+        //Replace '_' with ' ' because .env file doesn't support white space
+        if($currentLanguage == '')
+            $currentLanguage = null;
+        else
+            $currentLanguage = str_replace('_', ' ', $currentLanguage);
 
         return view('settings.app', [
             'appName' => $appName,
+            'currentLanguage' => $currentLanguage,
+            'translations' => $translations
         ]);
     }
 
@@ -141,9 +152,16 @@ class SettingsController extends Controller
         ];
 
         $validated = $request->validate($validationArray);
-        
+
+        //If it's null then set the default theme language by saving and empty string to .env file
+        if($request->appLanguage == null)
+            $appLanguage = '';
+        else
+            $appLanguage = str_replace(' ', '_', $request->appLanguage);
+
         $file = DotenvEditor::setKeys([
             'APP_NAME' => $request->appName,
+            'APP_LANGUAGE' => $appLanguage,
         ]);
 
         DotenvEditor::save();  

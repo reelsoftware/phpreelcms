@@ -69,6 +69,8 @@ return [
 
     'theme' => env('THEME', 'default'),
 
+    'language' => env('APP_LANGUAGE', ''),
+
     'stripe_key' => env('STRIPE_KEY', null),
     'stripe_secret' => env('STRIPE_SECRET', null),
     'stripe_webhook_secret' => env('STRIPE_WEBHOOK_SECRET', null),

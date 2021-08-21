@@ -34,7 +34,7 @@
                                 @csrf
                                 <select class="custom-select" name="language">
                                     <option value="0" {{ $language == null ? 'selected' : '' }}>
-                                        {{ __('English (Default)') }}
+                                        {{ __('Default language') }}
                                     </option>
 
                                     @foreach($translations as $translation)
