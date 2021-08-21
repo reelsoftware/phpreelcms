@@ -27,7 +27,6 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\EpisodeOrderController;
 use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\ModulesController;
-use App\Http\Controllers\StandaloneVideoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -127,10 +126,6 @@ Route::middleware(['setLanguage'])->group(function ()
     Route::get('/trailer/season/{id}', [TrailerController::class, 'showSeason'])
         ->name('trailerSeasonShow');
 
-    //Standalone videos
-    Route::get('/video/{id}', [StandaloneVideoController::class, 'show'])
-        ->name('videoShow');
-
     //Check if the content is free and if requires auth
     Route::middleware(['access.availability'])->group(function () 
     {
@@ -184,22 +179,6 @@ Route::middleware(['setLanguage'])->group(function ()
         //Upload API
         Route::post('dashboard/api/store/{storage?}', [ResourceController::class, 'storeAPI'])
             ->name('resourceStoreApi');
-
-        //Video
-        Route::get('dashboard/video', [StandaloneVideoController::class, 'index'])
-            ->name('videoDashboard');
-
-        Route::get('dashboard/video/create', [StandaloneVideoController::class, 'create'])
-            ->name('videoCreate');
-
-        Route::post('dashboard/video/store', [StandaloneVideoController::class, 'store'])
-            ->name('videoStore');
-
-        Route::get('dashboard/video/edit/{id}', [StandaloneVideoController::class, 'edit'])
-            ->name('videoEdit');
-
-        Route::post('dashboard/video/update/{id}', [StandaloneVideoController::class, 'update'])
-            ->name('videoUpdate');
 
         //Movie
         Route::get('dashboard/movie', [MovieController::class, 'indexDashboard'])
