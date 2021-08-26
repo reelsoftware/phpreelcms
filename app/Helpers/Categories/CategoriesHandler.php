@@ -28,7 +28,7 @@ class CategoriesHandler
                 'images.name as image_name',
                 'images.storage as image_storage',
             )->get();
-
+        
         return $movies;
     }
 
@@ -42,7 +42,8 @@ class CategoriesHandler
     public static function getSeriesByCategory(string $category, string $param)
     {
         $series = Series::orderByDesc('id')
-            ->where([[$category, 'like', '%' . $param . '%'], ['public', '=', '1']])
+            ->where('public', '=', '1')
+            ->whereJsonContains("categories->$category", $param)
             ->join('images', 'images.id', '=', 'series.thumbnail')
             ->select(
                 'series.id as id',
@@ -57,5 +58,4 @@ class CategoriesHandler
 
         return $series;
     }
-
 }

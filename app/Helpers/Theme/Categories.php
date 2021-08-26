@@ -4,14 +4,18 @@ namespace App\Helpers\Theme;
 class Categories
 {
     /**
-     * Returns the URL of the category that contains all the content released in that particular year
+     * Returns the URL of a specific category with a specific value
      *
-     * @param int $year
+     * @param  string  $categoryName name of the category to select content for
+     * @param  string  $value to search for 
      * 
      */
-    public static function releaseUrl(int $year)
+    public static function categoryUrl(string $categoryName, string $value)
     {
-        return route('releaseShow', ['year' => $year]);
+        return route('categoryShow', [
+            'categoryName' => $categoryName,
+            'value' => $value
+        ]);
     }
 
     /**
