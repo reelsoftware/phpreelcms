@@ -30,7 +30,7 @@ class S3Strategy implements IStorageStrategy
 
     public function __construct()
     {
-        $this->path = 's3://' . env('AWS_BUCKET');;
+        $this->path = 's3://' . env('AWS_BUCKET');
         $this->fileName = '';
         $this->client = new S3Client([
             'region' => env('AWS_DEFAULT_REGION'),
@@ -57,7 +57,7 @@ class S3Strategy implements IStorageStrategy
         if($request->videoId == '')
         {
             $this->fileName = UploadHandler::storeResource($request->file('file'), 's3');
-            $this->path .= '//resources/' . $this->fileName;
+            $this->path .= "/resources/$this->fileName";
         }
         else  
         {
@@ -66,7 +66,7 @@ class S3Strategy implements IStorageStrategy
             //Set file name from previous chunk
             $this->fileName = $request->videoId;
 
-            $this->path .= '//resources/' . $this->fileName;
+            $this->path .= "/resources/$this->fileName";
 
             //Get the files chunks that were already saved
             $savedChunks = fopen($this->path, 'a');

@@ -18,7 +18,7 @@ class UploadHandler
     public static function storeResource($file, $storage)
     {
         $fileName = time() . Str::random(26) . '.' . $file->extension();
-        Storage::disk($storage)->put($fileName, file_get_contents($file));
+        Storage::disk($storage)->put("/resources/$fileName", file_get_contents($file));
 
         return $fileName;
     }
