@@ -24,11 +24,8 @@ class MovieFactory extends Factory
         return [
             'title' => $this->faker->sentence(3),
             'description' => $this->faker->text(100),
-            'year' => $this->faker->numberBetween(0, 2100),
-            'rating' => $this->faker->randomLetter(),
+            'categories' => $this->faker->text(100),
             'length' => $this->faker->numberBetween(1, 72000),
-            'cast' => implode(', ', $this->faker->words(5)),
-            'genre' => implode(', ', $this->faker->words(5)),
             'thumbnail' => function () {
                 return \App\Models\Image::factory()->create()->id;
             },

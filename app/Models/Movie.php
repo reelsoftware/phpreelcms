@@ -9,4 +9,12 @@ class Movie extends Model
 {
     use HasFactory;
 
+     /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'categories' => 'array',
+    ];
 }
