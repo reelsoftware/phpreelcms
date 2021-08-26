@@ -127,11 +127,8 @@ class ContentHandler
                 'movies.id as id',
                 'movies.title as title',
                 'movies.description as description',
-                'movies.year as year',
                 'movies.length as length',
-                'movies.cast as cast',
-                'movies.genre as genre',
-                'movies.rating as rating',
+                'movies.categories as categories',
                 'videos.name as video_name',
                 'videos.storage as video_storage',
             )
