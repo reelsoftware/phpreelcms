@@ -28,33 +28,12 @@
                 
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-4">
-                            <x-year-form type="create"/>           
-                        </div>
-
-                        <div class="col-md-4">
-                            <x-rating-form type="create"/>           
-                        </div>
-
-                        <div class="col-md-4">
+                        <div class="col-md-12">
                             <x-length-form type="create"/>           
                         </div>
                     </div>
                 </div>
             
-                
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <x-cast-form type="create"/>           
-                        </div>
-
-                        <div class="col-lg-6">
-                            <x-genre-form type="create"/>           
-                        </div>
-                    </div>
-                </div>
-
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
