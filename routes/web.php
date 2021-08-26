@@ -92,15 +92,6 @@ Route::middleware(['setLanguage'])->group(function ()
     Route::get('/categories/{categoryName}/{value}', [CategoriesController::class, 'index'])
         ->name('categoryShow');
 
-    Route::get('/categories/genre/{slug}', [CategoriesController::class, 'showGenre'])
-        ->name('genreShow');
-
-    Route::get('/categories/release/{year}', [CategoriesController::class, 'showRelease'])
-        ->name('releaseShow');
-
-    Route::get('/categories/rating/{grade}', [CategoriesController::class, 'showRating'])
-        ->name('ratingShow');
-
     //Subscriptions
     Route::get('/subscribe', [SubscriptionController::class, 'index'])->name('subscribe');
 
