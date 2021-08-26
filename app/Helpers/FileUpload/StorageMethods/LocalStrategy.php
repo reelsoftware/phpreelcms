@@ -5,7 +5,7 @@ use App\Helpers\FileUpload\UploadHandler;
 use Aws\S3\S3Client;
 use Aws\Exception\AwsException;
 use Illuminate\Http\Request;
-
+use Log;
 /**
  * Concrete strategy class implement the uploading method while following the base Strategy
  * interface. The interface makes them interchangeable in the StorageContext.
@@ -39,7 +39,7 @@ class LocalStrategy implements IStorageStrategy
         if($request->videoId == '')
         {
             $this->fileName = UploadHandler::storeResource($request->file('file'), 'local');
-            $this->path .= '/app/resources/' . $this->fileName;
+            $this->path .= $this->fileName;
         }
         else  
         {
@@ -48,11 +48,12 @@ class LocalStrategy implements IStorageStrategy
             //Set file name from previous chunk
             $this->fileName = $request->videoId;
 
-            $this->path .= '/app/resources/' . $this->fileName;
+            $this->path .= "/app/resources/$this->fileName";
 
             //Get the files chunks that were already saved
             $savedChunks = fopen($this->path, 'a');
-
+            
+            Log::debug($this->path);
             //Update the saved chunks with the new chunk
             fwrite($savedChunks, file_get_contents($request->file('file')));
             fclose($savedChunks);

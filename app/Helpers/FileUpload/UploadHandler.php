@@ -12,13 +12,15 @@ class UploadHandler
      * 
      * @param Request $file request file from the upload form
      * @param String $storage medium used for the file
+     * @param String $path to the directory where the file should be stored, empty to store in root
      * 
      * @return string name of the stored file
      */
-    public static function storeResource($file, $storage)
+    public static function storeResource($file, $storage, $path = "")
     {
         $fileName = time() . Str::random(26) . '.' . $file->extension();
-        Storage::disk($storage)->put("/resources/$fileName", file_get_contents($file));
+
+        Storage::disk($storage)->put($path . $fileName, file_get_contents($file));
 
         return $fileName;
     }
