@@ -1,13 +1,13 @@
 @extends(AppConfig::themeLayout("layout"))
 
 @section('title')
-    {{ __('Starring') }} {{ $cast }} - {{ AppConfig::name() }}
+    {{ __('Results for') }} {{ $value }} - {{ AppConfig::name() }}
 @endsection
 
 @section('content')
     <div class="container ne-margin-top-under-nav">
         <div class="ne-h1">
-            {{ __('Starring') }}<i>{{ $cast }}</i>
+            {{ __('Results for ') }}<i>{{ $value }}</i>
         </div>
 
         <div class="row">

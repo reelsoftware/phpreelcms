@@ -13,16 +13,17 @@ class CategoriesController extends Controller
     /**
      * Display the movies having assigned that cast
      *
-     * @param  string  $slug
+     * @param  string  $categoryName name of the category to select content for
+     * @param  string  $value to search for 
      * @return \Illuminate\Http\Response
      */
-    public function showCast($slug)
+    public function index($categoryName, $value)
     {
-        //Gets all the movies that have a cast value similar to the given slug
-        $movies = CategoriesHandler::getMovieByCategory('cast', $slug);
+        //Gets all the movies that have a cast value similar to the given value
+        $movies = CategoriesHandler::getMovieByCategory($categoryName, $value);
 
-        //Gets all the series that have a cast value similar to the given slug
-        $series = CategoriesHandler::getSeriesByCategory('cast', $slug);
+        //Gets all the series that have a cast value similar to the given value
+        $series = CategoriesHandler::getSeriesByCategory($categoryName, $value);
 
         $results = [];
 
@@ -40,10 +41,10 @@ class CategoriesController extends Controller
 
         $subscribed = UserHandler::checkSubscription();
 
-        return Theme::view('categories.cast', [
+        return Theme::view('categories.index', [
             'content' => $results, 
             'subscribed' => $subscribed,
-            'cast' => $slug,
+            'value' => $value,
         ]);
     }
 

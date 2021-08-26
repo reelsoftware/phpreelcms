@@ -89,8 +89,8 @@ Route::middleware(['setLanguage'])->group(function ()
     Route::get('/resource/image/{storage}/{fileName}', [ResourceController::class, 'imageFile'])->name('fileResourceImage');
 
     //Categories
-    Route::get('/categories/cast/{slug}', [CategoriesController::class, 'showCast'])
-        ->name('castShow');
+    Route::get('/categories/{categoryName}/{value}', [CategoriesController::class, 'index'])
+        ->name('categoryShow');
 
     Route::get('/categories/genre/{slug}', [CategoriesController::class, 'showGenre'])
         ->name('genreShow');

@@ -78,21 +78,6 @@ class MovieController extends Controller
     {
         $movie = ContentHandler::getMovie($id);
 
-        $movie1 = Movie::where([['movies.public', '=', '1'], ['movies.id', '=', $id]])
-            ->whereJsonContains('categories->name', 'John')
-            ->join('videos', 'videos.id', '=', 'movies.video')
-            ->select(
-                'movies.id as id',
-                'movies.title as title',
-                'movies.description as description',
-                'movies.length as length',
-                'movies.categories as categories',
-                'videos.name as video_name',
-                'videos.storage as video_storage',
-            )
-            ->first();
-            
-        dd($movie1->categories);
         if($movie == null)
             return abort(404);
 
