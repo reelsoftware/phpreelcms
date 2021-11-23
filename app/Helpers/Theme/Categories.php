@@ -12,10 +12,13 @@ class Categories
      */
     public static function categoryUrl(string $categoryName, string $value)
     {
-        return route('categoryShow', [
-            'categoryName' => $categoryName,
-            'value' => $value
-        ]);
+        if($value != "")
+        {
+            return route('categoryShow', [
+                'categoryName' => $categoryName,
+                'value' => $value
+            ]);
+        }
     }
 
     /**

@@ -9,6 +9,7 @@ use Auth;
 use App\Models\Series;
 use App\Models\Episode;
 use App\Models\Video;
+use App\Models\Category;
 use App\Helpers\Content\ContentHandler;
 use App\Helpers\User\UserHandler;
 use App\Helpers\Theme\Theme;
@@ -49,7 +50,11 @@ class SeriesController extends Controller
      */
     public function create()
     {
-        return view('series.create');
+        $categories = Category::all();
+
+        return view('series.create', [
+            'categories' => $categories
+        ]);
     }
 
     /**

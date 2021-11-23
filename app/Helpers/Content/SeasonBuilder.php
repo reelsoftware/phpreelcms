@@ -52,7 +52,6 @@ class SeasonBuilder implements IContentBuilder
         $season = new Seasons();
         $season->title = $this->request->title;
         $season->description = $this->request->description;
-        $season->year = $this->request->year;
         $season->series_id = $this->request->series_id;
         $season->thumbnail = ResourceHandler::addImage($this->request->thumbnail);
 

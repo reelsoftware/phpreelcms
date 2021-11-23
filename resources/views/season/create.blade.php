@@ -28,14 +28,6 @@
 
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-6">
-                            <x-year-form type="create"/>    
-                        </div>       
-                    </div>
-                </div>
-
-                <div class="container">
-                    <div class="row">
                         <div class="col-md-12">
                             <x-upload-form/>
                         </div>

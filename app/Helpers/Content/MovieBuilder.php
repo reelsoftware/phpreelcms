@@ -9,6 +9,8 @@ use App\Helpers\Resource\ResourceHandler;
 use App\Models\Movie;
 use App\Models\Video;
 use App\Helpers\Helper;
+use App\Helpers\Video\VideoProperties;
+use App\Models\Category;
 
 class MovieBuilder implements IContentBuilder
 {
@@ -53,12 +55,6 @@ class MovieBuilder implements IContentBuilder
         $movie = new Movie();
         $movie->title = $this->request->title;
         $movie->description = $this->request->description;
-        $movie->year = $this->request->year;
-        $movie->rating = $this->request->rating;
-        $seconds = Helper::timeToSeconds($this->request->length);
-        $movie->length = $seconds;
-        $movie->cast = $this->request->cast;
-        $movie->genre = $this->request->genre;
         $movie->public = $this->request->public;
         $movie->premium = $this->request->availability;
 
@@ -84,6 +80,16 @@ class MovieBuilder implements IContentBuilder
         $movie->video = ResourceHandler::addVideo($video, $this->request->platformVideo, $movie->premium, $movie->auth);
         $movie->trailer = ResourceHandler::addVideo($trailer, $this->request->platformTrailer, 0, 0);
 
+        //Get length of the video
+        $movie->length = VideoProperties::lengthSeconds($this->request->platformVideo, $video);
+
+        $categories = Category::all();
+        $categoriesArray = [];
+        foreach($categories as $id => $category)
+        {
+            $categoriesArray[$category->name] = explode(",", $this->request["categoryValue$id"]);
+        }
+        $movie->categories = json_encode($categoriesArray);
         $movie->save();
 
         return $this;

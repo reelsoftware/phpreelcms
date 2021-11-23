@@ -16,6 +16,7 @@
         "league/flysystem-aws-s3-v3": "~1.0",
         "nwidart/laravel-menus": "^7.0",
         "nwidart/laravel-modules": "^8.2",
+        "owen-oj/laravel-getid3": "^1.3",
         "pbmedia/laravel-ffmpeg": "^7.5",
         "phpreel/static": "^1.0",
         "zanysoft/laravel-zip": "master"

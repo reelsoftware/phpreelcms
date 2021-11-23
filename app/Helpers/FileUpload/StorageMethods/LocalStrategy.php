@@ -24,7 +24,7 @@ class LocalStrategy implements IStorageStrategy
 
     public function __construct()
     {
-        $this->path = base_path().'/storage';
+        $this->path = base_path() . '/storage';
         $this->fileName = '';
     }    
 

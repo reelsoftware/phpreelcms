@@ -7,6 +7,7 @@ use App\Helpers\Content\IContentBuilder;
 use App\Helpers\Content\ValidationManager; 
 use App\Helpers\Resource\ResourceHandler;
 use App\Models\Episode;
+use App\Models\Video;
 use App\Helpers\Helper;
 
 class EpisodeBuilder implements IContentBuilder
@@ -56,19 +57,13 @@ class EpisodeBuilder implements IContentBuilder
         $episode->length = $seconds;
         $episode->public = $this->request->public;
         $episode->premium = $this->request->availability;
-
+   
         //If the content is not free it means that we must use auth
         if($episode->premium != 1)
             $episode->auth = $this->request->access;
         else
             $episode->auth = 1;
-
-        //Update video premium and auth values
-        $video = Video::find($episode->video);
-        $video->premium = $episode->premium;
-        $video->auth = $episode->auth;
-        $video->save();
-
+        
         if($this->request->video != null)
             $video = $this->request->video;
         else if($this->request->videoId != null)
@@ -77,6 +72,13 @@ class EpisodeBuilder implements IContentBuilder
         $episode->season_id = $this->request->season_id;
         $episode->thumbnail = ResourceHandler::addImage($this->request->thumbnail);
         $episode->video = ResourceHandler::addVideo($video, $this->request->platformVideo, $episode->premium, $episode->auth);
+
+        //Update video premium and auth values
+        $video = Video::find($episode->video);
+
+        $video->premium = $episode->premium;
+        $video->auth = $episode->auth;
+        $video->save();
 
         //Set the order of the season as the last season of the series
         $lastOrder = Episode::where('season_id', '=', $this->request->season_id)

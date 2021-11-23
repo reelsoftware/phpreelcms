@@ -25,14 +25,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <x-length-form type="create"/>           
-                        </div>
-                    </div>
-                </div>
             
                 <div class="container">
                     <div class="row">
@@ -42,9 +34,23 @@
                     </div>
                 </div>
 
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="category">Categories</label>
+
+                                @foreach ($categories as $category)
+                                    <x-category-form type="create" id="{{ $loop->index }}" content="{{ $category->name }}"/>  
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="container mt-1">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <x-thumbnail-form type="create"/>
                         </div>
                     </div>

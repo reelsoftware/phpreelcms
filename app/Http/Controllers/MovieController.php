@@ -10,6 +10,7 @@ use App\Models\Movie;
 use App\Helpers\Content\MovieBuilder; 
 use App\Helpers\User\UserHandler;
 use App\Helpers\Theme\Theme;
+use App\Models\Category;
 
 class MovieController extends Controller
 {
@@ -51,7 +52,11 @@ class MovieController extends Controller
      */
     public function create()
     {
-        return view('movie.create');
+        $categories = Category::all();
+
+        return view('movie.create', [
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -81,13 +86,11 @@ class MovieController extends Controller
         if($movie == null)
             return abort(404);
 
-        $cast = explode(", ", $movie['cast']);
-        $genre = explode(", ", $movie['genre']);
-
+        $categories = json_decode($movie->categories, true);
+        
         return Theme::view('movie.show', [
             'item' => $movie,
-            'cast' => $cast, 
-            'genre' => $genre
+            'categories' => $categories
         ]);
     }
 

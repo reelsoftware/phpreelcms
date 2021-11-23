@@ -49,9 +49,6 @@ class CategoriesHandler
                 'series.id as id',
                 'series.title as title',
                 'series.description as description',
-                'series.year as year',
-                'series.cast as cast',
-                'series.genre as genre',
                 'images.name as image_name',
                 'images.storage as image_storage',
             )->get();

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Episode;
 use App\Models\Seasons;
 use App\Models\Video;
+use App\Models\Series;
 use Illuminate\Support\Facades\Storage;
 use App\Helpers\Content\EpisodeBuilder;
 use Theme;
@@ -82,10 +83,6 @@ class EpisodeController extends Controller
                 'episodes.video', 
                 'episodes.order', 
                 'episodes.season_id',
-                'series.year',
-                'series.genre',
-                'series.cast',
-                'series.rating',
                 'seasons.series_id',
                 'seasons.order as season_order',
                 'videos.name as video_name',
@@ -129,15 +126,15 @@ class EpisodeController extends Controller
         $episodes['current'] = $currentEpisode;
         $episodes['next'] = $nextEpisode;
 
-        $cast = explode(", ", $currentEpisode['cast']);
-        $genre = explode(", ", $currentEpisode['genre']);
+        $categoriesJson = Series::find($currentEpisode->series_id)->first("categories")["categories"];
+
+        $categories = json_decode($categoriesJson, true);
 
         return Theme::view('episodes.show', [
             'previousItem' => $prevEpisode,
             'nextItem' => $nextEpisode,
             'item' => $currentEpisode,
-            'cast' => $cast, 
-            'genre' => $genre,
+            'categories' => $categories
         ]);
     }
 

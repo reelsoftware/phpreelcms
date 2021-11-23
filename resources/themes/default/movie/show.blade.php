@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        @foreach ($item->categories as $category => $values)
+        @foreach ($categories as $category => $values)
             <div class="row">
                 <div class="col">
                     <span class="categories">

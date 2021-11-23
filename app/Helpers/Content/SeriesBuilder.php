@@ -8,6 +8,7 @@ use App\Helpers\Content\ValidationManager;
 use App\Helpers\Resource\ResourceHandler;
 use App\Models\Series;
 use App\Helpers\Helper;
+use App\Models\Category;
 
 class SeriesBuilder implements IContentBuilder
 {
@@ -52,12 +53,16 @@ class SeriesBuilder implements IContentBuilder
         $series = new Series();
         $series->title = $this->request->title;
         $series->description = $this->request->description;
-        $series->year = $this->request->year;
-        $series->rating = $this->request->rating;
-        $series->cast = $this->request->cast;
-        $series->genre = $this->request->genre;
         $series->thumbnail = ResourceHandler::addImage($this->request->thumbnail);
         $series->public = $this->request->public;
+
+        $categories = Category::all();
+        $categoriesArray = [];
+        foreach($categories as $id => $category)
+        {
+            $categoriesArray[$category->name] = explode(",", $this->request["categoryValue$id"]);
+        }
+        $series->categories = json_encode($categoriesArray);
 
         $series->save();
 

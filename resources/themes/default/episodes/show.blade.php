@@ -80,71 +80,31 @@
                 </p>
             </div>
         </div>
+        
+        @foreach ($categories as $category => $values)
+            @if($values[0] != "")
+                <div class="row">
+                    <div class="col">
+                        <span class="categories">
+                            {{ ucfirst($category) }}:
+                        </span> 
 
-        <div class="row">
-            <div class="col">
-                <span class="categories">
-                    {{ __('Release date') }}: 
-                </span> 
-
-                <a class="ne-movie-details" href="{{ Categories::releaseUrl($item->year) }}">
-                    {{ $item->year }}
-                </a>    
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <span class="categories">
-                    {{__('Genre')}}: 
-                </span> 
-
-                @foreach ($genre as $g)
-                    @if($loop->index < count($genre) - 1)
-                        <a class="ne-movie-details" href="{{ Categories::genreCategoryUrl($g) }}">
-                            {{$g}}, 
-                        </a> 
-                    @else
-                        <a class="ne-movie-details" href="{{ Categories::genreCategoryUrl($g) }}">
-                            {{$g}}
-                        </a> 
-                    @endif
-                @endforeach
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <span class="categories">
-                    {{__('Cast')}}: 
-                </span> 
-
-                @foreach ($cast as $actor)
-                    @if($loop->index < count($cast) - 1)
-                        <a class="ne-movie-details" href="{{ Categories::castActorCategoryUrl($actor) }}">
-                            {{$actor}}, 
-                        </a> 
-                    @else
-                        <a class="ne-movie-details" href="{{ Categories::castActorCategoryUrl($actor) }}">
-                            {{$actor}}
-                        </a> 
-                    @endif
-                @endforeach
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <span class="categories">
-                    {{__('Rating')}}: 
-                </span> 
-
-                <span class="ne-movie-details"></span>
-                <a class="ne-movie-details" href="{{ Categories::ratingCategoryUrl($item->rating) }}">
-                    {{ $item->rating }}
-                </a>    
-            </div>
-        </div>
+                        @foreach ($values as $value)
+                            @if($loop->index < count($values) - 1)
+                                <a class="ne-movie-details" href="{{ Categories::categoryUrl($category, $value) }}">
+                                    {{ $value }}, 
+                                </a> 
+                            @else
+                                <a class="ne-movie-details" href="{{ Categories::categoryUrl($category, $value) }}">
+                                    {{ $value }}
+                                </a> 
+                            @endif   
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+        @endforeach
+        
     </div>
     <!--EndContainer-->
 @endsection
