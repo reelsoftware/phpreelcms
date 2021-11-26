@@ -92,7 +92,7 @@ class SeriesController extends Controller
                 
         if($series == null || isset($series[0]) == false)
             return abort(404);
-
+     
         return Theme::view('series.show', [
             'content' => $series,
             'seriesLength' => $length['seriesLength'],

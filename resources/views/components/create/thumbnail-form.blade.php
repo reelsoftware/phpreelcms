@@ -1,7 +1,7 @@
 <div class="form-group">
     <label for="thumbnail">Thumbnail</label>
 
-    <select id="thumbnail" name="thumbnail" class="custom-select" required>
+    <select id="thumbnail" name="thumbnail" class="custom-select">
         <option></option>
     </select>
 

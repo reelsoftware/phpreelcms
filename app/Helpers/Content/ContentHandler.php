@@ -210,11 +210,12 @@ class ContentHandler
     public static function getSeasonsFromSeries(int $id)
     {
         $seasons = Series::where([['series.id', '=', $id], ['series.public', '=', 1]])
-            ->join('seasons', 'seasons.series_id', '=', 'series.id')->orderBy('seasons.order', 'asc')
-            ->join('images', 'images.id', '=', 'seasons.thumbnail')
+            ->leftJoin('seasons', 'seasons.series_id', '=', 'series.id')->orderBy('seasons.order', 'asc')
+            ->leftJoin('images', 'images.id', '=', 'seasons.thumbnail')
             ->get([
                 'seasons.id as season_id', 
                 'seasons.title', 
+                'seasons.trailer',
                 'series.description as series_description',
                 'series.title as series_title', 
                 'series.id as series_id', 
@@ -386,7 +387,7 @@ class ContentHandler
         
         $return['seriesLength'] = $seriesLength;
         $return['seasonsLength'] = $seasonsLength;
-
+        
         return $return;
     }
 }

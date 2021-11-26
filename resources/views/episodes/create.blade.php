@@ -42,14 +42,6 @@
                     </div>
                 </div>
 
-                <div class="container mt-1">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <x-thumbnail-form type="create"/>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6">

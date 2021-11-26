@@ -9,7 +9,7 @@
 <div class="form-group" id="uploadTrailer">
     <label for="trailer">Trailer</label>
 
-    <select id="trailer" name="trailer" class="custom-select" required>
+    <select id="trailer" name="trailer" class="custom-select">
         <option></option>
     </select>
     

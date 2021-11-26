@@ -30,10 +30,11 @@
                         <h2 class="ne-chapter-title">
                             <div class="container-fluid">
                                 <div class="row">
-                                    <div class="col-3 col-lg-2">
-                                        <img src="{{ Asset::image($series['season']->image_name, $series['season']->image_storage) }}" class="card-img">   
-                                    </div>
-
+                                    @if($series['season']->image_name != null)
+                                        <div class="col-3 col-lg-2">
+                                            <img src="{{ Asset::image($series['season']->image_name, $series['season']->image_storage) }}" class="card-img">   
+                                        </div>
+                                    @endif
                                     <div class="col-9 col-lg-10">
                                         <a href="#{{ $series['season']->title }}">
                                             {{ $series['season']->title }}
@@ -46,9 +47,12 @@
                                 </div>
                             </div>
                         </h2>
-                        <a href="{{ UrlRoutes::seasonTrailer($series['season']->season_id) }}" class="ne-movie-details">
-                            <i>{{ __('Watch seasons trailer') }}</i>
-                        </a>
+
+                        @if($series['season']->trailer != null)
+                            <a href="{{ UrlRoutes::seasonTrailer($series['season']->season_id) }}" class="ne-movie-details">
+                                <i>{{ __('Watch seasons trailer') }}</i>
+                            </a>
+                        @endif       
 
                         {{--Loop throughout all the episodes--}}
                         <div id="{{$series['season']->title}}">
