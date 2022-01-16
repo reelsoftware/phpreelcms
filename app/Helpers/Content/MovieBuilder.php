@@ -76,12 +76,28 @@ class MovieBuilder implements IContentBuilder
             $trailer = $this->request->trailer; 
 
         //Link the thumbnail from images table to movies table
-        $movie->thumbnail = ResourceHandler::addImage($this->request->thumbnail);
+        if($this->request->thumbnail != null)
+        {
+            $movie->thumbnail = ResourceHandler::addImage($this->request->thumbnail);
+        }
+
         $movie->video = ResourceHandler::addVideo($video, $this->request->platformVideo, $movie->premium, $movie->auth);
-        $movie->trailer = ResourceHandler::addVideo($trailer, $this->request->platformTrailer, 0, 0);
+        
+        if($trailer != null)
+        {
+            $movie->trailer = ResourceHandler::addVideo($trailer, $this->request->platformTrailer, 0, 0);
+        }
 
         //Get length of the video
-        $movie->length = VideoProperties::lengthSeconds($this->request->platformVideo, $video);
+        if($this->request->platformVideo == "local")
+        {
+            $movie->length = VideoProperties::lengthSeconds($this->request->platformVideo, $video);
+        }
+        else
+        {
+            dd("TO DO: Get the length remotely via API if YouTube or Vimeo");
+        }
+
 
         $categories = Category::all();
         $categoriesArray = [];

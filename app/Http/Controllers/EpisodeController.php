@@ -16,13 +16,7 @@ class EpisodeController extends Controller
     public function indexDashboard()
     {
         $episodes = Episode::orderByDesc('id')
-            ->join('seasons', 'seasons.id', '=', 'episodes.season_id')
-            ->select([
-                'episodes.id', 
-                'episodes.title', 
-                'episodes.created_at', 
-                'seasons.title as season_title'
-            ])
+            ->with('season')
             ->simplePaginate(10);
 
         return view('episodes.index', [
