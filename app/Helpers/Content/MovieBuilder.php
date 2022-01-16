@@ -95,7 +95,7 @@ class MovieBuilder implements IContentBuilder
         }
         else
         {
-            dd("TO DO: Get the length remotely via API if YouTube or Vimeo");
+            dd("TO DO: Get the length remotely via API if YouTube or Vimeo ");
         }
 
 

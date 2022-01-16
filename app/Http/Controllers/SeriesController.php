@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\SeriesResource;
 use Auth;
 use App\Models\Series;
 use App\Models\Episode;
@@ -34,13 +35,9 @@ class SeriesController extends Controller
     public function index()
     {
         $series = ContentHandler::getLatestSeriesSimplePaginate(9);
-
-        $subscribed = UserHandler::checkSubscription();
-
-        return Theme::view('series.index', [
-            'content' => $series, 
-            'subscribed' => $subscribed,
-        ]);
+        $json = SeriesResource::collection($series);
+        
+        return response()->json($json);
     }
 
     /**

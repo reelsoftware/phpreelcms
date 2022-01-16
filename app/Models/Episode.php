@@ -11,7 +11,7 @@ class Episode extends Model
     use HasFactory;
 
     /**
-     * Get the season associated with the episode.
+     * Get the season that belongs to the episode.
      */
     public function season()
     {

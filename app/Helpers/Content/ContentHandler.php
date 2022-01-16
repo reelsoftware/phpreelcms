@@ -1,5 +1,5 @@
 <?php
-namespace App\Helpers\Content; 
+namespace App\Helpers\Content;
 
 use App\Models\Movie;
 use App\Models\Series;
@@ -97,17 +97,10 @@ class ContentHandler
         if($limit < 0)
             throw new Exception("\$limit must be a non-negative integer");
 
-            $series = Series::orderByDesc('series.id')
+            $series = Series::orderByDesc('id')
                 ->where('public', '=', '1')
-                ->join('images', 'images.id', '=', 'series.thumbnail')
-                ->select([
-                    'series.id as series_id',
-                    'series.title as series_title',
-                    'series.description as series_description',
-                    'images.name as image_name',
-                    'images.storage as image_storage'
-                ])
-                ->simplePaginate($limit);
+                ->with('thumbnail')
+                ->simplePaginate(10);
 
         return $series;
     }
