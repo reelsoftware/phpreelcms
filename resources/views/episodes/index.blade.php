@@ -26,7 +26,11 @@
                 <tr>
                     <th scope="row">{{$loop->index + 1}}</th>
                     <td>{{$episode->title}}</td>
-                    <td>{{$episode->season_title}}</td>
+                    @if($episode->season != null)
+                        <td>{{$episode->season->title}}</td>
+                    @else
+                        <td>None</td>
+                    @endif
                     <td>{{$episode->public ? 'Private' : 'Public'}}</td>
                     <td>{{$episode->created_at}}</td>
                     <td>

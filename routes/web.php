@@ -171,22 +171,6 @@ Route::middleware(['setLanguage'])->group(function ()
         Route::post('dashboard/api/store/{storage?}', [ResourceController::class, 'storeAPI'])
             ->name('resourceStoreApi');
 
-        //Movie
-        Route::get('dashboard/movie', [MovieController::class, 'indexDashboard'])
-            ->name('movieDashboard');
-
-        Route::get('dashboard/movie/create', [MovieController::class, 'create'])
-            ->name('movieCreate');
-
-        Route::post('dashboard/movie/store', [MovieController::class, 'store'])
-            ->name('movieStore');
-
-        Route::get('dashboard/movie/edit/{id}', [MovieController::class, 'edit'])
-            ->name('movieEdit');
-
-        Route::post('dashboard/movie/update/{id}', [MovieController::class, 'update'])
-            ->name('movieUpdate');
-
         //Series
         Route::get('dashboard/series', [SeriesController::class, 'indexDashboard'])
         ->name('seriesDashboard');

@@ -29,11 +29,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Menu::create('dashboard-nav', function($menu) {
-            $menu->dropdown('Movies', function ($sub) {
-                $sub->route('movieDashboard', 'Show all', [], ['icon' => 'ni ni-image']);
-                $sub->route('movieCreate', 'Create new', [], ['icon' => 'ni ni-fat-add']);
-            });
-
             $menu->dropdown('Series', function ($sub) {
                 $sub->route('seriesDashboard', 'Show all', [], ['icon' => 'ni ni-image']);
                 $sub->route('seriesCreate', 'Create new', [], ['icon' => 'ni ni-fat-add']);
