@@ -23,7 +23,7 @@ class SeriesResource extends JsonResource
             'categories' => $this->categories,
             'public' => $this->public,
             'createdAt' => $this->created_at,
-            'updatedAt' => $this->updated_at,
+            'updatedAt' => $this->updated_at
         ];
     }
 }

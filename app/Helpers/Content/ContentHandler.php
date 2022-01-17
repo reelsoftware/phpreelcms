@@ -5,6 +5,9 @@ use App\Models\Movie;
 use App\Models\Series;
 use App\Models\Episode;
 use App\Models\Seasons;
+use Exception;
+use TypeError;
+use ValueError;
 
 class ContentHandler
 {
@@ -87,20 +90,50 @@ class ContentHandler
     }
 
     /**
-     * Return the latest public movies with simple pagination
+     * Return the latest public series with simple pagination
      *
-     * @param int $limit how many of the latest series to get
+     * @param int $perPage number of series per page
+     * @return \Illuminate\Pagination\Paginator
      */
-    public static function getLatestSeriesSimplePaginate(int $limit)
-    {
-        //Error handling
-        if($limit < 0)
-            throw new Exception("\$limit must be a non-negative integer");
+    public static function getLatestSeriesSimplePaginate($perPage)
+    {   
+        $perPageInt = (int)$perPage;
+   
+        if($perPageInt == 0)
+        {
+            //perPage was given as a string value 
+            throw new TypeError("Argument perPage must be an integer, string was given.");
+        }
+        else if($perPage < 0)
+        {
+            throw new ValueError("Argument perPage must be a non-negative integer, $perPage was given.");
+        }
 
-            $series = Series::orderByDesc('id')
-                ->where('public', '=', '1')
-                ->with('thumbnail')
-                ->simplePaginate(10);
+        $series = Series::orderByDesc('id')
+            ->where('public', '=', '1')
+            ->with('thumbnail')
+            ->simplePaginate($perPageInt);
+
+        return $series;
+    }
+
+    /**
+     * Return the latest public series with pagination
+     *
+     * @param int $perPage number of series per page
+     * @return \Illuminate\Pagination\Paginator
+     */
+    public static function getLatestSeriesPaginate(int $perPage)
+    {
+        if($perPage < 0)
+        {
+            throw new Exception("Argument perPage must be a non-negative integer, $perPage was given.");
+        }
+        
+        $series = Series::orderByDesc('id')
+            ->where('public', '=', '1')
+            ->with('thumbnail')
+            ->paginate($perPage);
 
         return $series;
     }

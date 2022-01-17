@@ -11,6 +11,15 @@ class Series extends Model
     use HasFactory;
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'image_id'
+    ];
+
+    /**
      * Get the thumbnail associated with the series.
      */
     public function thumbnail()

@@ -20,5 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // Series
+Route::get('series/{perPage?}', [SeriesController::class, 'index']);
 
-Route::get('series', [SeriesController::class, 'index']);
+Route::fallback(function() {
+    return response()->json(['error' => 'Server error. Something went wrong.'], 500); 
+});

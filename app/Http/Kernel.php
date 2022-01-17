@@ -42,7 +42,7 @@ class Kernel extends HttpKernel
 
         'api' => [
             'throttle:api',
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class
         ],
     ];
 
@@ -68,6 +68,6 @@ class Kernel extends HttpKernel
         'install' => \App\Http\Middleware\CheckInstall::class,
         'setLanguage' => \App\Http\Middleware\SetPreferredLanguage::class,
         'stripe' => \App\Http\Middleware\CheckStripe::class,
-        'access.availability' => \App\Http\Middleware\CheckAccessAvailability::class,
+        'access.availability' => \App\Http\Middleware\CheckAccessAvailability::class
     ];
 }

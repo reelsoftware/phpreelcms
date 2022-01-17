@@ -14,7 +14,11 @@ use App\Models\Category;
 use App\Helpers\Content\ContentHandler;
 use App\Helpers\User\UserHandler;
 use App\Helpers\Theme\Theme;
-use App\Helpers\Content\SeriesBuilder; 
+use App\Helpers\Content\SeriesBuilder;
+use Exception;
+use Response;
+use TypeError;
+use ValueError;
 
 class SeriesController extends Controller
 {
@@ -28,16 +32,27 @@ class SeriesController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a paginated list of series.
      *
+     * @param  int  $perPage
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($perPage = 10)
     {
-        $series = ContentHandler::getLatestSeriesSimplePaginate(9);
-        $json = SeriesResource::collection($series);
-        
-        return response()->json($json);
+        try
+        {
+            $series = ContentHandler::getLatestSeriesSimplePaginate($perPage); 
+        }
+        catch(TypeError $error)
+        {
+            return response()->json(['error' => $error->getMessage()], 500);
+        }
+        catch(ValueError $error)
+        {
+            return response()->json(['error' => $error->getMessage()], 500);
+        }
+      
+        return response()->json($series, 200);
     }
 
     /**

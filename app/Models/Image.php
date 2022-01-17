@@ -10,6 +10,15 @@ class Image extends Model
     use HasFactory;
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'id'
+    ];
+
+    /**
      * Get the series that belongs to this image.
      */
     public function series()
