@@ -20,7 +20,7 @@ class ResourceController extends Controller
     }
 
     //Return video files
-    public function file($storage, $fileName)
+    public function videoFile($storage, $fileName)
     {
         return StreamResource::streamFile($storage, $fileName);
     }

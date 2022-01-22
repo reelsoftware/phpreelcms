@@ -9,6 +9,7 @@ use App\Models\Video;
 use App\Models\Series;
 use Illuminate\Support\Facades\Storage;
 use App\Helpers\Content\EpisodeBuilder;
+use App\Helpers\Theme\Asset;
 use Theme;
 
 class EpisodeController extends Controller
@@ -63,6 +64,108 @@ class EpisodeController extends Controller
      */
     public function show($id)
     {
+        $response = [];
+
+        $currentEpisode = Episode::where([
+            ['episodes.id', '=', $id],
+            ['episodes.public', '=', 1]
+        ])
+        ->with('videos')
+        ->with('images')
+        ->first();
+
+        if($currentEpisode == null)
+        {
+            return response()->json(['error' => 'Episode not found.'], 404);
+        }
+
+        $video = [
+            'href' => Asset::video($currentEpisode->videos->name, $currentEpisode->videos->storage),
+            'rel' => 'episodes',
+            'type' => 'GET'
+        ];
+ 
+        if($currentEpisode->images == null)
+        {
+            $image = null;
+        }
+        else
+        {
+            $image = [
+                'href' => Asset::image($currentEpisode->images->name, $currentEpisode->images->storage),
+                'rel' => 'episodes',
+                'type' => 'GET'
+            ];
+        }
+
+        $response['data'] = $currentEpisode;
+
+        $response['links'] = [
+            'video' => $video,
+            'image' => $image
+        ];
+
+        // If it's a single episode (a standalone video that is not linked to any season or series)
+        if($currentEpisode->season_id == null)
+        {
+            return response()->json($response, 200);
+        }
+
+        //Get the next episode
+        $nextEpisode = Episode::where([
+            ['order', '>', $currentEpisode->order],
+            ['season_id', '=', $currentEpisode->season_id]
+        ])
+        ->orderBy('order', 'asc')
+        ->limit(1)
+        ->select('id')
+        ->first();
+
+        //Get the previous episode
+        $prevEpisode = Episode::where([
+            ['order', '<', $currentEpisode->order],
+            ['season_id', '=', $currentEpisode->season_id]
+        ])
+        ->orderBy('order', 'desc')
+        ->limit(1)
+        ->select('id')
+        ->first();
+
+        if($nextEpisode == null)
+        {
+            $next = null;
+        }
+        else
+        {
+            $next = [
+                'href' => route('episodeShow:api', ['id' => $nextEpisode->id]),
+                'rel' => 'episodes',
+                'type' => 'GET'
+            ];
+        }
+
+        if($prevEpisode == null)
+        {
+            $previous = null;
+        }
+        else
+        {
+            $previous = [
+                'href' => route('episodeShow:api', ['id' => $prevEpisode->id]),
+                'rel' => 'episodes',
+                'type' => 'GET'
+            ];
+        }
+
+        $response['links'] = [
+            'video' => $video,
+            'next' => $next,
+            'previous' => $previous
+        ];
+
+        return response()->json($response, 200);
+
+        dd($currentEpisode);
         //Get the current episode
         $currentEpisode = Episode::where([
             ['episodes.id', '=', $id],
@@ -174,5 +277,47 @@ class EpisodeController extends Controller
         $builder->setRequest($request)->validate()->update($id);
 
         return redirect()->route('episodeDashboard');
+    }
+
+    /**
+     * Display a list of episodes.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $response = [];
+
+        $episodes = Episode::orderBy('order')
+            ->with('videos')
+            ->where('season_id', '=', $request->season)
+            ->get();
+
+        if(empty($episodes->toArray()))
+        {
+            return response()->json(['error' => 'Episodes not found.'], 404);
+        }
+
+        for($i=0;$i<count($episodes);$i++)
+        {
+            $response[$i]  = [
+                'data' => $episodes[$i],
+                'links' => [
+                    'episode' => [
+                        'href' => route('episodeShow:api', ['id' => $episodes[$i]->id]),
+                        'rel' => 'episodes',
+                        'type' => 'GET'
+                    ],
+                    'video' => [
+                        'href' => Asset::video($episodes[$i]->videos->name, $episodes[$i]->videos->storage),
+                        'rel' => 'episodes',
+                        'type' => 'GET'
+                    ]
+                ]
+            ];
+        }
+        
+        return response()->json($response, 200);
     }
 }

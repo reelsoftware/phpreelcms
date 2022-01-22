@@ -112,7 +112,7 @@ class ContentHandler
 
         $series = Series::orderByDesc('id')
             ->where('public', '=', '1')
-            ->with('thumbnail')
+            ->with('images')
             ->simplePaginate($perPageInt)
             ->withQueryString();
         
@@ -134,7 +134,7 @@ class ContentHandler
         
         $series = Series::orderByDesc('id')
             ->where('public', '=', '1')
-            ->with('thumbnail')
+            ->with('images')
             ->paginate($perPage)
             ->withQueryString();
 
@@ -188,8 +188,8 @@ class ContentHandler
             ['id', '=', $id],
             ['public', '=', $public]
         ])
-            ->with('thumbnail')
-            ->get();
+            ->with('images')
+            ->first();
 
         return $series;
     }

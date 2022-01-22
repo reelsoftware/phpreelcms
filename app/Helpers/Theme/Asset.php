@@ -35,13 +35,21 @@ class Asset
     public static function video(string $videoName, string $videoStorage)
     {
         if(in_array($videoStorage, ['local', 's3']))
-            return route('fileResource', ['fileName' => $videoName, 'storage' => $videoStorage]);
+        {
+            return route('videoResource', ['fileName' => $videoName, 'storage' => $videoStorage]);
+        }
         else if($videoStorage == 'youtube')
+        {
             return "https://www.youtube.com/embed/$videoName";
+        }
         else if($videoStorage == 'vimeo')
+        {
             return "https://player.vimeo.com/video/$videoName";
+        }
         else
+        {
             return null;
+        }
     }
 
     /**

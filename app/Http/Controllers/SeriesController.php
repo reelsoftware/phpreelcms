@@ -19,6 +19,7 @@ use Exception;
 use Response;
 use TypeError;
 use ValueError;
+use App\Helpers\Theme\Asset;
 
 class SeriesController extends Controller
 {
@@ -95,7 +96,7 @@ class SeriesController extends Controller
         
         $series = ContentHandler::getSeries($id);
         $response['data'] = $series;
-        
+
         if(empty($series->toArray()))
         {
             return response()->json(['error' => 'Series not found.'], 404);
@@ -105,6 +106,11 @@ class SeriesController extends Controller
             'seasons' => [
                 'href' => route('seasonsIndex') . '?series=' . $id,
                 'rel' => 'seasons',
+                'type' => 'GET'
+            ],
+            'image' => [
+                'href' => Asset::image($series->images->name, $series->images->storage),
+                'rel' => 'episodes',
                 'type' => 'GET'
             ]
         ];

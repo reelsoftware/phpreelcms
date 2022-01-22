@@ -82,7 +82,7 @@ Route::middleware(['setLanguage'])->group(function ()
     require __DIR__.'/auth.php';
 
     //Resources
-    Route::get('/resource/video/{storage}/{fileName}', [ResourceController::class, 'file'])
+    Route::get('/resource/video/{storage}/{fileName}', [ResourceController::class, 'videoFile'])
         ->middleware('access.availability')
         ->name('fileResource');
 

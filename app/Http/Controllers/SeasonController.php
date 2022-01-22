@@ -167,15 +167,31 @@ class SeasonController extends Controller
      */
     public function index(Request $request)
     {
+        $response = [];
+
         $seasons = Seasons::orderBy('order')
             ->where('series_id', '=', $request->series)
             ->get();
 
         if(empty($seasons->toArray()))
         {
-            return response()->json(['error' => 'Season not found.'], 404);
+            return response()->json(['error' => 'Seasons not found.'], 404);
+        }
+
+        for($i=0;$i<count($seasons);$i++)
+        {
+            $response[$i]  = [
+                'data' => $seasons[$i],
+                'links' => [
+                    'episodes' => [
+                        'href' => route('episodeIndex') . '?season=' . $seasons[$i]->id,
+                        'rel' => 'episodes',
+                        'type' => 'GET'
+                    ]
+                ]
+            ];
         }
  
-        return response()->json($seasons, 200);
+        return response()->json($response, 200);
     }
 }

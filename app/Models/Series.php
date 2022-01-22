@@ -32,5 +32,10 @@ class Series extends Model
     // {
     //     return $this->hasMany(Seasons::class, 'series_id');
     // }
+
+    public function images()
+    {
+        return $this->belongsTo(Image::class, 'image_id');
+    }
     
 }
