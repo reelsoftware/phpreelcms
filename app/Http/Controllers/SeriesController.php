@@ -34,14 +34,14 @@ class SeriesController extends Controller
     /**
      * Display a paginated list of series.
      *
-     * @param  int  $perPage
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index($perPage = 10)
+    public function index(Request $request)
     {
         try
         {
-            $series = ContentHandler::getLatestSeriesSimplePaginate($perPage); 
+            $series = ContentHandler::getLatestSeriesPaginate($request->perPage); 
         }
         catch(TypeError $error)
         {
@@ -51,7 +51,7 @@ class SeriesController extends Controller
         {
             return response()->json(['error' => $error->getMessage()], 500);
         }
-      
+ 
         return response()->json($series, 200);
     }
 
@@ -91,25 +91,25 @@ class SeriesController extends Controller
      */
     public function show($id)
     {
+        $response = [];
+        
         $series = ContentHandler::getSeries($id);
+        $response['data'] = $series;
+        
+        if(empty($series->toArray()))
+        {
+            return response()->json(['error' => 'Series not found.'], 404);
+        }
+        
+        $response['links'] = [
+            'seasons' => [
+                'href' => route('seasonsIndex') . '?series=' . $id,
+                'rel' => 'seasons',
+                'type' => 'GET'
+            ]
+        ];
 
-        if($series == null)
-            return Theme::view('series.show', [
-                'content' => null,
-                'seriesLength' => null,
-                'seasonsLength' => null
-            ]);
-
-        $length = ContentHandler::getSeriesSeasonsLength($series);
-                
-        if($series == null || isset($series[0]) == false)
-            return abort(404);
-     
-        return Theme::view('series.show', [
-            'content' => $series,
-            'seriesLength' => $length['seriesLength'],
-            'seasonsLength' => $length['seasonsLength']
-        ]);
+        return response()->json($response, 200);
     }
 
     /**

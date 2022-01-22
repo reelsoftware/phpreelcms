@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SeasonController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SeriesController;
@@ -20,7 +21,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // Series
-Route::get('series/{perPage?}', [SeriesController::class, 'index']);
+Route::get('series/', [SeriesController::class, 'index']);
+Route::get('series/{id}', [SeriesController::class, 'show']);
+
+// Seasons
+Route::get('seasons/', [SeasonController::class, 'index'])->name('seasonsIndex');
 
 Route::fallback(function() {
     return response()->json(['error' => 'Server error. Something went wrong.'], 500); 

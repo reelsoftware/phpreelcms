@@ -8,6 +8,7 @@ use App\Models\Seasons;
 use Exception;
 use TypeError;
 use ValueError;
+use DB;
 
 class ContentHandler
 {
@@ -112,8 +113,9 @@ class ContentHandler
         $series = Series::orderByDesc('id')
             ->where('public', '=', '1')
             ->with('thumbnail')
-            ->simplePaginate($perPageInt);
-
+            ->simplePaginate($perPageInt)
+            ->withQueryString();
+        
         return $series;
     }
 
@@ -133,7 +135,8 @@ class ContentHandler
         $series = Series::orderByDesc('id')
             ->where('public', '=', '1')
             ->with('thumbnail')
-            ->paginate($perPage);
+            ->paginate($perPage)
+            ->withQueryString();
 
         return $series;
     }
@@ -166,23 +169,27 @@ class ContentHandler
      *
      * @param int $id series 
      */
-    public static function getSeries(int $id)
+    public static function getSeries(int $id, string $public = 'true')
     {
-        //Get the id of all the seasons from a specific series
-        $seasons = ContentHandler::getSeasonsFromSeries($id);
-
-        //All the episodes and seasons as separate array elements
-        $series = [];
-
-        for($i=0;$i<count($seasons);$i++)
+        if($public == 'true')
         {
-            $episode = ContentHandler::getEpisodesFromSeason($seasons[$i]->season_id);
-            
-            $series[$i] = [
-                'episode' => $episode,
-                'season' => $seasons[$i]
-            ];
+            $public = 1;
         }
+        else if($public == 'false')
+        {
+            $public = 0;
+        }
+        else
+        {
+            return [];
+        }
+        
+        $series = Series::where([
+            ['id', '=', $id],
+            ['public', '=', $public]
+        ])
+            ->with('thumbnail')
+            ->get();
 
         return $series;
     }
@@ -235,20 +242,36 @@ class ContentHandler
      */
     public static function getSeasonsFromSeries(int $id)
     {
-        $seasons = Series::where([['series.id', '=', $id], ['series.public', '=', 1]])
-            ->leftJoin('seasons', 'seasons.series_id', '=', 'series.id')->orderBy('seasons.order', 'asc')
-            ->leftJoin('images', 'images.id', '=', 'seasons.thumbnail')
-            ->get([
-                'seasons.id as season_id', 
-                'seasons.title', 
-                'seasons.trailer',
-                'series.description as series_description',
-                'series.title as series_title', 
-                'series.id as series_id', 
-                'images.name as image_name',
-                'images.storage as image_storage'
-            ]); 
 
+        // $seasons = Seasons::orderByDesc('id')
+        // ->with('series')
+        // ->with('episodes')
+        // ->get();
+
+        $seasons = Seasons::orderByDesc('id')
+            ->with('series')
+            ->get();
+
+
+        // dd($seasons);
+
+        // $seasons = Series::where([['series.id', '=', $id], ['series.public', '=', 1]])
+        //     ->leftJoin('seasons', 'seasons.series_id', '=', 'series.id')->orderBy('seasons.order', 'asc')
+        //     ->leftJoin('images', 'images.id', '=', 'seasons.thumbnail')
+        //     ->get([
+        //         'seasons.id as season_id', 
+        //         'seasons.title', 
+        //         'seasons.trailer',
+        //         'series.description as series_description',
+        //         'series.title as series_title', 
+        //         'series.id as series_id', 
+        //         'images.name as image_name',
+        //         'images.storage as image_storage'
+        //     ]); 
+
+        
+
+        // dd($seasons);
         return $seasons;
     }
 

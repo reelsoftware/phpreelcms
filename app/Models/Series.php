@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Image;
+use App\Models\Seasons;
 
 class Series extends Model
 {
@@ -26,4 +27,10 @@ class Series extends Model
     {
         return $this->belongsTo(Image::class, 'image_id');
     }
+
+    // public function season()
+    // {
+    //     return $this->hasMany(Seasons::class, 'series_id');
+    // }
+    
 }
