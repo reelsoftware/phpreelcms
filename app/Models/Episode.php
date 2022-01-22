@@ -19,7 +19,7 @@ class Episode extends Model
 
     public function videos()
     {
-        return $this->belongsTo(Video::class, 'video');
+        return $this->belongsTo(Video::class, 'video_id');
     }
 
     public function images()
