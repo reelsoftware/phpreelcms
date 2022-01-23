@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\ResourceController;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,13 +19,13 @@ use App\Http\Controllers\ResourceController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Series
+Route::middleware(['auth:sanctum'])->group(function () 
+{
+    Route::get('series/{id}', [SeriesController::class, 'show']);
 });
 
-// Series
 Route::get('series', [SeriesController::class, 'index']);
-Route::get('series/{id}', [SeriesController::class, 'show']);
 
 // Seasons
 Route::get('seasons', [SeasonController::class, 'index'])->name('seasonsIndex');
@@ -35,6 +36,16 @@ Route::get('episodes/{id}', [EpisodeController::class, 'show'])->name('episodeSh
 
 //Resources
 Route::get('/resource/video/{storage}/{fileName}', [ResourceController::class, 'videoFile'])->name('videoResource');
+
+// Authentication
+Route::post('register', [RegisterController::class, 'register']);
+Route::post('login', [RegisterController::class, 'login']);
+
+
+//Test route
+Route::middleware('auth:sanctum')->get('/testtttt', function() {
+    return response()->json('Ok, you got credentials.', 200); 
+});
 
 Route::fallback(function() {
     return response()->json(['error' => 'Server error. Something went wrong.'], 500); 

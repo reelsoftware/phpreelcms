@@ -97,7 +97,7 @@ class SeriesController extends Controller
         $series = ContentHandler::getSeries($id);
         $response['data'] = $series;
 
-        if(empty($series->toArray()))
+        if($series == null)
         {
             return response()->json(['error' => 'Series not found.'], 404);
         }

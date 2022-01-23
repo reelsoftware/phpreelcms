@@ -70,10 +70,10 @@ class EpisodeBuilder implements IContentBuilder
             $video = $this->request->videoId;
 
         $episode->season_id = $this->request->season_id;
-        $episode->video = ResourceHandler::addVideo($video, $this->request->platformVideo, $episode->premium, $episode->auth);
+        $episode->video_id = ResourceHandler::addVideo($video, $this->request->platformVideo, $episode->premium, $episode->auth);
 
         //Update video premium and auth values
-        $video = Video::find($episode->video);
+        $video = Video::find($episode->video_id );
 
         $video->premium = $episode->premium;
         $video->auth = $episode->auth;
