@@ -16,7 +16,7 @@ class PlanHandler
             ->join('subscription_plans', 'subscription_plans.subscription_type_id', '=', 'subscription_types.id')
             ->where('subscription_plans.public', '=', 1)
             ->get();
-            
+
         return $plans;
     }
 

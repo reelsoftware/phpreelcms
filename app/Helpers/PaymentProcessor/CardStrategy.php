@@ -27,25 +27,33 @@ class CardStrategy implements IPaymentStrategy
         $this->request->validate( [
             'plan' => 'required'
         ]);
-
+      
         try {
             $stripeCheckout = $this->request->user()
                 ->newSubscription('default', $this->request->plan)
                 ->checkout([
                     'cancel_url' => route('subscribe'),
                 ]);
-        } catch (\Stripe\Exception\InvalidRequestException $ex) {
-            return redirect()->route('error', [
-                'code' => "400",
-                'message' => $ex->getMessage()
-            ])->send();
-        } catch (Exception $ex) {
-            return redirect()->route('error', [
-                'code' => $ex->getError()->code,
-                'message' => $ex->getMessage()
-            ])->send();
+        } 
+        catch (\Stripe\Exception\InvalidRequestException $ex) 
+        {
+            return response()->json(['error' => $ex->getMessage()], $ex->getError()->code);
+        } 
+        catch (Exception $ex) 
+        {
+            return response()->json(['error' => $ex->getMessage()], $ex->getError()->code);
         }
-            
-        return redirect()->away($stripeCheckout->url)->send();
+
+        $response = [];
+
+        $response['links'] = [
+            'subscribe' => [
+                'href' => $stripeCheckout->url,
+                'rel' => 'subscribe',
+                'type' => 'GET'
+            ],
+        ];
+        
+        return $response;
     }
 }

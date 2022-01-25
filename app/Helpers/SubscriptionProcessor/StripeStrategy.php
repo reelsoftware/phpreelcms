@@ -53,26 +53,26 @@ class StripeStrategy implements ISubscriptionStrategy
      */
     public function index()
     {
-        $user = Auth::user();
-        $benefits = [];
-        
-        $subscription = UserHandler::checkSubscription();
+        $response = [];
 
         $plans = PlanHandler::getPublicPlans();
-        
-        foreach($plans as $plan)
-            $benefits[] = explode(',', $plan->benefits);
+    
+        for($i=0;$i<count($plans);$i++)
+        {
+            $plans[$i]->benefits = explode(',', $plans[$i]->benefits);
+        }
 
-        $view = [];
+        $response['data'] = $plans;
 
-        $view['name'] = 'subscribe.index';
-        $view['data'] = [
-            'plans' => $plans,
-            'benefits' => $benefits,
-            'subscription' => $subscription
+        $response['links'] = [
+            'subscribe' => [
+                'href' => route('subscribeStore'),
+                'rel' => 'subscribe',
+                'type' => 'POST'
+            ]
         ];
 
-        return $view;
+        return $response;
     }
 
 
@@ -82,8 +82,8 @@ class StripeStrategy implements ISubscriptionStrategy
     public function store()
     {
         $this->paymentContext->setPaymentStrategy(new CardStrategy($this->request));
-        
-        $this->paymentContext->execute();
+
+        return $this->paymentContext->execute();
     }
 
     /**

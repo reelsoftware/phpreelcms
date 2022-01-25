@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +25,10 @@ use App\Http\Controllers\RegisterController;
 Route::middleware(['auth:sanctum'])->group(function () 
 {
     Route::get('series/{id}', [SeriesController::class, 'show']);
+
+    Route::get('/subscribe', [SubscriptionController::class, 'index'])->name('subscribe');
+    Route::post('/subscribe/store', [SubscriptionController::class, 'store'])->name('subscribeStore');
+
 });
 
 Route::get('series', [SeriesController::class, 'index']);
@@ -40,6 +46,8 @@ Route::get('/resource/video/{storage}/{fileName}', [ResourceController::class, '
 // Authentication
 Route::post('register', [RegisterController::class, 'register']);
 Route::post('login', [RegisterController::class, 'login']);
+
+Route::post('/user/subscription', [UserController::class, 'manageSubscription'])->name('userManageSubscription');
 
 
 //Test route

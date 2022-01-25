@@ -42,7 +42,7 @@ class StripeStrategy implements IPlanStrategy
     public function index()
     {
         $subscriptionPlans = SubscriptionPlan::orderByDesc('id')->simplePaginate(10);
-        
+
         $view = [];
 
         $view['name'] = 'subscriptionPlans.index';

@@ -29,9 +29,9 @@ class SubscriptionController extends Controller
     public function index()
     {
         $this->subscriptionContext->setSubscriptionStrategy(new StripeStrategy());
-        $view = $this->subscriptionContext->index();
-
-        return Theme::view($view['name'], $view['data']);
+        $response = $this->subscriptionContext->index();
+        
+        return response()->json($response, 200);
     }
 
     /**
@@ -46,6 +46,7 @@ class SubscriptionController extends Controller
             'request' => $request
         ]));
         
-        $this->subscriptionContext->store();
+        $response = $this->subscriptionContext->store();
+        return response()->json($response, 200);
     }
 }
