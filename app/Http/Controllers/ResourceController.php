@@ -9,7 +9,9 @@ use App\Helpers\FileUpload\StorageMethods\LocalStrategy;
 use App\Helpers\FileUpload\StorageMethods\S3Strategy;
 use App\Helpers\Resource\StreamResource;
 use Illuminate\Support\Facades\Log;
+use App\Models\Video;
 use Storage;
+use Auth;
 
 class ResourceController extends Controller
 {
@@ -20,7 +22,7 @@ class ResourceController extends Controller
     }
 
     //Return video files
-    public function videoFile($storage, $fileName)
+    public function videoFile(Request $request, $storage, $fileName)
     {
         return StreamResource::streamFile($storage, $fileName);
     }

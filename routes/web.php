@@ -39,9 +39,6 @@ use App\Http\Controllers\ModulesController;
 |
 */
 
-Route::get('/error/{code}/{message}', [ErrorController::class, 'show'])
-    ->name('error');
-
 Route::middleware(['install'])->group(function () 
 {
     Route::get('/install', [InstallController::class, 'index'])
@@ -63,21 +60,9 @@ Route::middleware(['install'])->group(function ()
         ->name('storeSeed');
 });
 
-//Asset routes
-Route::get('/asset/js/{scriptName}', [AssetController::class, 'javascript'])
-    ->name('jsAsset');
-
-Route::get('/asset/css/{styleName}', [AssetController::class, 'css'])
-    ->name('cssAsset');
-
-Route::get('/asset/image/{imageName}', [AssetController::class, 'image'])
-    ->name('imageAsset');
-
-
 Route::middleware(['setLanguage'])->group(function () 
 {
-    Route::get('/', [HomeController::class, 'index'])
-            ->name('home');
+
 
     require __DIR__.'/auth.php';
 

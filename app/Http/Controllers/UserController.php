@@ -75,6 +75,17 @@ class UserController extends Controller
 
     public function manageSubscription(Request $request)
     {
-        return $request->user()->redirectToBillingPortal(route('user'));
+        $response = [];
+        $targetUrl = $request->user()->redirectToBillingPortal()->getTargetUrl();
+        
+        $response['links'] = [
+            'user' => [
+                'href' => $targetUrl,
+                'rel' => 'user',
+                'type' => 'GET'
+            ]
+        ];
+
+        return response()->json($response, 200);
     }
 }

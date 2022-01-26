@@ -39,7 +39,7 @@ class DashboardController extends Controller
             $percentageSubscribed = 0;
 
         //Count all movies
-        $moviesCount = DB::table('movies')->count();
+        $moviesCount = DB::table('episodes')->where('season_id', '=', null)->count();
 
         //Count all series
         $seriesCount = DB::table('series')->count();

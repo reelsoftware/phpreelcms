@@ -74,12 +74,12 @@ class DevStripe extends Command
             //Create a mock Stripe product and save it to the database
             $stripe = new \Stripe\StripeClient($stripeSecret);
             $product = $stripe->products->create([
-                'name' => 'default',
+                'name' => config('app.stripe_active_product'),
             ]);
 
             //Add subscription to the database
             $subscriptionType = new SubscriptionType();
-            $subscriptionType->name = 'default';
+            $subscriptionType->name = config('app.stripe_active_product');
             $subscriptionType->product_id = $product['id'];
             $subscriptionType->public = '1';
             $subscriptionType->save();

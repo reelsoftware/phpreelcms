@@ -40,9 +40,25 @@ class SeriesController extends Controller
      */
     public function index(Request $request)
     {
+        if($request->perPage == null)
+        {
+            return response()->json(['error' => "Please specify how many series to be displayed on one page via a URL parameter (perPage=10)."], 500);
+        }
+
         try
         {
-            $series = ContentHandler::getLatestSeriesPaginate($request->perPage); 
+            if($request->pagination == 'simple')
+            {
+                $series = ContentHandler::getLatestSeriesSimplePaginate($request->perPage); 
+            }
+            else if($request->pagination == 'normal')
+            {
+                $series = ContentHandler::getLatestSeriesPaginate($request->perPage); 
+            }
+            else
+            {
+                return response()->json(['error' => "Please specify pagination method via a URL parameter (pagination=simple or pagination=normal)."], 500);
+            }
         }
         catch(TypeError $error)
         {
@@ -104,7 +120,7 @@ class SeriesController extends Controller
         
         $response['links'] = [
             'seasons' => [
-                'href' => route('seasonsIndex') . '?series=' . $id,
+                'href' => route('seasonsIndex:api') . '?series-id=' . $id,
                 'rel' => 'seasons',
                 'type' => 'GET'
             ],

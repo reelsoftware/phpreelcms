@@ -20,7 +20,7 @@ class UserHandler
 
         if(Auth::check())
         {
-            $defaultSubscription = 'default';
+            $defaultSubscription = config('app.stripe_active_product');
             $subscribed = $user->subscribed($defaultSubscription);
             
             if($subscribed == 1)

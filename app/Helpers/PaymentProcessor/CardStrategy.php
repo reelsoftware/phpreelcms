@@ -30,14 +30,15 @@ class CardStrategy implements IPaymentStrategy
       
         try {
             $stripeCheckout = $this->request->user()
-                ->newSubscription('default', $this->request->plan)
+                ->newSubscription(config('app.stripe_active_product'), $this->request->plan)
                 ->checkout([
                     'cancel_url' => route('subscribe'),
                 ]);
         } 
         catch (\Stripe\Exception\InvalidRequestException $ex) 
-        {
-            return response()->json(['error' => $ex->getMessage()], $ex->getError()->code);
+        {   
+            $errorMessage = $ex->getMessage();
+            return response()->json(['error' => $errorMessage], 500);
         } 
         catch (Exception $ex) 
         {

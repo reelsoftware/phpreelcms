@@ -74,6 +74,7 @@ return [
     'stripe_key' => env('STRIPE_KEY', null),
     'stripe_secret' => env('STRIPE_SECRET', null),
     'stripe_webhook_secret' => env('STRIPE_WEBHOOK_SECRET', null),
+    'stripe_active_product' => env('STRIPE_ACTIVE_PRODUCT', 'default'),
 
     'aws_access_key_id' => env('AWS_ACCESS_KEY_ID', null),
     'aws_secret_access_key' => env('AWS_SECRET_ACCESS_KEY', null),

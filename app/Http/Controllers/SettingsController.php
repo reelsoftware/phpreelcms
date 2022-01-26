@@ -261,12 +261,12 @@ class SettingsController extends Controller
             //Add data to Stripe
             $stripe = new \Stripe\StripeClient($stripe['STRIPE_SECRET']);
             $product = $stripe->products->create([
-                'name' => 'default',
+                'name' => config('app.stripe_active_product'),
             ]);
 
             //Add subscription to the database
             $subscriptionType = new SubscriptionType();
-            $subscriptionType->name = 'default';
+            $subscriptionType->name = config('app.stripe_active_product');
             $subscriptionType->product_id = $product['id'];
             $subscriptionType->public = '1';
             $subscriptionType->save();

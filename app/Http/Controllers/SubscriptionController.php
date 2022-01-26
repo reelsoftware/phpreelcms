@@ -30,7 +30,7 @@ class SubscriptionController extends Controller
     {
         $this->subscriptionContext->setSubscriptionStrategy(new StripeStrategy());
         $response = $this->subscriptionContext->index();
-        
+
         return response()->json($response, 200);
     }
 

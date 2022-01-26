@@ -169,8 +169,13 @@ class SeasonController extends Controller
     {
         $response = [];
 
+        if($request['series-id'] == null)
+        {
+            return response()->json(['error' => 'Series id not found. Please specify a series-id via a URL parameter.'], 500);
+        }
+
         $seasons = Seasons::orderBy('order')
-            ->where('series_id', '=', $request->series)
+            ->where('series_id', '=', $request['series-id'])
             ->get();
 
         if(empty($seasons->toArray()))

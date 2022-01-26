@@ -90,7 +90,7 @@ class StripeStrategy implements IPlanStrategy
         ]);
         
         $pennies = PaymentHelper::toPennies($this->request->price);
-        $subscription = SubscriptionType::where('name', '=', 'default')
+        $subscription = SubscriptionType::where('name', '=', config('app.stripe_active_product'))
             ->first(['product_id', 'id']);
 
         //Add plan to Stripe
