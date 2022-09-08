@@ -22,9 +22,13 @@ class Theme
 
         //If the child theme file exists then render that file else render the theme file
         if(View::exists($childThemePath))
+        {
             return true;
+        }
         else
+        {
             return false;
+        }
     }
 
     /**
@@ -34,9 +38,13 @@ class Theme
     public static function getActiveTheme(): string
     {
         if(File::isDirectory(resource_path("themes/child-" . config('app.theme'))))
+        {
             return 'child-' . config('app.theme');
+        }
         else
+        {
             return config('app.theme');
+        }
     }
 
     /**
@@ -56,11 +64,17 @@ class Theme
 
         //If the file exist in the child theme then return the child theme
         if(File::exists($childThemePath))
+        {
             return $childThemePath;
+        }
         else if(File::exists($themePath))
+        {
             return $themePath;
+        }
         else 
+        {
             return null;
+        }
     }
 
     /**
@@ -108,7 +122,9 @@ class Theme
         {
             //Remove child themes from the list
             if(substr($theme, 0, 6) != "child-")
+            {
                 array_push($baseThemes, $theme);
+            }
         }
 
         return $baseThemes;
@@ -144,7 +160,9 @@ class Theme
         $configPath = resource_path('themes/'. $theme . '/config.json');
 
         if(File::exists($configPath))
+        {
             return json_decode(implode("", file($configPath)), true);
+        }
     }
 
     /**
@@ -171,12 +189,18 @@ class Theme
 
         //Generate the root child theme directory
         if(!File::isDirectory($path))
+        {
             File::makeDirectory($path);
+        }
 
         //Generate the child theme directories
         foreach($directories as $directory)
+        {
             if(!File::isDirectory("$path//$directory"))
+            {
                 File::makeDirectory("$path//$directory");
+            }
+        }
     }
 
     /**
@@ -222,12 +246,16 @@ class Theme
                 $tempPath = $path . '/' . $key;
 
                 if(!File::isDirectory($tempPath))
+                {
                     File::makeDirectory($tempPath);
+                }
 
                 Theme::createFiles($value, $tempPath);
             }   
             else if(!File::exists($path . '/' . $value))
+            {
                 File::put($path . '/' . $value, '');
+            }
         }
     }
 
@@ -252,7 +280,9 @@ class Theme
         $json = json_encode($config, JSON_PRETTY_PRINT);
         
         if(!File::exists($path))
+        {
             File::put($path, $json);
+        }
     }
 
     /**
@@ -265,7 +295,9 @@ class Theme
         $path = resource_path("themes/$theme");
 
         if(File::isDirectory($path))
+        {
             File::copy(resource_path('themeCover/cover.jpg'), "$path/cover.jpg");
+        }
     }
 
     /**
@@ -280,7 +312,9 @@ class Theme
 
         //Create the theme directory if it doesn't exist
         if(!File::isDirectory($path))
+        {
             File::makeDirectory($path);
+        }
 
         //Create the directories, subdirectories and files
         Theme::createFiles($directories, $path);
@@ -296,9 +330,13 @@ class Theme
         $path = resource_path('themes/' . $theme);
 
         if(File::isDirectory($path))
+        {
             return true;
+        }
         else
+        {
             return false;          
+        }
     }
 
     /**
@@ -323,6 +361,8 @@ class Theme
         $langFiles = File::files(Theme::getFilePath("lang"));
 
         foreach($langFiles as $langFile)
+        {
             File::copy($langFile, resource_path('lang/' . $langFile->getFilename()));
+        }
     }
 }

@@ -35,13 +35,21 @@ class Asset
     public static function video(string $videoName, string $videoStorage)
     {
         if(in_array($videoStorage, ['local', 's3']))
+        {
             return route('fileResource', ['fileName' => $videoName, 'storage' => $videoStorage]);
+        }
         else if($videoStorage == 'youtube')
+        {
             return "https://www.youtube.com/embed/$videoName";
+        }
         else if($videoStorage == 'vimeo')
+        {
             return "https://player.vimeo.com/video/$videoName";
+        }
         else
+        {
             return null;
+        }
     }
 
     /**
@@ -76,10 +84,16 @@ class Asset
     public static function item($item)
     {
         if(with($item)->getTable() == 'movies')
+        {
             return route('movieShow', ['id' => $item->id]);
+        }
         else if(with($item)->getTable() == 'series')
+        {
             return route('seriesShow', ['id' => $item->id]); 
+        }
         else
+        {
             return null;
+        }
     }
 }

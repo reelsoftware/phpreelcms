@@ -67,9 +67,13 @@ class TranslationController extends Controller
 
             //Check if there is any translation provided by the user
             if($request[$key] != null)
+            {
                 $languageFile[$enKey] = $request[$key];
+            }
             else
+            {
                 $languageFile[$enKey] = '';
+            }
         }
 
         //Save the translation file as a json file
@@ -140,7 +144,9 @@ class TranslationController extends Controller
                 $defaultFile[$enKey] = $request[strval($i)];
             }
             else
+            {
                 $defaultFile[$enKey] = '';
+            }
 
             $i++;
         }
@@ -167,7 +173,9 @@ class TranslationController extends Controller
         $language = Translation::find($id);
 
         if($language != null)
+        {
             $language->delete();
+        }
 
         TranslationHandler::deleteTranslationFile($language['language']);
 

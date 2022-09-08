@@ -39,9 +39,13 @@ class ValidationManager
         ];
 
         if (isset($validationData[$field]))
+        {
             return $validationData[$field];
+        }
         else 
+        {
             return null;
+        }
     }
 
     /**
@@ -59,13 +63,17 @@ class ValidationManager
         {
             //Check to see if the request has a value assigned to it
             if($value != '')
+            {
                 array_push($fieldNames, $field);
+            }
         }
         
         $validationArray = [];
 
         foreach ($fieldNames as $field)
+        {
             $validationArray[$field] = ValidationManager::getValidationData($field);
+        }
 
         return $validationArray; 
     }

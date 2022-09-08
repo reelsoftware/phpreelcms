@@ -21,9 +21,13 @@ class UserController extends Controller
 
         //If the language is 0 then select the null option (English (Default))
         if($request->language == '0')
+        {
             $user->language = null;
+        }
         else
+        {
             $user->language = $request->language;
+        }
 
         $user->save();
 
@@ -60,9 +64,13 @@ class UserController extends Controller
         $defaultSubscription = Setting::where('setting', '=', 'default_subscription')->first();
         
         if($defaultSubscription != null)
+        {
             $subscription = $user->subscribed($defaultSubscription['value']);
+        }
         else
+        {
             $subscription = null;
+        }
 
         $params['name'] = $name;
         $params['email'] = $email;

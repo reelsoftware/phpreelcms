@@ -59,9 +59,13 @@ class EpisodeBuilder implements IContentBuilder
 
         //If the content is not free it means that we must use auth
         if($episode->premium != 1)
+        {
             $episode->auth = $this->request->access;
+        }
         else
+        {
             $episode->auth = 1;
+        }
 
         //Update video premium and auth values
         $video = Video::find($episode->video);
@@ -70,9 +74,13 @@ class EpisodeBuilder implements IContentBuilder
         $video->save();
 
         if($this->request->video != null)
+        {
             $video = $this->request->video;
+        }
         else if($this->request->videoId != null)
+        {
             $video = $this->request->videoId;
+        }
 
         $episode->season_id = $this->request->season_id;
         $episode->thumbnail = ResourceHandler::addImage($this->request->thumbnail);
@@ -84,9 +92,13 @@ class EpisodeBuilder implements IContentBuilder
             ->first(['order']);
 
         if($lastOrder != null)
+        {
             $episode->order = $lastOrder['order'] + 1;
+        }
         else
+        {
             $episode->order = 1;
+        }
 
         $episode->save();
 
@@ -112,9 +124,13 @@ class EpisodeBuilder implements IContentBuilder
 
         //If the content is not free it means that we must use auth
         if($episode->premium != 1)
+        {
             $episode->auth = $this->request->access;
+        }
         else
+        {
             $episode->auth = 1;
+        }
         
         //If you update the season of a episode then set the order as the last episode of the season
         if($episode->season_id != $this->request->season_id)
@@ -127,23 +143,33 @@ class EpisodeBuilder implements IContentBuilder
 
             //Set it to 1 if there is not last order
             if($lastOrder == null)
+            {
                 $episode->order = 1;
+            }
             else
+            {
                 $episode->order = $lastOrder->order + 1;
+            }
         }
 
         $episode->season_id = $this->request->season_id;
         
         //Update thumbnail
         if($this->request->thumbnail != null)
+        {
             ResourceHandler::updateImage($this->request->thumbnail, $episode->thumbnail, config('app.storage_disk'));
+        }
 
         //Update video
         if($this->request->video != null)
+        {
             ResourceHandler::updateVideo($this->request->video, $episode->video, $this->request->platformVideo, $episode->premium, $episode->auth);
+        }
 
         if($this->request->videoId != null)
+        {
             ResourceHandler::updateVideo($this->request->videoId, $episode->video, $this->request->platformVideo);
+        }
 
         $episode->save();
         

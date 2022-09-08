@@ -28,11 +28,15 @@ class CategoriesController extends Controller
 
         //Add movies to results array
         foreach($movies as $movie)
+        {
             $results[] = $movie;
+        }
 
         //Add series to results array
         foreach($series as $s)
+        {
             $results[] = $s;
+        }
         
         shuffle($results);
 
@@ -65,11 +69,15 @@ class CategoriesController extends Controller
 
         //Add movies to results array
         foreach($movies as $movie)
+        {
             $results[] = $movie;
+        }
 
         //Add series to results array
         foreach($series as $s)
+        {
             $results[] = $s;
+        }
         
         shuffle($results);
 
@@ -102,11 +110,15 @@ class CategoriesController extends Controller
 
         //Add movies to results array
         foreach($movies as $movie)
+        {
             $results[] = $movie;
+        }
 
         //Add series to results array
         foreach($series as $s)
+        {
             $results[] = $s;
+        }
         
         shuffle($results);
 
@@ -139,11 +151,15 @@ class CategoriesController extends Controller
 
         //Add movies to results array
         foreach($movies as $movie)
+        {
             $results[] = $movie;
+        }
 
         //Add series to results array
         foreach($series as $s)
+        {
             $results[] = $s;
+        }
 
         shuffle($results);
 

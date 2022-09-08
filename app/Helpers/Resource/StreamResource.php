@@ -20,11 +20,17 @@ class StreamResource
         $stream = null;
 
         if($storage == 's3')
+        {
             $stream = new S3Stream();
+        }
         else if($storage == 'local')
+        {
             $stream = new LocalStream();
+        }
         else
+        {
             abort(404);
+        }
 
         $stream->setter($fileName, $storage, $fileName);
         $filestream = $stream->output();

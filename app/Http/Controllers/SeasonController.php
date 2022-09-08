@@ -126,9 +126,13 @@ class SeasonController extends Controller
         $season = Seasons::find($id);
        
         if($season != null)
+        {
             $content = $season;
+        }
         else
+        {
             abort(404);
+        }
 
         $trailer = Video::where('id', '=', $season['trailer'])->first(['name', 'storage']);
 

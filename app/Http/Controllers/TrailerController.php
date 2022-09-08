@@ -15,7 +15,9 @@ class TrailerController extends Controller
         $trailer = ContentHandler::getSeasonTrailer($id);
 
         if($trailer == null)
+        {
             return abort(404);
+        }
 
         return Theme::view('trailer.show', [
             'item' => $trailer,
@@ -27,7 +29,9 @@ class TrailerController extends Controller
         $trailer = ContentHandler::getMovieTrailer($id);
 
         if($trailer == null)
+        {
             return abort(404);
+        }
 
         return Theme::view('trailer.show', [
             'item' => $trailer,

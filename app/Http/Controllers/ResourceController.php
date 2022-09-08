@@ -35,17 +35,25 @@ class ResourceController extends Controller
     public function storeAPI(Request $request, $storage = null)
     {
         if($storage == null)
+        {
     	    $storageMedium = config('app.storage_disk');
+        }
         else
+        {
             $storageMedium = $storage;
+        }
         
     	$storageContext = new StorageContext();
 
         //Update the strategy based on storage
     	if($storageMedium == 'local')
+        {
     		$storageContext->setStorageStrategy(new LocalStrategy());
+        }
         else if($storageMedium == 's3')
+        {
     		$storageContext->setStorageStrategy(new S3Strategy());
+        }
 
         //Get the JSON response from previous call
     	$response = $storageContext->execute($request);

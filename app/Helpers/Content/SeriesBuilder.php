@@ -84,7 +84,9 @@ class SeriesBuilder implements IContentBuilder
 
         //Update thumbnail
         if($this->request->thumbnail != null)
+        {
             ResourceHandler::updateImage($this->request->thumbnail, $series->thumbnail, config('app.storage_disk'));
+        }
         
         $series->save();
 

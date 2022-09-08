@@ -73,7 +73,9 @@ class EnvHandler
             if($separateFields[0] != "#SECTION")
             {
                 if(!$checkInArray)
+                {
                     array_push($assocArrayValue, $separateFields[0]);
+                }
             }
             else
             {
@@ -94,7 +96,9 @@ class EnvHandler
 
                 //Empty the array if an excluded value is found
                 if($checkInArray) 
+                {
                     $assocArrayValue = [];
+                }
             }
         }
 
@@ -126,8 +130,12 @@ class EnvHandler
         $envFields = $this->getEnvFields();
         
         foreach($this->envFields as $section => $envField)
+        {
             foreach($envField as $env)
+            {
                 $this->validatedFields[$env] = 'required';
+            }
+        }
 
         //Remove the validation for password
         $this->validatedFields['DB_PASSWORD'] = "";

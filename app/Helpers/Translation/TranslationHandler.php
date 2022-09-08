@@ -16,7 +16,9 @@ class TranslationHandler
     {
         //Error handling
         if($limit < 0)
+        {
             throw new Exception("\$limit must be a non-negative integer");
+        }
 
         return Translation::orderByDesc('id')->simplePaginate($limit);
     }

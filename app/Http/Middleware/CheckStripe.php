@@ -19,7 +19,9 @@ class CheckStripe
     {
         //If the env values are null or the table is not seeded then redirect to the install page
         if(config('app.stripe_key') == null || config('app.stripe_secret') == null || config('app.stripe_webhook_secret') == null || empty(DB::table('subscription_types')->count()))
+        {
             return redirect(route('stripeUpdate'));
+        }    
 
         return $next($request);
     }

@@ -42,12 +42,20 @@ class ResourceHandler
         ])->first('premium');
 
         if($file == null)
+        {
             return null;
+        }
         else
+        {
             if($file->premium == 1)
+            {
                 return true;
+            }
             else 
+            {
                 return false;
+            }
+        }
     }
 
     /**
@@ -101,7 +109,9 @@ class ResourceHandler
     public static function delete($fileName, $storage)
     {
         if (Storage::disk($storage)->exists($fileName)) 
+        {
             return Storage::disk($storage)->delete($fileName);
+        }
     }
 
     /**
@@ -121,7 +131,9 @@ class ResourceHandler
 
         //Delete the old video if available
         if(in_array($video['storage'], ResourceHandler::getLocalStorage())) 
+        {
             ResourceHandler::delete($video->name, $video->storage);
+        }
 
         //Update the video
         $video->name = $fileName;

@@ -37,10 +37,14 @@ class StripeStrategy implements ISubscriptionStrategy
         if($params !== null)
         {
             if(isset($params['request']) && $params['request'] !== null)
+            {
                 $this->request = $params['request'];
+            }
 
             if(isset($params['id']) && $params['id'] !== null)
+            {
                 $this->id = $params['id'];
+            }
         }
 
         $this->paymentContext = new PaymentContext();
@@ -61,7 +65,9 @@ class StripeStrategy implements ISubscriptionStrategy
         $plans = PlanHandler::getPublicPlans();
         
         foreach($plans as $plan)
+        {
             $benefits[] = explode(',', $plan->benefits);
+        }
 
         $view = [];
 
@@ -98,7 +104,9 @@ class StripeStrategy implements ISubscriptionStrategy
         $currencies = PaymentHelper::getCurrencies();
        
         if($subscriptionPlan == null)
+        {
             abort(404);
+        }
 
         $view = [];
 

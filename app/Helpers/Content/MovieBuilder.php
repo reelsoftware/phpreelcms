@@ -64,20 +64,32 @@ class MovieBuilder implements IContentBuilder
 
         //If the content is not free it means that we must use auth
         if($movie->premium != 1)
+        {
             $movie->auth = $this->request->access;
+        }
         else
+        {
             $movie->auth = 1;
+        }
 
         //Update the video depending on the chosen platform
         if($this->request->video == null)
+        {
             $video = $this->request->videoId;
+        }
         else
+        {
             $video = $this->request->video;
+        }
 
         if($this->request->trailer == null)
+        {
             $trailer = $this->request->trailerId;
+        }
         else
+        {
             $trailer = $this->request->trailer; 
+        }
 
         //Link the thumbnail from images table to movies table
         $movie->thumbnail = ResourceHandler::addImage($this->request->thumbnail);
@@ -112,9 +124,13 @@ class MovieBuilder implements IContentBuilder
         
         //If the content is not free it means that we must use auth
         if($movie->premium != 1)
+        {
             $movie->auth = $this->request->access;
+        }
         else
+        {
             $movie->auth = 1;
+        }
         
         //Update video premium and auth values
         $video = Video::find($movie->video);
@@ -124,21 +140,31 @@ class MovieBuilder implements IContentBuilder
 
         //Update thumbnail
         if($this->request->thumbnail != null)
+        {
             ResourceHandler::updateImage($this->request->thumbnail, $movie->thumbnail, config('app.storage_disk'));
+        }
 
         //Update video
         if($this->request->video != null)
+        {
             ResourceHandler::updateVideo($this->request->video, $movie->video, $this->request->platformVideo, $movie->premium, $movie->auth);
+        }
 
         if($this->request->videoId != null)
+        {
             ResourceHandler::updateVideo($this->request->videoId, $movie->video, $this->request->platformVideo);
+        }
 
         //Update trailer
         if($this->request->trailer != null)
+        {
             ResourceHandler::updateVideo($this->request->trailer, $movie->trailer, $this->request->platformTrailer, 0, 0);
+        }
 
         if($this->request->trailerId != null)
+        {
             ResourceHandler::updateVideo($this->request->trailerId, $movie->trailer, $this->request->platformTrailer);
+        }
 
         $movie->save();
 
