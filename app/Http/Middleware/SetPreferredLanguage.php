@@ -21,7 +21,9 @@ class SetPreferredLanguage
     {
         //Set the global default language
         if(config('app.language') != '')
+        {
             app()->setLocale(str_replace('_', ' ', config('app.language')));
+        }
 
         //Check if user is logged in
         if($request->user() != null)
@@ -30,7 +32,9 @@ class SetPreferredLanguage
 
             //If not null set app language to user's preferred language and overwrite the global default
             if($userLanguage != null)
+            {
                 app()->setLocale($userLanguage);
+            }
         }
 
         return $next($request);

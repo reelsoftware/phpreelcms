@@ -106,9 +106,13 @@ class SeriesController extends Controller
         $series = Series::find($id);
        
         if($series != null)
+        {
             $content = $series;
+        }
         else
-            dd('Wrong id');
+        {
+            abort(404);
+        }
 
         $trailer = Video::where('id', '=', $series['trailer'])->first(['name', 'storage']);
         

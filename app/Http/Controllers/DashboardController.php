@@ -25,18 +25,26 @@ class DashboardController extends Controller
 
         //Change in users
         if($usersCount30Days != 0)
+        {
             $percentageChangeUsers = (($usersCount - $usersCount30Days) / $usersCount30Days) * 100;
+        }
         else
+        {
             $percentageChangeUsers = 0;
+        }
 
         //Count all active subscribers
         $activeSubscription = DB::table('subscriptions')->where('ends_at', '=', null)->count();
 
         //Percentage of users that are subscribed
         if($usersCount != 0)
+        {
             $percentageSubscribed = (100 * $activeSubscription) / $usersCount;
+        }
         else
+        {
             $percentageSubscribed = 0;
+        }
 
         //Count all movies
         $moviesCount = DB::table('movies')->count();

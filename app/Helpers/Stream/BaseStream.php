@@ -75,17 +75,17 @@ abstract class BaseStream
      */
     public function setter(string $filePath, string $adapter = 's3')
     {
-        $this->filePath    = $filePath;
+        $this->filePath = $filePath;
         //Name of the storage medium(local, s3)
         $this->adapterName = $adapter;
         //Get the disk based on the selected storage
-        $this->disk        = Storage::disk($this->adapterName);
-        $this->adapter     = $this->disk->getAdapter();
+        $this->disk = Storage::disk($this->adapterName);
+        $this->adapter = $this->disk->getAdapter();
 
         //Set to zero until setHeadersAndStream is called
         $this->start = 0;
-        $this->size  = 0;
-        $this->end   = 0;
+        $this->size = 0;
+        $this->end = 0;
     }
 
     /**
@@ -102,19 +102,19 @@ abstract class BaseStream
      */
     protected function setHeadersAndStream()
     {
-        $this->start   = 0;
-        $this->size    = $this->disk->size($this->filePath);
-        $this->end     = $this->size - 1;
-        $this->length  = $this->size;
+        $this->start = 0;
+        $this->size = $this->disk->size($this->filePath);
+        $this->end = $this->size - 1;
+        $this->length = $this->size;
         $this->isRange = false;
 
         //Set headers
         $this->returnHeaders = [
-            'Last-Modified'       => $this->disk->lastModified($this->filePath),
-            'Accept-Ranges'       => 'bytes',
-            'Content-Type'        => $this->disk->mimeType($this->filePath),
+            'Last-Modified' => $this->disk->lastModified($this->filePath),
+            'Accept-Ranges' => 'bytes',
+            'Content-Type' => $this->disk->mimeType($this->filePath),
             'Content-Disposition' => 'inline; filename=' . basename($this->filePath) . '.' . Arr::last(explode('.', $this->filePath)),
-            'Content-Length'      => $this->length,
+            'Content-Length' => $this->length,
         ];
         
         //Handle ranges here
@@ -135,7 +135,9 @@ abstract class BaseStream
 
             //If true, it means is the first chunk of the range (Range: bytes=0-)
             if (substr($range, 0, 1) == '-') 
+            {
                 $cStart = $this->size - intval(substr($range, 1)) - 1;
+            }
             //Else it means it not the first chunk so it has two values (Range: bytes=64312833-64657026)
             else 
             {
@@ -146,7 +148,8 @@ abstract class BaseStream
             }
 
             $cEnd = min($cEnd, $this->size - 1);
-            if ($cStart > $cEnd || $cStart > $this->size - 1) {
+            if ($cStart > $cEnd || $cStart > $this->size - 1) 
+            {
                 return response('416 Requested Range Not Satisfiable', 416, [
                     'Content-Range' => 'bytes */' . $this->size,
                 ]);
@@ -163,6 +166,4 @@ abstract class BaseStream
 
         return $this->stream();
     }
-
-    //abstract protected function stream(): StreamedResponse;
 }

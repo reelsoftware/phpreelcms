@@ -41,16 +41,24 @@ class SettingsController extends Controller
         {
             //Validation only applies if there are no values inside the env file
             if(config('app.aws_access_key_id') == null)
+            {
                 $validationArray['awsAccessKeyId'] = 'required';
+            }
 
             if(config('app.aws_secret_access_key') == null)
+            {
                 $validationArray['awsSecretAccessKey'] = 'required';
+            }
 
             if(config('app.aws_default_region') == null)
+            {
                 $validationArray['awsDefaultRegion'] = 'required';
+            }
 
             if(config('app.aws_bucket') == null)
+            {
                 $validationArray['awsBucket'] = 'required';
+            }
         }
 
         $validated = $request->validate($validationArray);
@@ -65,16 +73,24 @@ class SettingsController extends Controller
             $s3['CHUNK_SIZE'] = $request->chunkSize;
 
             if($request->awsAccessKeyId != null)
+            {
                 $s3['AWS_ACCESS_KEY_ID'] = $request->awsAccessKeyId;
+            }
 
             if($request->awsSecretAccessKey != null)
+            {
                 $s3['AWS_SECRET_ACCESS_KEY'] = $request->awsSecretAccessKey;
+            }
 
             if($request->awsDefaultRegion != null)
+            {
                 $s3['AWS_DEFAULT_REGION'] = $request->awsDefaultRegion;
+            }
 
             if($request->awsBucket != null)
+            {
                 $s3['AWS_BUCKET'] = $request->awsBucket;
+            }
 
             DotenvEditor::setKeys($s3);
         }
@@ -134,9 +150,13 @@ class SettingsController extends Controller
 
         //Replace '_' with ' ' because .env file doesn't support white space
         if($currentLanguage == '')
+        {
             $currentLanguage = null;
+        }
         else
+        {
             $currentLanguage = str_replace('_', ' ', $currentLanguage);
+        }
 
         return view('settings.app', [
             'appName' => $appName,
@@ -155,9 +175,13 @@ class SettingsController extends Controller
 
         //If it's null then set the default theme language by saving and empty string to .env file
         if($request->appLanguage == null)
+        {
             $appLanguage = '';
+        }
         else
+        {
             $appLanguage = str_replace(' ', '_', $request->appLanguage);
+        }
 
         $file = DotenvEditor::setKeys([
             'APP_NAME' => $request->appName,
@@ -228,28 +252,42 @@ class SettingsController extends Controller
         $validationArray = [];
 
         if(config('app.stripe_key') == null)
+        {
             $validationArray['stripeKey'] = 'required';
+        }
 
         if(config('app.stripe_secret') == null)
+        {
             $validationArray['stripeSecret'] = 'required';
+        }
 
         if(config('app.stripe_webhook_secret') == null)
+        {
             $validationArray['stripeWebhookSecret'] = 'required';
+        }
 
         if(count($validationArray))    
+        {
             $request->validate($validationArray);
+        }
 
         //Store or update the values in the env file
         $stripe = [];
 
         if($request->stripeKey != null)
+        {
             $stripe['STRIPE_KEY'] = $request->stripeKey;
+        }
 
         if($request->stripeSecret != null)
+        {
             $stripe['STRIPE_SECRET'] = $request->stripeSecret;
+        }
 
         if($request->stripeWebhookSecret != null)
+        {
             $stripe['STRIPE_WEBHOOK_SECRET'] = $request->stripeWebhookSecret;
+        }
 
         DotenvEditor::setKeys($stripe);
         DotenvEditor::save();

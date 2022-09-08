@@ -57,9 +57,13 @@ class SeasonBuilder implements IContentBuilder
         $season->thumbnail = ResourceHandler::addImage($this->request->thumbnail);
 
         if($this->request->trailer != null)
+        {
             $trailer = $this->request->trailer;
+        }
         else if($this->request->trailerId != null)
+        {
             $trailer = $this->request->trailerId;
+        }
 
         $season->trailer = ResourceHandler::addVideo($trailer, $this->request->platformTrailer, 0, 0);
 
@@ -69,9 +73,13 @@ class SeasonBuilder implements IContentBuilder
             ->first(['order']);
 
         if($lastOrder != null)
+        {
             $season->order = $lastOrder['order'] + 1;
+        }
         else 
+        {
             $season->order = 1;
+        }
         
         $season->save();
 
@@ -94,14 +102,20 @@ class SeasonBuilder implements IContentBuilder
         
         //Update thumbnail
         if($this->request->thumbnail != null)
+        {
             ResourceHandler::updateImage($this->request->thumbnail, $season->thumbnail, config('app.storage_disk'));
+        }
 
         //Update trailer
         if($this->request->trailer != null)
+        {
             ResourceHandler::updateVideo($this->request->trailer, $season->trailer, $this->request->platformTrailer, 0, 0);
+        }
 
         if($this->request->trailerId != null)
+        {
             ResourceHandler::updateVideo($this->request->trailerId, $season->trailer, $this->request->platformTrailer);
+        }
 
         //If you update the season of a episode then set the order as the last episode of the season
         if($season->series_id != $this->request->series_id)
@@ -115,9 +129,13 @@ class SeasonBuilder implements IContentBuilder
             //Set it to 1 if there is not last order
 
             if($lastOrder != null)
+            {
                 $season->order = $lastOrder['order'] + 1;
+            }
             else 
+            {
                 $season->order = 1;
+            }
         }
 
         $season->series_id = $this->request->series_id;

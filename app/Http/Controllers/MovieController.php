@@ -79,7 +79,9 @@ class MovieController extends Controller
         $movie = ContentHandler::getMovie($id);
 
         if($movie == null)
+        {
             return abort(404);
+        }
 
         $cast = explode(", ", $movie['cast']);
         $genre = explode(", ", $movie['genre']);
@@ -117,9 +119,13 @@ class MovieController extends Controller
             ])->first();
 
         if($movie != null)
+        {
             $content = $movie;
+        }
         else
+        {
             abort(404);    
+        }
 
         $video = Video::where('id', '=', $movie['video'])->first(['name', 'storage']);
         $trailer = Video::where('id', '=', $movie['trailer'])->first(['name', 'storage']);

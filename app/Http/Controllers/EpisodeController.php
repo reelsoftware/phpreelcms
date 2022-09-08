@@ -94,7 +94,9 @@ class EpisodeController extends Controller
 
         //Check if that episode exists
         if($currentEpisode == null)
+        {
             return abort(404);
+        }
 
         //Set order of the current episode
         $currentEpisodeOrder = $currentEpisode['order'];
@@ -152,9 +154,13 @@ class EpisodeController extends Controller
         $episode = Episode::find($id);
        
         if($episode != null)
+        {
             $content = $episode;
+        }
         else
+        {
             abort();
+        }
 
         $seasons = Seasons::orderBy('id', 'desc')
             ->get(['id', 'title']);

@@ -46,7 +46,9 @@ class ModuleHandler
         $configPath = base_path('Modules/'. $module . '/config.json');
 
         if(File::exists($configPath))
+        {
             return json_decode(implode("", file($configPath)), true);
+        }
     }
 
     /**
@@ -82,7 +84,9 @@ class ModuleHandler
         $json = json_encode($config, JSON_PRETTY_PRINT);
         
         if(!File::exists($path))
+        {
             File::put($path, $json);
+        }
     }
 
     /**
@@ -95,7 +99,9 @@ class ModuleHandler
         $path = base_path("Modules/$module");
 
         if(File::isDirectory($path))
+        {
             File::copy(resource_path('themeCover/cover.jpg'), "$path/cover.jpg");
+        }
     }
 
     /**
@@ -108,8 +114,12 @@ class ModuleHandler
         $path = base_path('Modules/' . $module);
 
         if(File::isDirectory($path))
+        {
             return true;
+        }
         else
+        {
             return false;          
+        }
     }
 }

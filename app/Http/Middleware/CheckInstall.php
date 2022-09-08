@@ -36,15 +36,21 @@ class CheckInstall
         }
 
         if($tables == null)
+        {
             return $next($request);
+        }
         else
         {
             $users = DB::table('users')->count();
 
             if($users == 0)
+            {
                 return $next($request);
+            }
             else
+            {
                 return redirect(route('home'));
+            }
         }
     }
 }

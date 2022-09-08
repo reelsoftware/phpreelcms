@@ -21,10 +21,14 @@ class S3Stream extends BaseStream
         ]);
         // Open a stream in read-only mode
         if (!($stream = fopen("s3://{$this->adapter->getBucket()}/{$this->filePath}", 'rb', false, $context))) 
+        {
             throw new Exception('Could not open stream for reading export [' . $this->filePath . ']');
+        }
        
         if (isset($this->start) && $this->start > 0) 
+        {
             fseek($stream, $this->start, SEEK_SET);
+        }
 
         $remainingBytes = $this->length ?? $this->size;
 
@@ -33,8 +37,10 @@ class S3Stream extends BaseStream
 
         //stream(Closure $callback, int $status = 200, array $headers = [])
         $video = response()->stream(
-            function () use ($stream, $remainingBytes, $chunkSize) {
-                while (!feof($stream) && $remainingBytes > 0) {
+            function () use ($stream, $remainingBytes, $chunkSize) 
+            {
+                while (!feof($stream) && $remainingBytes > 0) 
+                {
                     $toGrab = min($chunkSize, $remainingBytes);
                     echo fread($stream, $toGrab);
                     $remainingBytes -= $toGrab;

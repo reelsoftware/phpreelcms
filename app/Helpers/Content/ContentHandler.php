@@ -16,8 +16,10 @@ class ContentHandler
     public static function getLatestMovies(int $limit)
     {
         //Error handling
-        if($limit < 0)
+        if($limit < 0) 
+        {
             throw new Exception("\$limit must be a non-negative integer");
+        }
 
         $movies = Movie::where('public', '=', '1')
             ->join('images', 'images.id', '=', 'movies.thumbnail')
@@ -42,7 +44,9 @@ class ContentHandler
     {
         //Error handling
         if($limit < 0)
+        {
             throw new Exception("\$limit must be a non-negative integer");
+        }
 
         $series = Series::where('public', '=', '1')
             ->join('images', 'images.id', '=', 'series.thumbnail')
@@ -67,7 +71,9 @@ class ContentHandler
     {
         //Error handling
         if($limit < 0)
+        {
             throw new Exception("\$limit must be a non-negative integer");
+        }
 
         $movies = Movie::orderByDesc('movies.id')
             ->where('public', '=', '1')
@@ -97,7 +103,9 @@ class ContentHandler
     {
         //Error handling
         if($limit < 0)
+        {
             throw new Exception("\$limit must be a non-negative integer");
+        }
 
             $series = Series::orderByDesc('series.id')
                 ->where('public', '=', '1')
@@ -256,10 +264,12 @@ class ContentHandler
             ->where('public', '=', '1');
 
         for($i=0;$i<count($query);$i++)
+        {
             $movies = $movies
                 ->orWhere('title', 'like', '%' . $query[$i] . '%')
                 ->orWhere('description', 'like', '%' . $query[$i] . '%');
 
+        }
 
         $movies = $movies
             ->join('images', 'images.id', '=', 'movies.thumbnail')
@@ -288,9 +298,11 @@ class ContentHandler
             ->where('public', '=', '1');
 
         for($i=0;$i<count($query);$i++)
+        {
             $series = $series
                 ->orWhere('title', 'like', '%' . $query[$i] . '%')
                 ->orWhere('description', 'like', '%' . $query[$i] . '%');
+        }
 
         $series = $series  
             ->join('images', 'images.id', '=', 'series.thumbnail')
@@ -358,7 +370,9 @@ class ContentHandler
 
                 //Check if the current season is the same with the current iterating season
                 if($currentSeasonId == $content['season']['season_id'])
+                {
                     $currentSeasonLength += $episode['length'];
+                }
                 else
                 {
                     //Add the season length to the array

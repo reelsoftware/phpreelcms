@@ -18,9 +18,13 @@ class Utilities
 
         //If the child theme file exists then render that file else render the theme file
         if(Theme::existsChildView($filePath))
+        {
             $theme = 'child-' . config('app.theme') . '.' . $filePath;
+        }
         else
+        {
             $theme = config('app.theme') . '.' . $filePath;;
+        }
 
         return $content->links($theme);
     }
