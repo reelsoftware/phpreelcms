@@ -1,4 +1,4 @@
-<p align="center"><a href="https://phpreelcms.reel.software/" target="_blank"><img src="https://phpreelcms.reel.software/img/logo.png" width="250"></a></p>
+<p align="center"><a href="https://reel.software/" target="_blank"><img src="https://phpreelcms.reel.software/img/logo.png" width="250"></a></p>
 
 # About phpReel
 It's an open-source MIT subscription-based video streaming application built on top of the Laravel Framework. In simpler terms I can say that phpReel is an application that let's you upload video content and distribute it to your users free or via a subscription.
